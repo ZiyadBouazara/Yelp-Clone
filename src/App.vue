@@ -1,16 +1,21 @@
+<!-- Layout.vue -->
+
 <template>
-  <div id="app">
-    <nav-menu></nav-menu>
-    <router-view></router-view>
+  <div>
+    <Navigation />
+    <router-view />
+    <PageFooter />
   </div>
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/Navigation.vue";
+import PageFooter from "@/components/PageFooter.vue";
+
 export default {
-  name: "app",
   components: {
-    "nav-menu": Navigation,
+    Navigation,
+    PageFooter,
   },
 };
 </script>
