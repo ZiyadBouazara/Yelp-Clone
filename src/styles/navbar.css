@@ -1,0 +1,98 @@
+.navBar-BACKGROUND {
+  background: url("../assets/lol.webp") no-repeat center center fixed;
+  background-size: cover;
+  margin-bottom: 20px;
+}
+
+div, header, a, form, input, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.consumer-navigation {
+  padding: 24px 40px 500px;
+  pointer-events: auto;
+  background: none;
+}
+
+.interieur-navBar {
+  min-width: 960px;
+}
+
+.border-css {
+  border-color: rgba(235, 235, 235, 1);
+}
+
+.nav-firstLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Logo {
+  border-color: rgba(235, 235, 235, 1);
+}
+
+.logo-link {
+  display: block;
+  max-width: 80px;
+  width: 100%;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+}
+
+.searchBar {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 18px 0px;
+  border-radius: 4px;
+  border: 1px solid rgba(235, 235, 235, 1);
+  padding: 8px;
+  margin-right: 8px;
+}
+
+.searchInput {
+  width: 200px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.searchButton, .transparentButton, .redButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.searchButton {
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+.transparentButton {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  margin-right: 8px;
+}
+
+.redButton {
+  background-color: red;
+  color: white;
+}
+
+.buttonSpace {
+  width: 16px;
+}

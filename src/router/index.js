@@ -4,6 +4,7 @@ import Restaurant from "@/components/Restaurant";
 import User from "@/components/User";
 import LogIn from "@/components/LogIn.vue";
 import SignUp from "@/components/SignUp.vue";
+import Navigation from "@/components/Navigation.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/signup",
     name: "Sign Up",
     component: SignUp,
+  },
+  {
+    path: "/navigation",
+    name: "Navigation",
+    component: Navigation,
   },
 ];
 
