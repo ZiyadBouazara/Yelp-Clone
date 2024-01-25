@@ -5,4 +5,6 @@
   </div>
 </template>
 
-<style></style>
+<script setup>
+import "@/styles/global.css";
+</script>
