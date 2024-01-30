@@ -5,6 +5,7 @@ import User from "@/components/User";
 import LogIn from "@/components/LogIn.vue";
 import SignUp from "@/components/SignUp.vue";
 import Navigation from "@/components/Navigation.vue";
+import RestaurantDetails from "@/components/RestaurantDetails.vue";
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: "/navigation",
     name: "Navigation",
     component: Navigation,
+  },
+  {
+    path: "/restaurants",
+    name: "Restaurant-details",
+    component: RestaurantDetails,
   },
 ];
 

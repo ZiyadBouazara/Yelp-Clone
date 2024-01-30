@@ -4,7 +4,12 @@
   margin-bottom: 20px;
 }
 
-div, header, a, form, input, button {
+div,
+header,
+a,
+form,
+input,
+button {
   margin: 0;
   padding: 0;
   border: 0;
@@ -69,7 +74,9 @@ div, header, a, form, input, button {
   box-sizing: border-box;
 }
 
-.searchButton, .transparentButton, .redButton {
+.searchButton,
+.transparentButton,
+.redButton {
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;

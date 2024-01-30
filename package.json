@@ -22,10 +22,12 @@
     "@vue/cli-service": "~5.0.8",
     "@vue/compiler-sfc": "^3.1.0",
     "@vue/eslint-config-prettier": "^9.0.0",
+    "css-loader": "^6.9.1",
     "eslint": "^8.21.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.3.0",
-    "prettier": "^3.0.3",
+    "prettier": "3.2.4",
+    "style-loader": "^3.3.4",
     "vitest": "^1.2.0"
   }
 }

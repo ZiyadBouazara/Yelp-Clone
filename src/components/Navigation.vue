@@ -35,10 +35,18 @@
             </form>
             <button class="searchButton">Search</button>
             <div class="buttonSpace"></div>
-            <router-link to="/login" class="transparentButton" style="text-decoration: none;">
+            <router-link
+              to="/login"
+              class="transparentButton"
+              style="text-decoration: none"
+            >
               Log In
             </router-link>
-            <router-link to="/signup" class="redButton" style="text-decoration: none;">
+            <router-link
+              to="/signup"
+              class="redButton"
+              style="text-decoration: none"
+            >
               Sign Up
             </router-link>
           </div>
@@ -53,4 +61,3 @@
 <script setup>
 import "@/styles/navbar.css";
 </script>
-
