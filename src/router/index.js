@@ -5,7 +5,7 @@ import User from "@/components/User";
 import LogIn from "@/components/LogIn.vue";
 import SignUp from "@/components/SignUp.vue";
 import Navigation from "@/components/Navigation.vue";
-import RestaurantDetails from "@/components/RestaurantDetails.vue";
+import RestaurantDetails from "@/pages/RestaurantDetails.vue";
 
 const routes = [
   {
