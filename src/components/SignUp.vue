@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-body">
             <!-- Form -->
-            <form class="row g-3">
+            <form class="row g-3 mx-auto">
               <div>
                 <h3 class="card-title text-center mb-4">Sign Up for UFood</h3>
                 <h4 class="card-body text-center lead">
