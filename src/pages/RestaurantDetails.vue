@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 const restaurant = ref({
@@ -44,7 +43,7 @@ const initMap = async () => {
     const customIcon = leaflet.divIcon({
       className: "custom-leaflet-div-icon",
       html: '<i class="fas fa-map-marker-alt fa-3x text-danger"></i>',
-      iconAnchor: [18, 36], // point of the icon that corresponds to the marker's location
+      iconAnchor: [18, 36],
     });
 
     leaflet.marker(restaurantLocation, { icon: customIcon }).addTo(map.value);
@@ -266,8 +265,8 @@ onMounted(() => {
 }
 
 .red-button {
-  background-color: #ff0000; /* Red background */
-  color: #ffffff; /* White text */
+  background-color: #ff0000;
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -276,10 +275,10 @@ onMounted(() => {
 }
 
 .white-button {
-  background-color: #ffffff; /* White background */
-  color: #333333; /* Dark text */
+  background-color: #ffffff;
+  color: #333333;
   padding: 10px 20px;
-  border: 1px solid #333333; /* Dark border */
+  border: 1px solid #333333;
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
