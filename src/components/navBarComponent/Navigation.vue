@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" :class="navbarClass">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/">UFOOD</router-link>
+        <Logo />
         <button class="navbar-toggler" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,110 +10,44 @@
           :class="['collapse', 'navbar-collapse']"
           id="navbarSupportedContent"
         >
-          <div class="d-flex mx-auto">
-            <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                type="button"
-                class="btn btn-outline-danger"
-                style="margin-left: 5px"
-              >
-                Search
-              </button>
-            </form>
-          </div>
-
+          <SearchForm />
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <div
-              v-for="(dropdown, index) in dropdowns"
-              :key="index"
-              class="dropdown m-2"
-            >
-              <button
-                class="btn btn-outline-danger dropdown-toggle"
-                type="button"
-                :id="'dropdown-' + (index + 1)"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {{ dropdown.text }}
-              </button>
-              <ul
-                class="dropdown-menu"
-                :aria-labelledby="'dropdown-' + (index + 1)"
-              >
-                <li
-                  v-for="(item, itemIndex) in dropdown.items"
-                  :key="itemIndex"
-                >
-                  <a class="dropdown-item" href="#">
-                    {{ item.label }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <a
-              v-for="(link, index) in links"
-              :key="index"
-              class="nav-item"
-              :class="{
-                'red-link': !isHovered[index],
-                'hovered-link': isHovered[index],
-              }"
-              @mouseover="setHover(index, true)"
-              @mouseout="setHover(index, false)"
-              href="#"
-            >
-              {{ link }}
-            </a>
+            <Dropdowns :dropdowns="dropdowns" />
+            <Links :links="links" :isHovered="isHovered" @hover="setHover" />
           </ul>
-
-          <div class="profile-dropdown" style="margin-left: 20px">
-            <div @click="toggle" class="profile-dropdown-btn">
-              <div class="profile-img">
-                <img src="../assets/imageUnknown.png" alt="Profile Image" />
-              </div>
-
-              <!-- Displaying the first item in the dropDownProfile array -->
-              <span>
-                {{ dropDownProfile[0].text }}
-                <i class="fa-solid fa-angle-down"></i>
-              </span>
-            </div>
-
-            <!-- Generating the dropdown list based on dropDownProfile -->
-            <ul class="profile-dropdown-list">
-              <li
-                v-for="(item, index) in dropDownProfile[0].items"
-                :key="index"
-                class="profile-dropdown-list-item"
-              >
-                <!-- Using router-link to dynamically generate links -->
-                <a :href="item.href" class="nav-link">
-                  <i class="fa-regular fa-user"></i>
-                  {{ item.label }}
-                </a>
-              </li>
-            </ul>
-          </div>
+          <!--          <ProfileDropdown-->
+          <!--            :dropDownProfile="dropDownProfile"-->
+          <!--            :isDropdownActive="isDropdownActive"-->
+          <!--            @toggle="toggle"-->
+          <!--          />-->
         </div>
       </div>
     </nav>
+    <div>
+      <carousel></carousel>
+    </div>
   </div>
 </template>
 
 <script>
 import "@/styles/navbar.css";
+import Logo from "./Logo.vue";
+import SearchForm from "./SearchForm.vue";
+import Dropdowns from "./DropDowns.vue";
+import Links from "./Links.vue";
+// import ProfileDropdown from './ProfileDropdown.vue';
+import Carousel from "@/components/GeneralComponent/Carousel.vue";
 import { computed, ref } from "vue";
 
 export default {
+  components: {
+    Logo,
+    SearchForm,
+    Dropdowns,
+    Links,
+    Carousel,
+    // ProfileDropdown,
+  },
   setup() {
     const slide = ref(0);
     const sliding = ref(null);
