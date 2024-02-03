@@ -16,6 +16,9 @@
 <!--        :lastUpdated="yourLastUpdatedVariable"-->
 <!--      ></CardComponent>-->
 <!--    </div>-->
+<!--    <div class="row">
+      <ProfileInformation></ProfileInformation>
+    </div>-->
   </div>
 </template>
 
@@ -30,6 +33,7 @@ export default {
     FilterOffCanvas,
     FormHome,
     // CardComponent,
+    // ProfileInformation,
   },
   data() {
     return {
