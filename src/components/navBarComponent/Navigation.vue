@@ -31,10 +31,10 @@
 
 <script>
 import "@/styles/navbar.css";
-import Logo from "./Logo.vue";
-import SearchForm from "./SearchForm.vue";
-import Dropdowns from "./DropDowns.vue";
-import Links from "./Links.vue";
+import Logo from "./NavBarLogo.vue";
+import SearchForm from "./NavBarSearchForm.vue";
+import Dropdowns from "./NavBarDropDowns.vue";
+import Links from "./NavBarLinks.vue";
 // import ProfileDropdown from './ProfileDropdown.vue';
 import Carousel from "@/components/GeneralComponent/Carousel.vue";
 import { computed, ref } from "vue";

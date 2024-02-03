@@ -8,14 +8,14 @@
         <Form-Home></Form-Home>
       </div>
     </div>
-<!--    <div class="row">-->
-<!--      <CardComponent-->
-<!--        :imageSrc="yourImageSrcVariable"-->
-<!--        :cardTitle="yourCardTitleVariable"-->
-<!--        :cardText="yourCardTextVariable"-->
-<!--        :lastUpdated="yourLastUpdatedVariable"-->
-<!--      ></CardComponent>-->
-<!--    </div>-->
+    <div class="row">
+      <CardComponent
+        :imageSrc="yourImageSrcVariable"
+        :cardTitle="yourCardTitleVariable"
+        :cardText="yourCardTextVariable"
+        :lastUpdated="yourLastUpdatedVariable"
+      ></CardComponent>
+    </div>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
   components: {
     FilterOffCanvas,
     FormHome,
-    // CardComponent,
+    CardComponent,
   },
   data() {
     return {

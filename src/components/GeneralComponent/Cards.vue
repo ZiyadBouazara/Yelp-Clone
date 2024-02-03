@@ -23,9 +23,6 @@
           >
             Order/Book A table
           </button>
-          <div class="container">
-            <span ref="rateMe" class="rating-faces"></span>
-          </div>
         </div>
       </div>
     </div>
