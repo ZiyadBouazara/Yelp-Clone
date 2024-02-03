@@ -1,12 +1,20 @@
 <template>
-  <div class="card mb-3" style="margin-top: 40px" :class="{ 'border-danger': isHovered }">
-    <div class="row g-0" @mouseover="isHovered = true" @mouseout="isHovered = false">
+  <div
+    class="card mb-3"
+    style="margin-top: 40px"
+    :class="{ 'border-danger': isHovered }"
+  >
+    <div
+      class="row g-0"
+      @mouseover="isHovered = true"
+      @mouseout="isHovered = false"
+    >
       <div class="col-md-4">
         <img
           :src="imageSrc"
           class="img-fluid rounded-start"
           alt="Card image"
-          style="margin: 10px; border-radius: 7px"
+          style="margin: 10px; border-radius: 7px; border: black"
         />
       </div>
       <div class="col-md-8">
@@ -16,8 +24,13 @@
           <p class="card-text">
             <small class="text-body-secondary">{{ lastUpdated }}</small>
           </p>
+          <p
+            class="card-text"
+            :style="{ color: restaurantHour ? 'green' : 'red' }"
+          >
+            {{ restaurantHour ? "Open" : "Closed" }}
+          </p>
           <button
-            v-if="isHovered"
             type="button"
             class="btn btn-outline-danger btn-lg"
             style="position: absolute; bottom: 0; right: 0; margin: 10px"
@@ -50,6 +63,10 @@ export default {
     lastUpdated: {
       type: String,
       default: "Last updated 3 mins ago",
+    },
+    restaurantHour: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
