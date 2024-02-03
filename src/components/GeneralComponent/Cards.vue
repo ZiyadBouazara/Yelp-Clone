@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import "js/addons/rating.js";
 export default {
   name: "CardComponent",
   props: {
@@ -54,11 +53,6 @@ export default {
       type: String,
       default: "Last updated 3 mins ago",
     },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      $(this.$refs.rateMe).mdbRate();
-    });
   },
 };
 </script>
