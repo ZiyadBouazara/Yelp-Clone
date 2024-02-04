@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
+import Navigation from "@/components/navBarComponent/Navigation.vue";
 import PageFooter from "@/components/PageFooter.vue";
 
 export default {
