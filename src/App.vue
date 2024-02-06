@@ -1,7 +1,7 @@
 <!-- Layout.vue -->
 
 <template>
-  <div>
+  <div id="app">
     <Navigation />
     <router-view />
     <PageFooter />
@@ -20,4 +20,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: ghostwhite;
+}
+</style>
