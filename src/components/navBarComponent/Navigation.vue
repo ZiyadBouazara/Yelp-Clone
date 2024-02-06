@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" :class="navbarClass">
       <div class="container-fluid">
         <Logo />
         <button class="navbar-toggler" type="button">
@@ -15,17 +15,16 @@
             <Dropdowns :dropdowns="dropdowns" />
             <Links :links="links" :isHovered="isHovered" @hover="setHover" />
           </ul>
+          <!--          <ProfileDropdown-->
+          <!--            :dropDownProfile="dropDownProfile"-->
+          <!--            :isDropdownActive="isDropdownActive"-->
+          <!--            @toggle="toggle"-->
+          <!--          />-->
         </div>
       </div>
     </nav>
-    <div class="category-container floating-text">
-      <p class="category-text_one text">Welcome to uFood,</p>
-      <p class="category-text_princ text">Choose and</p>
-      <p class="category-text_Enjoy text">Enjoy...</p>
-
-      <div class="container">
-        <base-sec-nav-bar></base-sec-nav-bar>
-      </div>
+    <div>
+      <carousel></carousel>
     </div>
   </div>
 </template>
@@ -37,16 +36,17 @@ import SearchForm from "./NavBarSearchForm.vue";
 import Dropdowns from "./NavBarDropDowns.vue";
 import Links from "./NavBarLinks.vue";
 // import ProfileDropdown from './ProfileDropdown.vue';
+import Carousel from "@/components/GeneralComponent/Carousel.vue";
 import { computed, ref } from "vue";
-import BaseSecNavBar from "@/components/GeneralComponent/baseSecNavBar.vue";
 
 export default {
   components: {
-    BaseSecNavBar,
     Logo,
     SearchForm,
     Dropdowns,
     Links,
+    Carousel,
+    // ProfileDropdown,
   },
   setup() {
     const slide = ref(0);
@@ -84,8 +84,58 @@ export default {
       },
     ];
 
+    const isDropdownActive = ref(
+      dropDownProfile && dropDownProfile[0].items.length > 0,
+    );
+
+    const navbarClass = computed(() => {
+      const backgroundColor = calculateBackgroundColor();
+      return {
+        "bg-body-tertiary": true,
+        "bg-fading": backgroundColor !== "#ababab",
+      };
+    });
+
+    const onSlideStart = (slide) => {
+      sliding.value = true;
+    };
+
+    const onSlideEnd = (slide) => {
+      sliding.value = false;
+    };
+
     const setHover = (index, value) => {
       isHovered[index].value = value;
+    };
+
+    const toggle = () => {
+      if (profileDropdownList.value) {
+        profileDropdownList.value.classList.toggle("active");
+      }
+    };
+
+    const calculateBackgroundColor = () => {
+      const slideColors = ["#ababab"];
+      const currentIndex = slide.value % slideColors.length;
+      return slideColors[currentIndex];
+    };
+
+    const mounted = () => {
+      profileDropdownList.value = document.querySelector(
+        ".profile-dropdown-list",
+      );
+      btn.value = document.querySelector(".profile-dropdown-btn");
+
+      if (profileDropdownList.value && btn.value) {
+        window.addEventListener("click", (e) => {
+          console.log("Window Clicked");
+          if (!btn.value.contains(e.target)) {
+            profileDropdownList.value.classList.remove("active");
+          }
+        });
+      } else {
+        console.error("Elements not found");
+      }
     };
 
     return {
@@ -98,57 +148,60 @@ export default {
       isHovered,
       dropdowns,
       dropDownProfile,
+      isDropdownActive,
+      navbarClass,
+      onSlideStart,
+      onSlideEnd,
       setHover,
+      toggle,
+      calculateBackgroundColor,
+      mounted,
     };
   },
 };
 </script>
 
-<style scoped>
-.container {
-  margin-top: -180px;
-  margin-bottom: -180px;
-}
+<!--Create a loop so that the dropdown element and link be reduced and less complicated code-->
+<!--     KEEP THESE OPTION FOR AFTER LOGIN IN           -->
+<!--            <li class="profile-dropdown-list-item">-->
+<!--              <a href="#">-->
+<!--                <i class="fa-regular fa-user"></i>-->
+<!--                Edit Profile-->
+<!--              </a>-->
+<!--            </li>-->
 
-.text {
-  border: 2px solid #ff6666;
-  padding: 10px;
-  border-radius: 30px;
-}
+<!--            <li class="profile-dropdown-list-item">-->
+<!--              <a href="#">-->
+<!--                <i class="fa-regular fa-envelope"></i>-->
+<!--                Inbox-->
+<!--              </a>-->
+<!--            </li>-->
 
-.category-container {
-  margin-top: 30px;
-}
+<!--            <li class="profile-dropdown-list-item">-->
+<!--              <a href="#">-->
+<!--                <i class="fa-solid fa-chart-line"></i>-->
+<!--                Analytics-->
+<!--              </a>-->
+<!--            </li>-->
 
-.floating-text {
-  text-align: center;
-  font-size: 40px;
-  animation: floatAnimation 2s infinite alternate;
-}
+<!--            <li class="profile-dropdown-list-item">-->
+<!--              <a href="#">-->
+<!--                <i class="fa-solid fa-sliders"></i>-->
+<!--                Settings-->
+<!--              </a>-->
+<!--            </li>-->
 
-@keyframes floatAnimation {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
-}
+<!--            <li class="profile-dropdown-list-item">-->
+<!--              <a href="#">-->
+<!--                <i class="fa-regular fa-circle-question"></i>-->
+<!--                Help & Support-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <hr />-->
 
-.category-text_princ {
-  text-align: center;
-  font-size: 50px;
-}
-
-.category-text_one {
-  margin-left: 400px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.category-text_Enjoy {
-  margin-left: 750px;
-  font-size: 60px;
-  font-weight: bold;
-}
-</style>
+<!--            <li class="profile-dropdown-list-item">-->
+<!--              <a href="#">-->
+<!--                <i class="fa-solid fa-arrow-right-from-bracket"></i>-->
+<!--                Log out-->
+<!--              </a>-->
+<!--            </li>-->
