@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-danger button">
+    <button type="button" class="btn btn-danger button" style="border-color: orangered;">
       <font-awesome-icon :icon="icon" class="icon" />
       {{ label }}
     </button>
@@ -44,6 +44,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 30px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
