@@ -3,7 +3,9 @@
     <navigation></navigation>
     <div v-if="isHomePage">
       <div class="category-container floating-text">
-        <p class="category-text_one text" style="margin-left: 100px;">Welcome to uFood,</p>
+        <p class="category-text_one text" style="margin-left: 100px">
+          Welcome to uFood,
+        </p>
         <p class="category-text_princ text">Choose and</p>
         <p class="category-text_Enjoy text">Enjoy...</p>
 
@@ -19,9 +21,9 @@
 
 <script>
 import { ref, watchEffect } from "vue";
-import Navigation from "@/components/navBarComponent/Navigation.vue";
-import PageFooter from "@/components/PageFooter.vue";
-import BaseSecNavBar from "@/components/generalComponent/baseSecNavBar.vue";
+import Navigation from "@/pages/Navigation.vue";
+import PageFooter from "@/pages/PageFooter.vue";
+import BaseSecNavBar from "@/components/GeneralComponent/baseSecNavBar.vue";
 import { useRoute } from "vue-router";
 
 export default {
@@ -43,7 +45,6 @@ export default {
     };
   },
 };
-
 </script>
 
 <style>

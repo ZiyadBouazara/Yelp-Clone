@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "@/components/homePageComponent/Home.vue";
-import Restaurant from "@/components/Restaurant";
-import User from "@/components/User";
-import LogIn from "@/components/LogIn.vue";
-import SignUp from "@/components/SignUp.vue";
-import Navigation from "@/components/navBarComponent/Navigation.vue";
-import RestaurantDetails from "@/pages/RestaurantDetails.vue";
+import Home from "@/pages/Home.vue";
+import Restaurant from "@/pages/Restaurant";
+import LogIn from "@/pages/LogIn.vue";
+import SignUp from "@/pages/SignUp.vue";
+import Navigation from "@/pages/Navigation.vue";
+import Profile from "@/pages/Profile.vue";
 
 const routes = [
   {
@@ -19,9 +18,9 @@ const routes = [
     component: Restaurant,
   },
   {
-    path: "/user",
-    name: "User",
-    component: User,
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
   },
   {
     path: "/login",
@@ -37,11 +36,6 @@ const routes = [
     path: "/navigation",
     name: "Navigation",
     component: Navigation,
-  },
-  {
-    path: "/restaurants",
-    name: "Restaurant-details",
-    component: RestaurantDetails,
   },
 ];
 
