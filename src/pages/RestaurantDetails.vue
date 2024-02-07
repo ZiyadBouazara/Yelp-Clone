@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 import "leaflet/dist/leaflet.css";
 
 const restaurant = ref({
@@ -25,7 +25,14 @@ const restaurant = ref({
 const mapIframeSrc = ref(
   "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
 );
+
 const map = ref(null);
+
+const restaurantImages = ref([
+  "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg",
+  "https://cdn.pixabay.com/photo/2017/06/06/22/46/mediterranean-cuisine-2378758_1280.jpg",
+  "https://cdn.pixabay.com/photo/2017/02/15/10/57/pizza-2068272_1280.jpg",
+]);
 
 const initMap = async () => {
   try {
@@ -61,14 +68,36 @@ const getDirections = () => {
   );
 };
 
+const isSticky = ref(false);
+
+const handleScroll = () => {
+  const topDistance = 400;
+
+  isSticky.value = window.scrollY >= topDistance;
+};
+
 onMounted(() => {
   initMap();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
 <template>
   <div>
-    <img src="https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg" alt="Picture" style="width: 100%; margin-bottom: 40px;">
+    <div class="row">
+      <div
+        v-for="(imageUrl, index) in restaurantImages"
+        :key="index"
+        class="col-md-4"
+        style="padding-left: 0; padding-right: 0"
+      >
+        <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />
+      </div>
+    </div>
     <div class="main-container">
       <button class="btn btn-outline-danger btn-lg" style="margin-left: 40px">
         <i class="fa-regular fa-star"></i> Write a review
@@ -124,7 +153,11 @@ onMounted(() => {
           <span class="hours">{{ hours }}</span>
         </div>
       </div>
-      <div class="side-container">
+
+      <div
+        :class="['side-container', isSticky ? 'sticky' : '']"
+        ref="sideContainer"
+      >
         <div class="contact-info">
           <p>{{ restaurant.phone }}</p>
           <i class="fas fa-phone-alt"></i>
@@ -150,7 +183,10 @@ onMounted(() => {
         </div>
         <div class="align-items-center">
           <p>
-            <button class="white-button side-container-btn">
+            <button
+              class="btn btn-outline-dark"
+              style="width: 300px; height: 50px"
+            >
               Suggest an edit <i class="fas fa-edit"></i>
             </button>
           </p>
@@ -158,19 +194,53 @@ onMounted(() => {
       </div>
     </div>
     <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    d
   </div>
 </template>
 
 <style scoped>
+.cropped-image {
+  width: 100%;
+  height: 200px; /* Adjust height as needed */
+  object-fit: cover; /* Crop the image to cover its container */
+}
+
 @media (max-width: 768px) {
   .d-flex {
     flex-direction: column;
   }
-}
-
-.side-container-btn {
-  width: 300px;
-  height: 50px;
 }
 
 .side-container-link {
@@ -192,13 +262,22 @@ onMounted(() => {
 }
 
 .side-container {
-  width: 800px;
+  width: 400px;
   height: 320px;
   padding: 20px;
   background-color: Ghostwhite;
   border-radius: 10px;
-  margin-right: 150px;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Add a red shadow */
+  margin-right: 40px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  position: absolute;
+  top: 70%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.sticky {
+  position: fixed;
+  top: 22%;
 }
 
 .address-container {
@@ -258,18 +337,5 @@ onMounted(() => {
 .small-line {
   border-bottom: 1px solid #ccc;
   margin: 5px 20px 20px 10px;
-}
-
-
-
-.white-button {
-  background-color: #ffffff;
-  color: #333333;
-  padding: 10px 20px;
-  border: 1px solid #333333;
-  border-radius: 5px;
-  margin: 5px;
-  cursor: pointer;
-  font-weight: bold;
 }
 </style>
