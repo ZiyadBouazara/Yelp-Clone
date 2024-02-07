@@ -1,7 +1,7 @@
 <template>
   <div class="scroll-container" title="Visited Restaurants">
     <div class="scrollable-list">
-      <ul>
+      <ul class="horizontal-scroll">
         <li
           v-for="(restaurant, index) in visitedRestaurants"
           :key="index"
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CardComponent from "@/components/GeneralComponent/baseRestaurantCards.vue";
+import CardComponent from "@/components/generalComponent/baseRestaurantCards.vue";
 
 export default {
   name: "VisitedRestaurants",
@@ -29,14 +29,30 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .scroll-container {
-  max-height: 300px;
-  overflow-y: auto;
-  justify-content: center;
+  max-height: 400px; /* Set the maximum height */
+  width: 100%; /* Set the width to 100% for responsiveness */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Hide vertical scrollbar */
 }
 
 .scrollable-list {
   padding-right: 15px;
+}
+
+.horizontal-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.list-group-item {
+  flex: 0 0 auto;
+  width: 200px; /* Set the width of each card */
 }
 </style>
