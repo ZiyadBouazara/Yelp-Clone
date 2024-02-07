@@ -35,7 +35,7 @@
 <script>
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
 import FormHome from "@/components/homePageComponent/FormHome.vue";
-import CardComponent from "@/components/GeneralComponent/baseRestaurantCards.vue";
+import CardComponent from "@/components/generalComponent/baseRestaurantCards.vue";
 
 export default {
   components: {
