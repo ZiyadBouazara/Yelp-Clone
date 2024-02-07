@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <div class="row">
+<!--    <div class="category-container floating-text">-->
+<!--      <p class="category-text_one text">Welcome to uFood,</p>-->
+<!--      <p class="category-text_princ text">Choose and</p>-->
+<!--      <p class="category-text_Enjoy text">Enjoy...</p>-->
+<!--    </div>-->
+    <div class="row floating-text">
       <div class="col" v-for="button in buttons" :key="button.id">
         <BaseButton :label="button.label" :icon="button.icon" />
       </div>
@@ -31,5 +36,24 @@ export default {
 </script>
 
 <style scoped>
-/* Styles for the BaseButton component can be applied here */
+.floating-text {
+  text-align: center;
+  font-size: 40px;
+  animation: floatAnimation 2s infinite alternate;
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+.text {
+  border: 2px solid #ff6666;
+  padding: 10px;
+  border-radius: 30px;
+}
 </style>
