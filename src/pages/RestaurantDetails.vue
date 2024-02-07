@@ -68,6 +68,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <img src="https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg" alt="Picture" style="width: 100%; margin-bottom: 40px;">
     <div class="main-container">
       <button class="btn btn-outline-danger btn-lg" style="margin-left: 40px">
         <i class="fa-regular fa-star"></i> Write a review

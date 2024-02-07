@@ -21,7 +21,7 @@
 import { ref, watchEffect } from "vue";
 import Navigation from "@/components/navBarComponent/Navigation.vue";
 import PageFooter from "@/components/PageFooter.vue";
-import BaseSecNavBar from "@/components/GeneralComponent/baseSecNavBar.vue";
+import BaseSecNavBar from "@/components/generalComponent/baseSecNavBar.vue";
 import { useRoute } from "vue-router";
 
 export default {
