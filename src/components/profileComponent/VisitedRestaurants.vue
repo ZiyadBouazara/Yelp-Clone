@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CardComponent from "@/components/GeneralComponent/baseRestaurantCards.vue";
+import CardComponent from "@/components/generalComponent/baseRestaurantCards.vue";
 
 export default {
   name: "VisitedRestaurants",
