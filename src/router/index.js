@@ -5,6 +5,7 @@ import LogIn from "@/pages/LogIn.vue";
 import SignUp from "@/pages/SignUp.vue";
 import Navigation from "@/pages/Navigation.vue";
 import Profile from "@/pages/Profile.vue";
+import RestaurantDetails from "@/pages/RestaurantDetails.vue";
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: "/navigation",
     name: "Navigation",
     component: Navigation,
+  },
+  {
+    path: "/restaurant/id",
+    name: "Restaurant details",  // ziad enleve pas ca enculer
+    component: RestaurantDetails,
   },
 ];
 
