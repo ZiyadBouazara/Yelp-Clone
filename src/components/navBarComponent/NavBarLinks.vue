@@ -8,7 +8,7 @@
         'red-link': !isHovered[index],
         'hovered-link': isHovered[index],
       }"
-      @mouseover="handleHover(index, true)"
+      @mousexover="handleHover(index, true)"
       @mouseout="handleHover(index, false)"
       href="#"
     >

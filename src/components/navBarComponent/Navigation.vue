@@ -38,7 +38,7 @@ import Dropdowns from "./NavBarDropDowns.vue";
 import Links from "./NavBarLinks.vue";
 // import ProfileDropdown from './ProfileDropdown.vue';
 import { computed, ref } from "vue";
-import BaseSecNavBar from "@/components/GeneralComponent/baseSecNavBar.vue";
+import BaseSecNavBar from "@/components/generalComponent/baseSecNavBar.vue";
 
 export default {
   components: {

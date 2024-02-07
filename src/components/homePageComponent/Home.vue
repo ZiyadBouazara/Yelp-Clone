@@ -8,7 +8,7 @@
         <FormHome></FormHome>
       </div>
     </div>
-    <div class="row" style="margin-left: 90px; ">
+    <div class="row" style="margin-left: 90px">
       <div
         class="card-container d-flex overflow-auto hide-scrollbar"
         v-for="(card, index) in chunkedCardData"
@@ -35,7 +35,7 @@
 <script>
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
 import FormHome from "./FormHome.vue";
-import CardComponent from "@/components/GeneralComponent/baseRestaurantCards.vue";
+import CardComponent from "@/components/generalComponent/baseRestaurantCards.vue";
 
 export default {
   components: {

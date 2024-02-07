@@ -69,16 +69,16 @@ onMounted(() => {
 <template>
   <div>
     <div class="main-container">
-      <button class="red-button">
+      <button class="btn btn-outline-danger btn-lg" style="margin-left: 40px">
         <i class="fa-regular fa-star"></i> Write a review
       </button>
-      <button class="white-button dark-text">
+      <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-solid fa-camera-retro"></i> Ajouter une photo
       </button>
-      <button class="white-button dark-text">
+      <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-regular fa-share-from-square"></i> Partager
       </button>
-      <button class="white-button dark-text">
+      <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-regular fa-bookmark"></i> Sauvegarder
       </button>
     </div>
@@ -107,7 +107,7 @@ onMounted(() => {
             {{ restaurant.address.city }}, {{ restaurant.address.province }}
             {{ restaurant.address.zipCode }}
           </p>
-          <button class="white-button small-btn" @click="getDirections">
+          <button class="btn btn-outline-dark btn-lg" @click="getDirections">
             Obtenir l'itineraire
           </button>
         </div>
@@ -174,7 +174,7 @@ onMounted(() => {
 
 .side-container-link {
   font-weight: bold;
-  color: cadetblue;
+  color: #dc3545;
   text-decoration: none;
 }
 
@@ -190,25 +190,20 @@ onMounted(() => {
   justify-content: space-between;
 }
 
-.main-container {
-}
-
 .side-container {
   width: 800px;
   height: 320px;
   padding: 20px;
-  background-color: #ffff;
+  background-color: Ghostwhite;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin-right: 150px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Add a red shadow */
 }
+
 .address-container {
   margin-right: 10px;
   margin-left: 40px;
   font-size: 0.9rem;
-}
-
-.map-container {
 }
 
 .hours-item {
@@ -264,15 +259,7 @@ onMounted(() => {
   margin: 5px 20px 20px 10px;
 }
 
-.red-button {
-  background-color: #ff0000;
-  color: #ffffff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin: 20px 5px 5px 40px;
-  cursor: pointer;
-}
+
 
 .white-button {
   background-color: #ffffff;
@@ -283,10 +270,5 @@ onMounted(() => {
   margin: 5px;
   cursor: pointer;
   font-weight: bold;
-}
-
-.small-btn {
-  width: 190px;
-  height: 40px;
 }
 </style>
