@@ -38,6 +38,7 @@ export default {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
 }
 
 .profile-picture {
@@ -59,23 +60,23 @@ export default {
 .score {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center align score */
+  justify-content: center;
 }
 
 .score-info {
   font-size: 24px;
-  color: #000; /* Black color for score */
+  color: #000;
 }
 
 .score-info i {
   font-size: 24px;
-  color: #ffc107; /* Yellow color for star icon */
-  margin-right: 5px; /* Add margin to star icon */
+  color: #ffc107;
+  margin-right: 5px;
 }
 
 .score-value {
   margin: 0;
   font-size: 24px;
-  color: #000; /* Black color for score value */
+  color: #000;
 }
 </style>

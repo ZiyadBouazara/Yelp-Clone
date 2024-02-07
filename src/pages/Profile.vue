@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Left Column: User Card -->
-      <div class="col-md-4">
+      <div class="col-md-4 d-flex justify-content-center">
         <!-- User Card Component -->
         <ProfileCard
           :location="location"
@@ -83,12 +83,5 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-}
-
-@media (max-width: 768px) {
-  .container-fluid {
-    padding: 20px;
-  }
 }
 </style>
