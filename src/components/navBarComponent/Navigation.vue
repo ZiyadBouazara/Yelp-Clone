@@ -18,15 +18,15 @@
         </div>
       </div>
     </nav>
-    <div class="category-container floating-text">
-      <p class="category-text_one text">Welcome to uFood,</p>
-      <p class="category-text_princ text">Choose and</p>
-      <p class="category-text_Enjoy text">Enjoy...</p>
+<!--    <div class="category-container floating-text">-->
+<!--      <p class="category-text_one text">Welcome to uFood,</p>-->
+<!--      <p class="category-text_princ text">Choose and</p>-->
+<!--      <p class="category-text_Enjoy text">Enjoy...</p>-->
 
-      <div class="container">
-        <base-sec-nav-bar></base-sec-nav-bar>
-      </div>
-    </div>
+<!--      <div class="container">-->
+<!--        <base-sec-nav-bar></base-sec-nav-bar>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -42,7 +42,6 @@ import BaseSecNavBar from "@/components/generalComponent/baseSecNavBar.vue";
 
 export default {
   components: {
-    BaseSecNavBar,
     Logo,
     SearchForm,
     Dropdowns,
