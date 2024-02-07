@@ -7,36 +7,36 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div
-          :class="['collapse', 'navbar-collapse']"
           id="navbarSupportedContent"
+          :class="['collapse', 'navbar-collapse']"
         >
           <SearchForm />
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <Dropdowns :dropdowns="dropdowns" />
-            <Links :links="links" :isHovered="isHovered" @hover="setHover" />
+            <Links :isHovered="isHovered" :links="links" @hover="setHover" />
           </ul>
         </div>
       </div>
     </nav>
-<!--    <div class="category-container floating-text">-->
-<!--      <p class="category-text_one text">Welcome to uFood,</p>-->
-<!--      <p class="category-text_princ text">Choose and</p>-->
-<!--      <p class="category-text_Enjoy text">Enjoy...</p>-->
+    <!--    <div class="category-container floating-text">-->
+    <!--      <p class="category-text_one text">Welcome to uFood,</p>-->
+    <!--      <p class="category-text_princ text">Choose and</p>-->
+    <!--      <p class="category-text_Enjoy text">Enjoy...</p>-->
 
-<!--      <div class="container">-->
-<!--        <base-sec-nav-bar></base-sec-nav-bar>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--      <div class="container">-->
+    <!--        <base-sec-nav-bar></base-sec-nav-bar>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 
 <script>
 import "@/styles/navbar.css";
-import Logo from "./NavBarLogo.vue";
-import SearchForm from "./NavBarSearchForm.vue";
-import Dropdowns from "./NavBarDropDowns.vue";
-import Links from "./NavBarLinks.vue";
-// import ProfileDropdown from './ProfileDropdown.vue';
+import Logo from "@/components/navBarComponent/NavBarLogo.vue";
+import SearchForm from "@/components/navBarComponent/NavBarSearchForm.vue";
+import Dropdowns from "@/components/navBarComponent/NavBarDropDowns.vue";
+import Links from "@/components/navBarComponent/NavBarLinks.vue";
+// import ProfileDropdown from '@/components/navBarComponent/ProfileDropdown.vue';
 import { computed, ref } from "vue";
 import BaseSecNavBar from "@/components/GeneralComponent/baseSecNavBar.vue";
 

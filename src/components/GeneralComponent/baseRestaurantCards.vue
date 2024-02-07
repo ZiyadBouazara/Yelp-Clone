@@ -1,30 +1,30 @@
 <template>
   <div
+    :class="{ 'border-danger': isHovered }"
     class="card"
     style="margin-top: 40px; width: 18rem; margin-left: 50px"
-    :class="{ 'border-danger': isHovered }"
   >
     <img
       :src="imageSrc"
-      class="card-img-top rounded-start"
       alt="Card image"
+      class="card-img-top rounded-start"
       style="border-radius: 7px; border: black; height: 200px"
-      @mouseover="isHovered = true"
       @mouseout="isHovered = false"
+      @mouseover="isHovered = true"
     />
-    <div class="card-body" style="height: 250px">
+    <div class="card-body" style="height: 250px; text-align: center">
       <h5 class="card-title">{{ restaurantName }}</h5>
       <p class="card-text">{{ restaurantDescription }}</p>
       <p class="card-text">
         <small class="text-body-secondary">{{ lastUpdated }}</small>
       </p>
-      <p class="card-text" :style="{ color: restaurantHour ? 'green' : 'red' }">
+      <p :style="{ color: restaurantHour ? 'green' : 'red' }" class="card-text">
         {{ restaurantHour ? "Open" : "Closed" }}
       </p>
       <button
-        type="button"
         class="btn btn-outline-danger btn-lg floating"
         style="position: absolute; bottom: 0; right: 0; margin: 10px"
+        type="button"
       >
         Order/Book A table
       </button>

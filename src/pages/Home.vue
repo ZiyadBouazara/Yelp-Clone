@@ -8,23 +8,23 @@
         <FormHome></FormHome>
       </div>
     </div>
-    <div class="row" style="margin-left: 90px; ">
+    <div class="row" style="margin-left: 90px">
       <div
-        class="card-container d-flex overflow-auto hide-scrollbar"
         v-for="(card, index) in chunkedCardData"
         :key="index"
+        class="card-container d-flex overflow-auto hide-scrollbar"
       >
         <div
-          class="card-wrapper"
           v-for="(cardItem, cardIndex) in card"
           :key="cardIndex"
+          class="card-wrapper"
           style="margin: 20px"
         >
           <CardComponent
             :imageSrc="cardItem.imageSrc"
-            :restaurantName="cardItem.restaurantName"
-            :restaurantDescription="cardItem.restaurantDescription"
             :lastUpdated="cardItem.lastUpdated"
+            :restaurantDescription="cardItem.restaurantDescription"
+            :restaurantName="cardItem.restaurantName"
           ></CardComponent>
         </div>
       </div>
@@ -34,7 +34,7 @@
 
 <script>
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
-import FormHome from "./FormHome.vue";
+import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/GeneralComponent/baseRestaurantCards.vue";
 
 export default {
