@@ -8,6 +8,13 @@
         <FormHome></FormHome>
       </div>
     </div>
+    <Modal v-if="isModalVisible" @close="closeAuthenticationModal">
+      <template v-slot:header> This is a new modal header. </template>
+
+      <template v-slot:modal-body> This is a new modal body. </template>
+
+      <template v-slot:footer> This is a new modal footer. </template>
+    </Modal>
     <div class="row restaurant-cards">
       <div
         v-for="(card, index) in chunkedCardData"
@@ -36,12 +43,18 @@
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
+import Modal from "@/components/generalComponent/BaseModal.vue";
+import { EventBus } from "@/App.vue";
 
 export default {
   components: {
     FilterOffCanvas,
     FormHome,
     CardComponent,
+    Modal,
+  },
+  created() {
+    EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
   },
   data() {
     return {
@@ -49,6 +62,7 @@ export default {
       isRestaurantOpen: true,
       closingHour: "22:00",
       openingHour: "08:00",
+      isModalVisible: false,
       cardData: [
         {
           imageSrc: "https://placekitten.com/300/300",
@@ -113,7 +127,6 @@ export default {
           lastUpdated: "Last updated 5 mins ago",
           restaurantHour: false,
         },
-        // Add more card data as needed
       ],
     };
   },
@@ -130,6 +143,14 @@ export default {
         resultArray[chunkIndex].push(item);
         return resultArray;
       }, []);
+    },
+  },
+  methods: {
+    openAuthenticationModal() {
+      this.isModalVisible = true;
+    },
+    closeAuthenticationModal() {
+      this.isModalVisible = false;
     },
   },
 };

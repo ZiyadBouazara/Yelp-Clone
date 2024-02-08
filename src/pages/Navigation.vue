@@ -21,12 +21,21 @@
           </div>
         </div>
         <div class="col-4 d-flex justify-content-end authentication">
+          <router-link style="display: none" to="/login">Log In</router-link>
+          <router-link style="display: none" to="/signup">Sign Up</router-link>
           <div class="p-1 user-authentication-sign-up">
-            <button type="button" class="btn btn-outline-danger">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              @click="navigateTo('/signup')"
+            >
               Sign Up
             </button>
           </div>
-          <div class="p-1 user-authentication-sign-in">
+          <div
+            class="p-1 user-authentication-sign-in"
+            @click="navigateTo('/login')"
+          >
             <button type="button" class="btn btn-outline-danger">
               Sign In
             </button>
@@ -43,10 +52,8 @@ import Logo from "@/components/navBarComponent/NavBarLogo.vue";
 import SearchForm from "@/components/navBarComponent/NavBarSearchForm.vue";
 import Dropdowns from "@/components/navBarComponent/NavBarDropDowns.vue";
 import Links from "@/components/navBarComponent/NavBarLinks.vue";
-// import ProfileDropdown from '@/components/navBarComponent/ProfileDropdown.vue';
 import { computed, ref } from "vue";
-import BaseSecNavBar from "@/components/generalComponent/BaseSecNavBar.vue";
-import BaseButton from "@/components/generalComponent/BaseButton.vue";
+import { EventBus } from "@/App.vue";
 
 export default {
   components: {
@@ -54,6 +61,22 @@ export default {
     SearchForm,
     Dropdowns,
     Links,
+  },
+  data() {
+    return {
+      isModalVisible: false,
+    };
+  },
+  methods: {
+    openModal() {
+      EventBus.emit("open-authentication-modal");
+    },
+    closeModal() {
+      EventBus.emit("close-authentication-modal");
+    },
+    navigateTo(path) {
+      this.$router.push(path);
+    },
   },
   setup() {
     const slide = ref(0);
