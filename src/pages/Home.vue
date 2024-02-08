@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="container">
     <div class="row">
       <div class="col-md-3">
         <filter-off-canvas></filter-off-canvas>
@@ -8,7 +8,7 @@
         <FormHome></FormHome>
       </div>
     </div>
-    <div class="row" style="margin-left: 90px">
+    <div class="row restaurant-cards">
       <div
         v-for="(card, index) in chunkedCardData"
         :key="index"
@@ -35,7 +35,7 @@
 <script>
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
 import FormHome from "@/components/homePageComponent/FormHome.vue";
-import CardComponent from "@/components/generalComponent/baseRestaurantCards.vue";
+import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 
 export default {
   components: {
@@ -136,6 +136,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+}
 .hide-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
@@ -147,5 +151,10 @@ export default {
 
 .hide-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;
+}
+
+.restaurant-cards {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
