@@ -3,7 +3,7 @@
     <img
       alt="Profile picture"
       class="profile-picture"
-      src="@/assets/default_user_avatar.png"
+      src="@/assets/UFood_Profile_Picture.png"
     />
     <div class="card-body">
       <h3 class="card-title">{{ name }}</h3>

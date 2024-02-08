@@ -1,17 +1,14 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid mt-5">
     <div class="row">
-      <!-- Left Column: User Card -->
-      <div class="col-md-4 d-flex justify-content-center">
-        <!-- User Card Component -->
+      <div class="col-4 d-flex justify-content-center">
         <ProfileCard
           :location="location"
           :name="name"
           :score="score"
         ></ProfileCard>
       </div>
-      <!-- Right Column: Visited Restaurants -->
-      <div class="col-md-8">
+      <div class="col-8">
         <h2 class="text-center mb-4">Visited Restaurants</h2>
         <VisitedRestaurants
           :visited-restaurants="visitedRestaurants"
