@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <div class="row">
+    <div class="row" style="margin-top: 10px">
       <div class="col-md-3">
         <filter-off-canvas></filter-off-canvas>
       </div>
