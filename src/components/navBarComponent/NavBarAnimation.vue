@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import BaseSecNavBar from "@/components/generalComponent/baseSecNavBar.vue";
+import BaseSecNavBar from "@/components/generalComponent/BaseSecNavBar.vue";
 
 export default {
   name: "NavBarAnimation",

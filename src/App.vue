@@ -10,10 +10,12 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import Vue, { ref, watchEffect } from "vue";
 import Navigation from "@/pages/Navigation.vue";
 import PageFooter from "@/pages/PageFooter.vue";
 import { useRoute } from "vue-router";
+import mitt from "mitt";
+export const EventBus = mitt();
 import NavBarAnimation from "@/components/navBarComponent/NavBarAnimation.vue";
 
 export default {
