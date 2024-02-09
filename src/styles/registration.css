@@ -5,7 +5,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
+  padding: 2rem;
 }
 
 .card-title {
@@ -25,4 +26,16 @@
 
 .btn-danger {
   width: 100%;
+}
+
+@media only screen and (max-width: 576px) {
+  .img-fluid {
+    display: none;
+  }
+
+  .card-body form > * {
+    margin-bottom: 0.1rem;
+  }
+
+
 }

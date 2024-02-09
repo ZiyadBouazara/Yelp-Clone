@@ -6,9 +6,9 @@
           <div class="card-body">
             <!-- Form -->
             <form class="row g-3 mx-auto">
-              <div>
-                <h3 class="card-title text-center mb-4">Sign Up for UFood</h3>
-                <h4 class="card-body text-center lead">
+              <div style="padding: 0">
+                <h3 class="card-title text-center">Sign Up for UFood</h3>
+                <h4 class="card-body text-center lead" style="padding: 0">
                   Connect with great local restaurants
                 </h4>
               </div>
