@@ -88,7 +88,6 @@
 </template>
 
 <script setup>
-import "@/styles/global.css";
 import "@/styles/registration.css";
 </script>
 <style>
