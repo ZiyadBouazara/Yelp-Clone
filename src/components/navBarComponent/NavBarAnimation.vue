@@ -4,9 +4,9 @@
       <base-sec-nav-bar></base-sec-nav-bar>
     </div>
     <div class="text-container">
-      <p class="category-text_one text_1">Welcome to uFood,</p>
-      <p class="category-text_one text_2">Choose and</p>
-      <p class="category-text_Enjoy text_3">Enjoy...</p>
+      <p class="category-text_one text_1 float-text">Welcome to uFood,</p>
+      <p class="category-text_one text_2 float-text">Choose and</p>
+      <p class="category-text_Enjoy text_3 float-text">Enjoy...</p>
     </div>
   </div>
 </template>
@@ -41,6 +41,7 @@ export default {
   border-radius: 50px;
   font-size: 30px;
   font-weight: bold;
+  animation: floatAnimation 2s infinite alternate;
 }
 
 .text_3 {
