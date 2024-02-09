@@ -91,3 +91,8 @@
 import "@/styles/global.css";
 import "@/styles/registration.css";
 </script>
+<style>
+.row {
+  margin-top: 100px;
+}
+</style>
