@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-<!--    <div class="category-container floating-text">-->
-<!--      <p class="category-text_one text">Welcome to uFood,</p>-->
-<!--      <p class="category-text_princ text">Choose and</p>-->
-<!--      <p class="category-text_Enjoy text">Enjoy...</p>-->
-<!--    </div>-->
     <div class="row floating-text">
       <div class="col" v-for="button in buttons" :key="button.id">
         <BaseButton :label="button.label" :icon="button.icon" />
@@ -14,7 +9,7 @@
 </template>
 
 <script>
-import BaseButton from "./baseButton.vue";
+import BaseButton from "./BaseButton.vue";
 
 export default {
   name: "BaseSecNavBar",

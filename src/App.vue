@@ -20,12 +20,13 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import Vue, { ref, watchEffect } from "vue";
 import Navigation from "@/pages/Navigation.vue";
 import PageFooter from "@/pages/PageFooter.vue";
-import BaseSecNavBar from "@/components/generalComponent/baseSecNavBar.vue";
+import BaseSecNavBar from "@/components/generalComponent/BaseSecNavBar.vue";
 import { useRoute } from "vue-router";
-
+import mitt from "mitt";
+export const EventBus = mitt();
 export default {
   components: {
     BaseSecNavBar,
