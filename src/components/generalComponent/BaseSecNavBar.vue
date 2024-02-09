@@ -1,8 +1,17 @@
 <template>
   <div class="container">
-    <div class="row floating-text">
+    <div class="row">
       <div class="col" v-for="button in buttons" :key="button.id">
-        <BaseButton :label="button.label" :icon="button.icon" />
+        <BaseButton
+          :label="button.label"
+          :icon="button.icon"
+          @mouseout="isHovered = false"
+          :style="{
+            borderBottom:
+              index !== buttons.length - 1 ? '1px solid #ddd' : 'none',
+            borderRadius: index === 0 ? '30px' : 'none',
+          }"
+        />
       </div>
     </div>
   </div>
@@ -18,11 +27,12 @@ export default {
   },
   data() {
     return {
+      isHovered: false,
       buttons: [
         { id: 1, label: "Italian", icon: ["fas", "pizza-slice"] },
         { id: 2, label: "Bar", icon: ["fas", "wine-bottle"] },
         { id: 3, label: "Coffee", icon: ["fas", "coffee"] },
-        { id: 4, label: "Moroccan", icon: ["fas", "globe-africa"] },
+        { id: 4, label: "African", icon: ["fas", "globe-africa"] },
         { id: 5, label: "Poutine", icon: ["fas", "hamburger"] },
       ],
     };
@@ -30,25 +40,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.floating-text {
-  text-align: center;
-  font-size: 40px;
-  animation: floatAnimation 2s infinite alternate;
-}
+<style>
 
-@keyframes floatAnimation {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
-}
-
-.text {
-  border: 2px solid #ff6666;
-  padding: 10px;
-  border-radius: 30px;
-}
 </style>

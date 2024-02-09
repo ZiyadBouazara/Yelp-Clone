@@ -11,7 +11,7 @@
       <button
         type="button"
         class="btn btn-outline-danger"
-        style="margin-left: 5px; height: 40px;"
+        style="margin-left: 5px; height: 40px"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

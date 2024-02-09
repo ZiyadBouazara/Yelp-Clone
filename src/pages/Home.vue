@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="row">
+  <div class="text-center">
+    <div class="row" style="margin-top: 10px">
       <div class="col-md-3">
         <filter-off-canvas></filter-off-canvas>
       </div>
@@ -174,8 +174,8 @@ export default {
   background-color: transparent;
 }
 
-.restaurant-cards {
-  display: flex;
-  justify-content: space-between;
-}
+/*.restaurant-cards {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*}*/
 </style>

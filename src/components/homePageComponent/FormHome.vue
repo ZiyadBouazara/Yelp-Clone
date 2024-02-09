@@ -3,7 +3,6 @@
     <form class="d-flex">
       <input
         class="form-control custom-search-input me-2"
-        type="type"
         v-model="searchTerm"
         @input="updateSearch"
         placeholder="Restaurant's Name..."
@@ -20,7 +19,7 @@
       <button
         type="button"
         class="btn btn-outline-danger"
-        style="margin-left: 5px; border-radius: 30px"
+        style="margin-left: 5px"
         @click="search"
       >
         <svg
