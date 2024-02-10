@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   margin-bottom: 0;
   max-height: 200px;

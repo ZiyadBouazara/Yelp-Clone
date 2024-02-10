@@ -21,7 +21,7 @@
 }
 
 .card-body form > * {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .btn-danger {
@@ -36,6 +36,4 @@
   .card-body form > * {
     margin-bottom: 0.1rem;
   }
-
-
 }
