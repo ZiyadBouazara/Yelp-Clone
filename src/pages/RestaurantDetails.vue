@@ -71,10 +71,14 @@ const getDirections = () => {
 const isSticky = ref(false);
 
 const handleScroll = () => {
-  const topDistance = 400;
-
+  const topDistance = 495;
   isSticky.value = window.scrollY >= topDistance;
 };
+
+const description = ref(
+  "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
+    "        poutines, options végétariennes et Vgan.",
+);
 
 onMounted(() => {
   initMap();
@@ -95,27 +99,41 @@ onBeforeUnmount(() => {
         class="col-md-4"
         style="padding-left: 0; padding-right: 0"
       >
-        <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />
+        <div style="position: relative">
+          <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />
+          <span class="restaurant-title" v-if="index === 0">Resto des pd</span>
+          <div class="restaurant-rating" v-if="index === 0">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <span style="color: white; margin-left: 5px">4.0</span>
+          </div>
+          <div v-if="index === 0" class="restaurant-genre-price">
+            <p><span>$$ <span style="vertical-align: 0.3em;">.</span> Italian, Poutine</span></p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="main-container">
-      <button class="btn btn-outline-danger btn-lg" style="margin-left: 40px">
+      <button id="reviewButton" class="btn btn-outline-danger btn-lg" style="margin-left: 40px">
         <i class="fa-regular fa-star"></i> Write a review
       </button>
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
-        <i class="fa-solid fa-camera-retro"></i> Ajouter une photo
+        <i class="fa-solid fa-camera-retro"></i> Add photo
       </button>
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
-        <i class="fa-regular fa-share-from-square"></i> Partager
+        <i class="fa-regular fa-share-from-square"></i> Share
       </button>
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
-        <i class="fa-regular fa-bookmark"></i> Sauvegarder
+        <i class="fa-regular fa-bookmark"></i> Save
       </button>
     </div>
 
     <div class="line"></div>
     <div class="d-flex align-items-baseline">
-      <strong class="header">Emplacement & horaires</strong>
+      <strong class="header">Location & Hours</strong>
       <a class="edit">Suggest an edit <i class="fa-solid fa-pen"></i></a>
     </div>
 
@@ -138,7 +156,7 @@ onBeforeUnmount(() => {
             {{ restaurant.address.zipCode }}
           </p>
           <button class="btn btn-outline-dark btn-lg" @click="getDirections">
-            Obtenir l'itineraire
+            Get Directions
           </button>
         </div>
       </div>
@@ -155,6 +173,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div
+        id="sideContainer"
         :class="['side-container', isSticky ? 'sticky' : '']"
         ref="sideContainer"
       >
@@ -164,7 +183,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="small-line"></div>
         <div class="d-flex justify-content-between">
-          <a class="side-container-link">Obtenir un itineraire</a>
+          <a class="side-container-link">Get Directions</a>
           <i class="fas fa-map-marker-alt"></i>
         </div>
         <div class="d-flex align-items-end">
@@ -194,55 +213,50 @@ onBeforeUnmount(() => {
       </div>
     </div>
     <div class="line"></div>
+    <div class="about-commerce">
+      <strong class="header">About the Business</strong>
+      <p class="description">{{ description }}</p>
+    </div>
     <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    d
   </div>
 </template>
 
 <style scoped>
-.cropped-image {
-  width: 100%;
-  height: 200px; /* Adjust height as needed */
-  object-fit: cover; /* Crop the image to cover its container */
-}
-
 @media (max-width: 768px) {
   .d-flex {
     flex-direction: column;
   }
 }
 
+.restaurant-genre-price {
+  position: absolute;
+  color: white;
+  bottom: 100px;
+  left: 100px;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.restaurant-rating {
+  position: absolute;
+  color: orange;
+  bottom: 160px;
+  left: 100px;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.restaurant-title {
+  position: absolute;
+  color: white;
+  bottom: 200px;
+  left: 100px;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 2rem;
+}
 .side-container-link {
   font-weight: bold;
   color: #dc3545;
@@ -270,7 +284,7 @@ onBeforeUnmount(() => {
   margin-right: 40px;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
   position: absolute;
-  top: 70%;
+  top: 635px;
   right: 20px;
   transform: translateY(-50%);
 }
@@ -334,8 +348,13 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid #ccc;
   margin: 20px 530px 20px 40px;
 }
+
 .small-line {
   border-bottom: 1px solid #ccc;
   margin: 5px 20px 20px 10px;
+}
+
+.description {
+  margin: 10px 10px 30px 40px;
 }
 </style>
