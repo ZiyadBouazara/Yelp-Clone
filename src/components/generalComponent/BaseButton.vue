@@ -16,7 +16,7 @@ import {
   faWineBottle,
   faGlobeAfrica,
 } from "@fortawesome/free-solid-svg-icons";
-import { icon, library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(faPizzaSlice, faCoffee, faHamburger, faWineBottle, faGlobeAfrica);
 
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       isHovered: false,
+      isVisible: true, // Initially visible
     };
   },
   components: {
@@ -34,24 +35,34 @@ export default {
     label: String,
     icon: Array,
   },
+  mounted() {
+    this.checkVisibility();
+    window.addEventListener("resize", this.checkVisibility);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkVisibility);
+  },
+  methods: {
+    checkVisibility() {
+      this.isVisible = window.innerWidth >= 999;
+    },
+  },
 };
 </script>
 
 <style scoped>
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .button {
   padding: 10px;
   text-align: center;
-  width: 100px;
+  width: 100%;
+  max-width: 140px;
   height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border-radius: 30px;
   transition: border-color 0.3s ease;
   background-color: ghostwhite;
