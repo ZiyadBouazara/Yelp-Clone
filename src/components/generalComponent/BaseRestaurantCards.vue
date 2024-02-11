@@ -19,13 +19,17 @@
       <p :style="{ color: restaurantHour ? 'green' : 'red' }" class="card-text">
         {{ restaurantHour ? "Open" : "Closed" }}
       </p>
-      <button
-        class="btn btn-outline-danger btn-lg"
-        style="position: absolute; bottom: 0; right: 0; margin: 10px"
-        type="button"
-      >
-        <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
-      </button>
+      <router-link to="/restaurant/id"
+        ><button
+          class="btn btn-outline-danger btn-lg"
+          style="position: absolute; bottom: 0; right: 0; margin: 10px"
+          type="button"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'arrow-right']"
+            class="icon"
+          /></button
+      ></router-link>
     </div>
   </div>
 </template>

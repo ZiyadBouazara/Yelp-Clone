@@ -99,7 +99,9 @@ onMounted(() => {
         <div style="position: relative">
           <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />
           <div class="lg-screen-title">
-            <span class="restaurant-title" v-if="index === 0">Resto des pd</span>
+            <span class="restaurant-title" v-if="index === 0"
+              >Restaurant example</span
+            >
             <div class="restaurant-rating" v-if="index === 0">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
@@ -125,17 +127,17 @@ onMounted(() => {
       <div class="mobile-title">
         <header class="header">Resto des pd</header>
         <div class="header">
-        <i class="fa-solid fa-star "></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-regular fa-star"></i>
-        <span style="margin-left: 5px">4.0</span>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-regular fa-star"></i>
+          <span style="margin-left: 5px">4.0</span>
           <p>
-              <span
+            <span
               >$$ <span style="vertical-align: 0.3em">.</span> Italian,
-                Poutine</span
-              >
+              Poutine</span
+            >
           </p>
         </div>
       </div>
@@ -246,7 +248,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .restaurant-genre-price {
   position: absolute;
   color: white;
