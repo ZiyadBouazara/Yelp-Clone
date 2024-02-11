@@ -26,8 +26,22 @@ export default {
   max-height: 200px;
 }
 
+.category-container {
+  background-image: url("@/assets/restaurant-image-1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .text-container {
   display: flex;
+  text-align: center;
+  color: #ffffff;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -36,16 +50,15 @@ export default {
 .text_1,
 .text_2,
 .text_3 {
-  border: 3px solid #ff6666;
   padding: 20px;
-  border-radius: 50px;
-  font-size: 30px;
+  font-size: 3vw;
   font-weight: bold;
   animation: floatAnimation 2s infinite alternate;
+  margin-bottom: 0;
 }
 
 .text_3 {
-  font-size: 50px;
+  font-size: 4vw;
 }
 
 @keyframes floatAnimation {

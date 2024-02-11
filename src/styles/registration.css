@@ -5,8 +5,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto;
+  height: 100%;
   padding: 2rem;
+  width: 100%;
+}
+
+.log-in-content{
+  width: 100%;
+  height: 100%;
+}
+
+.log-in-card{
+  display: flex;
+  align-items: end;
 }
 
 .card-title {

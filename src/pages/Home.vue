@@ -4,29 +4,17 @@
       <div class="col-md-3">
         <filter-off-canvas></filter-off-canvas>
       </div>
-      <div class="col-md-6" style="margin-left: 90px">
+      <div class="col-md-6">
         <FormHome></FormHome>
       </div>
     </div>
-    <Modal v-if="isModalVisible" @close="closeAuthenticationModal">
-      <template v-slot:header> This is a new modal header. </template>
-
-      <template v-slot:modal-body> This is a new modal body. </template>
-
-      <template v-slot:footer> This is a new modal footer. </template>
-    </Modal>
     <div class="row restaurant-cards">
       <div
-        v-for="(card, index) in chunkedCardData"
-        :key="index"
-        class="card-container d-flex overflow-auto hide-scrollbar"
+        v-for="(chunk, chunkIndex) in chunkedCardData"
+        :key="chunkIndex"
+        class="col-12 col-md-6 col-lg-4 mb-4"
       >
-        <div
-          v-for="(cardItem, cardIndex) in card"
-          :key="cardIndex"
-          class="card-wrapper"
-          style="margin: 20px"
-        >
+        <div v-for="(cardItem, index) in chunk" :key="index" class="card-wrapper">
           <CardComponent
             :imageSrc="cardItem.imageSrc"
             :lastUpdated="cardItem.lastUpdated"
@@ -43,7 +31,6 @@
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
-import Modal from "@/components/generalComponent/BaseModal.vue";
 import { EventBus } from "@/App.vue";
 
 export default {
@@ -51,7 +38,6 @@ export default {
     FilterOffCanvas,
     FormHome,
     CardComponent,
-    Modal,
   },
   created() {
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
@@ -133,16 +119,11 @@ export default {
   computed: {
     chunkedCardData() {
       const chunkSize = 3;
-      return this.cardData.reduce((resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / chunkSize);
-
-        if (!resultArray[chunkIndex]) {
-          resultArray[chunkIndex] = [];
-        }
-
-        resultArray[chunkIndex].push(item);
-        return resultArray;
-      }, []);
+      const chunks = [];
+      for (let i = 0; i < this.cardData.length; i += chunkSize) {
+        chunks.push(this.cardData.slice(i, i + chunkSize));
+      }
+      return chunks;
     },
   },
   methods: {
@@ -161,21 +142,24 @@ export default {
   display: flex;
   justify-content: center;
 }
-.hide-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+
+.card-container {
+  flex: 1 0 100%;
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  width: 6px;
+.card-wrapper {
+  margin: 0 auto;
 }
 
-.hide-scrollbar::-webkit-scrollbar-thumb {
-  background-color: transparent;
+@media (min-width: 768px) {
+  .col-md-6 .card-wrapper {
+    margin: 0; /* Reset margin for larger screens */
+  }
 }
 
-/*.restaurant-cards {*/
-/*  display: flex;*/
-/*  justify-content: space-between;*/
-/*}*/
+@media (min-width: 992px) {
+  .col-lg-4 .card-wrapper {
+    margin: 0; /* Reset margin for larger screens */
+  }
+}
 </style>

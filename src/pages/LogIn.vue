@@ -1,14 +1,11 @@
 <template>
   <div class="container mt-5">
-    <div class="row justify-content-center">
-      <!-- Left Column: Sign In Form -->
-      <div class="col-md-6">
+    <div class="row justify-content-center log-in-content">
+      <div class="col-md-6" style="display: flex; align-items: center; justify-content: center;">
         <div class="card">
           <div class="card-body">
             <h3 class="card-title text-center">Log In to UFood</h3>
-
-            <!-- Sign In Form -->
-            <form class="mx-auto" style="width: 300px">
+            <form class="mx-auto" @submit="authenticateUser">
               <div class="form-group">
                 <input
                   id="exampleInputEmail1"
@@ -28,8 +25,6 @@
               </div>
               <button class="btn btn-danger" type="submit">Log In</button>
             </form>
-
-            <!-- Additional Links -->
             <div class="mt-3 text-center">
               <p>
                 New user?
@@ -39,8 +34,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Right Column: Image -->
       <div class="col-md-6 mt-3 mt-md-0">
         <img
           alt="Illustration"
@@ -53,6 +46,18 @@
 </template>
 
 <script setup>
-import "@/styles/global.css";
 import "@/styles/registration.css";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const authenticateUser = (event) => {
+  event.preventDefault();
+  if (router && router.push) {
+    router.push({ name: "Home", query: { authenticatedUser: true } });
+    console.log("it works!");
+  } else {
+    console.error("router not available");
+  }
+};
 </script>
