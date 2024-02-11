@@ -15,11 +15,11 @@
     </Modal>
     <div class="row restaurant-cards">
       <div
-        v-for="(cardItem, index) in chunkedCardData"
-        :key="index"
-        class="card-container col-12 col-md-6 col-lg-4 mb-4"
+        v-for="(chunk, chunkIndex) in chunkedCardData"
+        :key="chunkIndex"
+        class="col-12 col-md-6 col-lg-4 mb-4"
       >
-        <div class="card-wrapper">
+        <div v-for="(cardItem, index) in chunk" :key="index" class="card-wrapper">
           <CardComponent
             :imageSrc="cardItem.imageSrc"
             :lastUpdated="cardItem.lastUpdated"
@@ -126,16 +126,11 @@ export default {
   computed: {
     chunkedCardData() {
       const chunkSize = 3;
-      return this.cardData.reduce((resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / chunkSize);
-
-        if (!resultArray[chunkIndex]) {
-          resultArray[chunkIndex] = [];
-        }
-
-        resultArray[chunkIndex].push(item);
-        return resultArray;
-      }, []);
+      const chunks = [];
+      for (let i = 0; i < this.cardData.length; i += chunkSize) {
+        chunks.push(this.cardData.slice(i, i + chunkSize));
+      }
+      return chunks;
     },
   },
   methods: {
@@ -164,14 +159,14 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .card-container {
-    flex: 1 0 50%;
+  .col-md-6 .card-wrapper {
+    margin: 0; /* Reset margin for larger screens */
   }
 }
 
 @media (min-width: 992px) {
-  .card-container {
-    flex: 1 0 33.33%;
+  .col-lg-4 .card-wrapper {
+    margin: 0; /* Reset margin for larger screens */
   }
 }
 </style>
