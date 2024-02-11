@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex mx-auto">
-    <form class="d-flex">
+  <div class="d-flex mx-auto flex-column align-items-center">
+    <form class="d-flex flex-column align-items-center mb-3">
       <input
-        class="form-control custom-search-input me-2"
+        class="form-control custom-search-input mb-2"
         v-model="searchTerm"
         @input="updateSearch"
         placeholder="Restaurant's Name..."
@@ -10,7 +10,7 @@
         style="border-radius: 30px; height: 40px"
       />
       <input
-        class="form-control custom-search-input me-2"
+        class="form-control custom-search-input mb-2"
         type="search"
         placeholder="Dining Preference..."
         aria-label="Search"
@@ -19,7 +19,7 @@
       <button
         type="button"
         class="btn btn-outline-danger"
-        style="margin-left: 5px"
+        style="height: 40px"
         @click="search"
       >
         <svg
@@ -68,11 +68,21 @@ export default {
 
 <style scoped>
 .custom-search-input {
-  width: 200px;
+  width: 100%;
+  max-width: 300px;
   height: 40px;
 }
-form {
-  display: inline;
-  align-items: center;
+
+@media (min-width: 768px) {
+  .d-flex.flex-column.align-items-center {
+    flex-direction: row;
+  }
+  .custom-search-input {
+    margin-right: 5px;
+    margin-bottom: 0;
+  }
+  .btn {
+    margin-left: 5px;
+  }
 }
 </style>

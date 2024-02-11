@@ -1,8 +1,8 @@
 <template>
   <div
     :class="{ 'border-danger': isHovered }"
-    class="card"
-    style="margin-top: 40px; width: 18rem; margin-left: 50px"
+    class="card custom-card"
+    style="margin-top: 40px;"
   >
     <img
       :src="imageSrc"
@@ -29,6 +29,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -85,5 +86,9 @@ export default {
 
 .card:hover {
   border-color: rgba(0, 0, 0, 0.1);
+}
+
+.custom-card {
+  padding: 20px;
 }
 </style>

@@ -1,18 +1,20 @@
 <template>
   <div class="container-fluid mt-5">
     <div class="row">
-      <div class="col-4 d-flex justify-content-center">
+      <div class="col-12 d-flex justify-content-center">
         <ProfileCard
           :location="location"
           :name="name"
           :score="score"
         ></ProfileCard>
       </div>
-      <div class="col-8">
-        <h2 class="text-center mb-4">Visited Restaurants</h2>
-        <VisitedRestaurants
-          :visited-restaurants="visitedRestaurants"
-        ></VisitedRestaurants>
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <h2 class="text-center mb-4">Visited Restaurants</h2>
+          <VisitedRestaurants
+            :visited-restaurants="visitedRestaurants"
+          ></VisitedRestaurants>
+        </div>
       </div>
     </div>
   </div>
