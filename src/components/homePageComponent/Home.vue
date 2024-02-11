@@ -53,5 +53,9 @@ export default {
     flex: 0 0 70%;
   }
 }
+
+.row {
+  --bs-gutter-x: 0;
+}
 </style>
 
