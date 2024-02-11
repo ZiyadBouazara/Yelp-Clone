@@ -17,15 +17,21 @@
             </ul>
             <router-link style="display: none" to="/profile">Profile</router-link>
             <button type="button" class="btn btn-outline-danger d-lg-none" @click="navigateTo('/profile')">Profile Example</button>
+            <div class="p-1 user-authentication-sign-up d-lg-none">
+              <button type="button" class="btn btn-outline-danger" @click="navigateTo('/signup')">Sign Up</button>
+            </div>
+            <div class="p-1 user-authentication-sign-in d-lg-none" @click="navigateTo('/login')">
+              <button type="button" class="btn btn-outline-danger">Log In</button>
+            </div>
           </div>
         </div>
         <div class="col-lg-4 col-6 d-flex justify-content-end authentication">
           <router-link style="display: none" to="/login">Log In</router-link>
           <router-link style="display: none" to="/signup">Sign Up</router-link>
-          <div class="p-1 user-authentication-sign-up">
+          <div class="p-1 user-authentication-sign-up d-none d-lg-block">
             <button type="button" class="btn btn-outline-danger" @click="navigateTo('/signup')">Sign Up</button>
           </div>
-          <div class="p-1 user-authentication-sign-in" @click="navigateTo('/login')">
+          <div class="p-1 user-authentication-sign-in d-none d-lg-block" @click="navigateTo('/login')">
             <button type="button" class="btn btn-outline-danger">Log In</button>
           </div>
         </div>
