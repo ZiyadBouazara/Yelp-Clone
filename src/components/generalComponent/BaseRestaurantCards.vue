@@ -2,7 +2,7 @@
   <div
     :class="{ 'border-danger': isHovered }"
     class="card custom-card"
-    style="margin-top: 40px;"
+    style="margin-top: 0"
   >
     <img
       :src="imageSrc"
@@ -29,7 +29,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
