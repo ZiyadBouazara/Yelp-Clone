@@ -8,7 +8,10 @@
   border-radius: 4px;
   color: black;
   border: 1px solid transparent;
-  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in, border 0.3s;
+  transition:
+    box-shadow 0.2s ease-in,
+    background-color 0.2s ease-in,
+    border 0.3s;
   background-color: transparent;
 }
 
@@ -74,7 +77,9 @@
 
 .profile-dropdown-list-item {
   padding: 0.5rem 0 0.5rem 1rem;
-  transition: background-color 0.2s ease-in, padding-left 0.2s;
+  transition:
+    background-color 0.2s ease-in,
+    padding-left 0.2s;
 }
 
 .profile-dropdown-list-item a {
@@ -117,7 +122,6 @@
   color: red !important;
 }
 
-
 .hovered-link {
   color: #ff6666 !important;
   margin-top: 15px;
@@ -126,11 +130,11 @@
   text-decoration: none !important;
 }
 
-
 .bg-fading {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ababab 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    #ababab 100%
+  );
   transition: background 0.5s ease;
 }
-
-
-

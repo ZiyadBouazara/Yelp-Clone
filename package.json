@@ -17,6 +17,7 @@
     "bootstrap-icons": "^1.11.3",
     "bootstrap-tagsinput": "^0.7.1",
     "core-js": "^3.8.3",
+    "leaflet": "^1.9.4",
     "mitt": "^3.0.1",
     "rating.js": "^0.0.0",
     "vue": "^3.4.18",
