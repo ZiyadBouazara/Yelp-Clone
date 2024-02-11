@@ -9,6 +9,8 @@
       alt="Card image"
       class="card-img-top rounded-start"
       style="border-radius: 7px; border: black; height: 200px"
+      @mouseout="isHovered = false"
+      @mouseover="isHovered = true"
     />
     <div class="card-body" style="height: 250px; text-align: center">
       <h5 class="card-title">{{ restaurantName }}</h5>
@@ -20,25 +22,19 @@
         {{ restaurantHour ? "Open" : "Closed" }}
       </p>
       <button
-        class="btn btn-outline-danger btn-lg"
+        class="btn btn-outline-danger btn-lg floating"
         style="position: absolute; bottom: 0; right: 0; margin: 10px"
         type="button"
       >
-        <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
+        Order/Book A table
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-library.add(faArrowRight);
 export default {
   name: "CardComponent",
-  components: { FontAwesomeIcon },
   props: {
     imageSrc: {
       type: String,
@@ -80,10 +76,9 @@ export default {
   transition: border-color 0.3s ease;
   background-color: ghostwhite;
   border-color: transparent;
-  box-shadow: rgba(235, 235, 235, 1);
 }
 
 .card:hover {
-  border-color: rgba(0, 0, 0, 0.1);
+  border-color: red;
 }
 </style>
