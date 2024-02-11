@@ -1,7 +1,10 @@
 <template>
   <div class="container mt-5">
     <div class="row justify-content-center log-in-content">
-      <div class="col-md-6" style="display: flex; align-items: center; justify-content: center;">
+      <div
+        class="col-md-6"
+        style="display: flex; align-items: center; justify-content: center"
+      >
         <div class="card">
           <div class="card-body">
             <h3 class="card-title text-center">Log In to UFood</h3>
