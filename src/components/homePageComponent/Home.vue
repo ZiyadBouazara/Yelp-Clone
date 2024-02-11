@@ -1,4 +1,3 @@
-
 <template>
   <div class="container text-center">
     <div class="row">
@@ -35,3 +34,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@media (max-width: 767px) {
+  .col-md-3 {
+    flex: 0 0 100%;
+  }
+  .col-md-9 {
+    flex: 0 0 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .col-md-3 {
+    flex: 0 0 30%;
+  }
+  .col-md-9 {
+    flex: 0 0 70%;
+  }
+}
+</style>
+

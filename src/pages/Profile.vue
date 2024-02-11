@@ -1,18 +1,23 @@
 <template>
   <div class="container-fluid mt-5">
-    <div class="row">
-      <div class="col-4 d-flex justify-content-center">
+    <div class="row justify-content-center">
+      <div class="col-12 d-flex justify-content-center">
         <ProfileCard
           :location="location"
           :name="name"
           :score="score"
         ></ProfileCard>
       </div>
-      <div class="col-8">
-        <h2 class="text-center mb-4">Visited Restaurants</h2>
-        <VisitedRestaurants
-          :visited-restaurants="visitedRestaurants"
-        ></VisitedRestaurants>
+      <div
+        class="row justify-content-center my-3 visited-restaurants-row"
+        style="text-align: start"
+      >
+        <h4 class="visited-restaurants-title">Visited restaurants</h4>
+        <div class="col-12 d-flex justify-content-center">
+          <VisitedRestaurants
+            :visited-restaurants="visitedRestaurants"
+          ></VisitedRestaurants>
+        </div>
       </div>
     </div>
   </div>
@@ -77,8 +82,19 @@ export default {
 </script>
 <style scoped>
 .container-fluid {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+h4 {
+  font-family: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.visited-restaurants-title {
+  margin-left: 80px;
 }
 </style>

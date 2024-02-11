@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   margin-bottom: 0;
   max-height: 200px;
@@ -39,13 +39,13 @@ export default {
   border: 3px solid #ff6666;
   padding: 20px;
   border-radius: 50px;
-  font-size: 30px;
+  font-size: 3vw; /* Responsive font size based on viewport width */
   font-weight: bold;
   animation: floatAnimation 2s infinite alternate;
 }
 
 .text_3 {
-  font-size: 50px;
+  font-size: 5vw; /* Responsive font size based on viewport width */
 }
 
 @keyframes floatAnimation {
