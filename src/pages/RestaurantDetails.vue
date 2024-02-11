@@ -5,10 +5,10 @@ import "leaflet/dist/leaflet.css";
 const restaurant = ref({
   name: "Test Restaurant",
   address: {
-    street: "888 rue des potters",
-    city: "Quebec",
+    street: "1065 Av. de la Médecine",
+    city: "Québec",
     province: "QC",
-    zipCode: "G1V 2T8",
+    zipCode: "G1V 0A6",
   },
   phone: "(888) 888-8888",
   openingHours: {
@@ -37,7 +37,7 @@ const restaurantImages = ref([
 const initMap = async () => {
   try {
     const leaflet = await import("leaflet");
-    map.value = leaflet.map("map").setView([37.775, -122.418], 15);
+    map.value = leaflet.map("map").setView([46.7799, -71.2772], 15);
 
     leaflet
       .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -45,7 +45,7 @@ const initMap = async () => {
       })
       .addTo(map.value);
 
-    const restaurantLocation = [37.775, -122.418];
+    const restaurantLocation = [46.7799, -71.2772];
 
     const customIcon = leaflet.divIcon({
       className: "custom-leaflet-div-icon",
@@ -59,21 +59,18 @@ const initMap = async () => {
   }
 };
 
-const getDirections = () => {
-  window.open(
-    "https://www.openstreetmap.org/directions?engine=osrm_car&route=" +
-      restaurant.value.address.city +
-      ",%20" +
-      restaurant.value.address.street,
-  );
+const getDirections = (startingLocation) => {
+  const destination = "46.7799,-71.2772"; // Coordinates for the destination address
+  const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
+  window.open(url);
 };
 
-const isSticky = ref(false);
-
-const handleScroll = () => {
-  const topDistance = 450;
-  isSticky.value = window.scrollY >= topDistance;
-};
+// const isSticky = ref(false);
+//
+// const handleScroll = () => {
+//   const topDistance = 450;
+//   isSticky.value = window.scrollY >= topDistance;
+// };
 
 const description = ref(
   "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
@@ -82,12 +79,12 @@ const description = ref(
 
 onMounted(() => {
   initMap();
-  window.addEventListener("scroll", handleScroll);
+  // window.addEventListener("scroll", handleScroll);
 });
-
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+//
+// onBeforeUnmount(() => {
+//   window.removeEventListener("scroll", handleScroll);
+// });
 </script>
 
 <template>
@@ -245,41 +242,6 @@ onBeforeUnmount(() => {
       <p class="description">{{ description }}</p>
     </div>
     <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
   </div>
 </template>
 
@@ -350,7 +312,7 @@ onBeforeUnmount(() => {
 
 .sticky {
   position: fixed;
-  top: 13%;
+  top: 20%;
   transform: translateY(-50%);
 }
 
