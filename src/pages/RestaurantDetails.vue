@@ -59,7 +59,7 @@ const initMap = async () => {
   }
 };
 
-const getDirections = (startingLocation) => {
+const getDirections = () => {
   const destination = "46.7799,-71.2772"; // Coordinates for the destination address
   const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
   window.open(url);
