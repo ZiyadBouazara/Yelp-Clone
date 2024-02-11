@@ -8,7 +8,7 @@
             <h3 class="card-title text-center">Log In to UFood</h3>
 
             <!-- Sign In Form -->
-            <form class="mx-auto" style="width: 300px">
+            <form class="mx-auto">
               <div class="form-group">
                 <input
                   id="exampleInputEmail1"
