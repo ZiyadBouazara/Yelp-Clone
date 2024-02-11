@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <div class="row" style="margin-top: 10px">
+    <div class="row bs-gutter-x-0" style="margin-top: 10px; margin-right: 0px">
       <div class="col-md-3">
         <filter-off-canvas></filter-off-canvas>
       </div>
@@ -161,5 +161,9 @@ export default {
   .col-lg-4 .card-wrapper {
     margin: 0; /* Reset margin for larger screens */
   }
+}
+
+.row {
+  --bs-gutter-x: 0;
 }
 </style>
