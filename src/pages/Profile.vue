@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import "@/styles/global.css";
 import ProfileCard from "@/components/profileComponent/ProfileCard.vue";
 import VisitedRestaurants from "@/components/profileComponent/VisitedRestaurants.vue";
 

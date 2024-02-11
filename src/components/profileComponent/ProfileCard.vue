@@ -3,7 +3,7 @@
     <img
       alt="Profile picture"
       class="profile-picture"
-      src="@/assets/default_user_avatar.png"
+      src="@/assets/UFood_Profile_Picture.png"
     />
     <div class="card-body">
       <div class="row mb-3">
@@ -68,6 +68,15 @@ export default {
   border: 1px solid #ccc;
   max-height: 400px;
   transition: box-shadow 0.3s;
+}
+
+.profile-picture:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  transform: scale(1.1);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .card:hover {
