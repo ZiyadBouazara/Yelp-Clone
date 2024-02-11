@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex mx-auto">
-    <form class="d-flex">
+    <form class="d-flex flex-grow-1">
       <input
-        class="form-control me-2 mx-auto"
+        class="form-control me-2 flex-grow-1"
         type="search"
         placeholder="Search"
         aria-label="Search"
@@ -35,3 +35,11 @@ export default {
   name: "SearchForm",
 };
 </script>
+
+<style scoped>
+@media (max-width: 768px) {
+  .form-control {
+    width: 100%;
+  }
+}
+</style>

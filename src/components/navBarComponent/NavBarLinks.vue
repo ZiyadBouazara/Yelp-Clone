@@ -32,4 +32,11 @@ export default {
 .nav-item {
   display: inline-block;
 }
+
+@media (max-width: 768px) {
+  .nav-item {
+    display: block;
+    margin-bottom: 10px; /* Adjust spacing between links on smaller screens */
+  }
+}
 </style>

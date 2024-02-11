@@ -4,29 +4,22 @@
       <div class="col-md-3">
         <filter-off-canvas></filter-off-canvas>
       </div>
-      <div class="col-md-6" style="margin-left: 90px">
+      <div class="col-md-6">
         <FormHome></FormHome>
       </div>
     </div>
     <Modal v-if="isModalVisible" @close="closeAuthenticationModal">
       <template v-slot:header> This is a new modal header. </template>
-
       <template v-slot:modal-body> This is a new modal body. </template>
-
       <template v-slot:footer> This is a new modal footer. </template>
     </Modal>
     <div class="row restaurant-cards">
       <div
-        v-for="(card, index) in chunkedCardData"
+        v-for="(cardItem, index) in chunkedCardData"
         :key="index"
-        class="card-container d-flex overflow-auto hide-scrollbar"
+        class="card-container col-12 col-md-6 col-lg-4 mb-4"
       >
-        <div
-          v-for="(cardItem, cardIndex) in card"
-          :key="cardIndex"
-          class="card-wrapper"
-          style="margin: 20px"
-        >
+        <div class="card-wrapper">
           <CardComponent
             :imageSrc="cardItem.imageSrc"
             :lastUpdated="cardItem.lastUpdated"
@@ -161,21 +154,24 @@ export default {
   display: flex;
   justify-content: center;
 }
-.hide-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+
+.card-container {
+  flex: 1 0 100%;
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  width: 6px;
+.card-wrapper {
+  margin: 0 auto;
 }
 
-.hide-scrollbar::-webkit-scrollbar-thumb {
-  background-color: transparent;
+@media (min-width: 768px) {
+  .card-container {
+    flex: 1 0 50%;
+  }
 }
 
-/*.restaurant-cards {*/
-/*  display: flex;*/
-/*  justify-content: space-between;*/
-/*}*/
+@media (min-width: 992px) {
+  .card-container {
+    flex: 1 0 33.33%;
+  }
+}
 </style>

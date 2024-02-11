@@ -36,4 +36,10 @@ export default {
 .dropdown {
   display: inline-block;
 }
+
+@media (max-width: 768px) {
+  .dropdown {
+    display: block;
+  }
+}
 </style>
