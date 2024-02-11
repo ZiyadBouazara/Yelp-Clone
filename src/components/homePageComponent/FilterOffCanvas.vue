@@ -109,7 +109,10 @@
       </div>
       <div class="row comp">
         <p style="font-weight: bold">Features</p>
-        <div class="form-check form-check-inline hover" style="margin-top: 20px">
+        <div
+          class="form-check form-check-inline hover"
+          style="margin-top: 20px"
+        >
           <input
             class="form-check-input"
             type="checkbox"
@@ -137,7 +140,10 @@
             >Offers Takeout</label
           >
         </div>
-        <button class="btn black hover" style="margin-top: 10px; margin-right: 10px">
+        <button
+          class="btn black hover"
+          style="margin-top: 10px; margin-right: 10px"
+        >
           See all
         </button>
       </div>

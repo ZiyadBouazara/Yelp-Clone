@@ -18,7 +18,9 @@
               <Dropdowns :dropdowns="dropdowns" />
               <Links :isHovered="isHovered" :links="links" @hover="setHover" />
             </ul>
-            <router-link style="display: none" to="/profile">Profile</router-link>
+            <router-link style="display: none" to="/profile"
+              >Profile</router-link
+            >
             <button
               type="button"
               class="btn btn-outline-danger"
@@ -44,9 +46,7 @@
             class="p-1 user-authentication-sign-in"
             @click="navigateTo('/login')"
           >
-            <button type="button" class="btn btn-outline-danger">
-              Log In
-            </button>
+            <button type="button" class="btn btn-outline-danger">Log In</button>
           </div>
         </div>
       </div>

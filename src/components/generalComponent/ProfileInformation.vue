@@ -52,8 +52,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-information-card{
-
+.profile-information-card {
   border: 2px solid red;
   border-radius: 7px;
 }

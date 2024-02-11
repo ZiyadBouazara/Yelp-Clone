@@ -71,7 +71,7 @@ const getDirections = () => {
 const isSticky = ref(false);
 
 const handleScroll = () => {
-  const topDistance = 495;
+  const topDistance = 450;
   isSticky.value = window.scrollY >= topDistance;
 };
 
@@ -79,6 +79,20 @@ const description = ref(
   "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
     "        poutines, options végétariennes et Vgan.",
 );
+
+const sideContainer = document.getElementById("sideContainer");
+const reviewButton = document.getElementById("reviewButton");
+
+if (sideContainer && reviewButton) {
+  reviewButton.addEventListener("load", () => {
+    const buttonRect = reviewButton.getBoundingClientRect();
+    const sideContainerRect = sideContainer.getBoundingClientRect();
+    const topDistance =
+      buttonRect.top + window.scrollY + sideContainerRect.height / 2;
+
+    sideContainer.style.top = topDistance + "px";
+  });
+}
 
 onMounted(() => {
   initMap();
@@ -111,13 +125,22 @@ onBeforeUnmount(() => {
             <span style="color: white; margin-left: 5px">4.0</span>
           </div>
           <div v-if="index === 0" class="restaurant-genre-price">
-            <p><span>$$ <span style="vertical-align: 0.3em;">.</span> Italian, Poutine</span></p>
+            <p>
+              <span
+                >$$ <span style="vertical-align: 0.3em">.</span> Italian,
+                Poutine</span
+              >
+            </p>
           </div>
         </div>
       </div>
     </div>
     <div class="main-container">
-      <button id="reviewButton" class="btn btn-outline-danger btn-lg" style="margin-left: 40px">
+      <button
+        id="reviewButton"
+        class="btn btn-outline-danger btn-lg"
+        style="margin-left: 40px"
+      >
         <i class="fa-regular fa-star"></i> Write a review
       </button>
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
@@ -218,45 +241,80 @@ onBeforeUnmount(() => {
       <p class="description">{{ description }}</p>
     </div>
     <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
   </div>
 </template>
 
 <style scoped>
-@media (max-width: 768px) {
-  .d-flex {
-    flex-direction: column;
-  }
-}
-
 .restaurant-genre-price {
   position: absolute;
   color: white;
-  bottom: 100px;
-  left: 100px;
-  padding: 5px;
+  bottom: 8%;
+  left: 10%;
+  padding: 0.2em;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 2vw;
 }
 
 .restaurant-rating {
   position: absolute;
   color: orange;
-  bottom: 160px;
-  left: 100px;
-  padding: 5px;
+  bottom: 20%;
+  left: 7%;
+  padding: 0.5em;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2.5vw;
 }
 
 .restaurant-title {
   position: absolute;
   color: white;
-  bottom: 200px;
-  left: 100px;
-  padding: 5px;
+  bottom: 30%;
+  left: 5%;
+  padding: 0.5em;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 4vw;
 }
+
+.contact-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 .side-container-link {
   font-weight: bold;
   color: #dc3545;
@@ -269,10 +327,6 @@ onBeforeUnmount(() => {
 
 .side-container-address {
   font-size: 0.9rem;
-}
-.contact-info {
-  display: flex;
-  justify-content: space-between;
 }
 
 .side-container {
@@ -291,7 +345,8 @@ onBeforeUnmount(() => {
 
 .sticky {
   position: fixed;
-  top: 22%;
+  top: 180px;
+  transform: translateY(-50%);
 }
 
 .address-container {
@@ -356,5 +411,11 @@ onBeforeUnmount(() => {
 
 .description {
   margin: 10px 10px 30px 40px;
+}
+
+@media (max-width: 1439px) {
+  .side-container {
+    display: none;
+  }
 }
 </style>
