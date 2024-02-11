@@ -58,4 +58,3 @@ export default {
   --bs-gutter-x: 0;
 }
 </style>
-

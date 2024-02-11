@@ -14,7 +14,11 @@
         :key="chunkIndex"
         class="col-12 col-md-6 col-lg-4 mb-4"
       >
-        <div v-for="(cardItem, index) in chunk" :key="index" class="card-wrapper">
+        <div
+          v-for="(cardItem, index) in chunk"
+          :key="index"
+          class="card-wrapper"
+        >
           <CardComponent
             :imageSrc="cardItem.imageSrc"
             :lastUpdated="cardItem.lastUpdated"
