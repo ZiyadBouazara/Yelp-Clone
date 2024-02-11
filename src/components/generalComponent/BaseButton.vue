@@ -1,8 +1,10 @@
 <template>
   <div :class="{ 'border-danger': isHovered }" class="button-container">
     <button type="button" class="btn button">
-      <font-awesome-icon :icon="icon" class="icon" />
-      {{ label }}
+      <div class="icon-wrapper">
+        <font-awesome-icon :icon="icon" class="icon" />
+      </div>
+      <div class="label">{{ label }}</div>
     </button>
   </div>
 </template>
@@ -60,7 +62,7 @@ export default {
 .button {
   padding: 10px;
   text-align: center;
-  width: 100%;
+  width: 100px;
   max-width: 140px;
   height: 140px;
   border-radius: 30px;
@@ -68,14 +70,24 @@ export default {
   background-color: ghostwhite;
   border-color: transparent;
   box-shadow: rgba(235, 235, 235, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-wrapper {
+  margin-bottom: 10px;
 }
 
 .icon {
   font-size: 20px;
-  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 16px;
 }
 
 .button:hover {
-  border-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(235, 235, 235, 1);
 }
 </style>
