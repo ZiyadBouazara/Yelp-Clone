@@ -4,7 +4,6 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <!-- Form -->
             <form class="row g-3 mx-auto">
               <div style="padding: 0">
                 <h3 class="card-title text-center">Sign Up for UFood</h3>
@@ -12,7 +11,6 @@
                   Connect with great local restaurants
                 </h4>
               </div>
-              <!-- First Name and Last Name -->
               <div class="col-md-6">
                 <input
                   id="inputFirstName"
@@ -29,8 +27,6 @@
                   type="text"
                 />
               </div>
-
-              <!-- Email and Password -->
               <div class="col-md-6">
                 <input
                   id="inputEmail"
@@ -47,8 +43,6 @@
                   type="password"
                 />
               </div>
-
-              <!-- ZIP Code -->
               <div class="col-md-12">
                 <input
                   id="inputZip"
@@ -57,14 +51,10 @@
                   type="text"
                 />
               </div>
-
-              <!-- Sign Up Button -->
               <div class="col-md-12">
                 <button class="btn btn-danger" type="submit">Sign Up</button>
               </div>
             </form>
-
-            <!-- Additional Links -->
             <div class="mt-3 text-center">
               <p>
                 Already on UFood?
@@ -74,8 +64,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Right Column: Image -->
       <div class="col-md-6 mt-3 mt-md-0">
         <img
           alt="Illustration"

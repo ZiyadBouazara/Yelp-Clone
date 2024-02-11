@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row">
+    <div class="row align-items-start">
       <div
         class="col-6 col-md-4 col-lg"
         v-for="(button, index) in buttons"
@@ -63,4 +63,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+
+</style>

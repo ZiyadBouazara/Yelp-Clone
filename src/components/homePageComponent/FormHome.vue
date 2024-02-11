@@ -4,7 +4,6 @@
       <input
         class="form-control custom-search-input mb-2"
         v-model="searchTerm"
-        @input="updateSearch"
         placeholder="Restaurant's Name..."
         aria-label="Search"
         style="border-radius: 30px; height: 40px"
@@ -56,9 +55,6 @@ export default {
     },
   },
   methods: {
-    updateSearch() {
-      // this.$emit("search-updated", this.searchTerm);
-    },
     search() {
       console.log("lol");
     },

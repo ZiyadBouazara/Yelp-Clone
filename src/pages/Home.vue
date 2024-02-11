@@ -8,11 +8,6 @@
         <FormHome></FormHome>
       </div>
     </div>
-    <Modal v-if="isModalVisible" @close="closeAuthenticationModal">
-      <template v-slot:header> This is a new modal header. </template>
-      <template v-slot:modal-body> This is a new modal body. </template>
-      <template v-slot:footer> This is a new modal footer. </template>
-    </Modal>
     <div class="row restaurant-cards">
       <div
         v-for="(chunk, chunkIndex) in chunkedCardData"
@@ -36,7 +31,6 @@
 import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
-import Modal from "@/components/generalComponent/BaseModal.vue";
 import { EventBus } from "@/App.vue";
 
 export default {
@@ -44,7 +38,6 @@ export default {
     FilterOffCanvas,
     FormHome,
     CardComponent,
-    Modal,
   },
   created() {
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
