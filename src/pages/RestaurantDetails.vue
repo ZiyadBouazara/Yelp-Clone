@@ -80,20 +80,6 @@ const description = ref(
     "        poutines, options végétariennes et Vgan.",
 );
 
-const sideContainer = document.getElementById("sideContainer");
-const reviewButton = document.getElementById("reviewButton");
-
-if (sideContainer && reviewButton) {
-  reviewButton.addEventListener("load", () => {
-    const buttonRect = reviewButton.getBoundingClientRect();
-    const sideContainerRect = sideContainer.getBoundingClientRect();
-    const topDistance =
-      buttonRect.top + window.scrollY + sideContainerRect.height / 2;
-
-    sideContainer.style.top = topDistance + "px";
-  });
-}
-
 onMounted(() => {
   initMap();
   window.addEventListener("scroll", handleScroll);
@@ -115,27 +101,47 @@ onBeforeUnmount(() => {
       >
         <div style="position: relative">
           <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />
-          <span class="restaurant-title" v-if="index === 0">Resto des pd</span>
-          <div class="restaurant-rating" v-if="index === 0">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <span style="color: white; margin-left: 5px">4.0</span>
-          </div>
-          <div v-if="index === 0" class="restaurant-genre-price">
-            <p>
-              <span
-                >$$ <span style="vertical-align: 0.3em">.</span> Italian,
-                Poutine</span
-              >
-            </p>
+          <div class="lg-screen-title">
+            <span class="restaurant-title" v-if="index === 0">Resto des pd</span>
+            <div class="restaurant-rating" v-if="index === 0">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-regular fa-star"></i>
+              <span style="color: white; margin-left: 5px">4.0</span>
+            </div>
+            <div v-if="index === 0" class="restaurant-genre-price">
+              <p>
+                <span
+                  >$$ <span style="vertical-align: 0.3em">.</span> Italian,
+                  Poutine</span
+                >
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="main-container">
+      <div class="mobile-title">
+        <header class="header">Resto des pd</header>
+        <div class="header">
+        <i class="fa-solid fa-star "></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-regular fa-star"></i>
+        <span style="margin-left: 5px">4.0</span>
+          <p>
+              <span
+              >$$ <span style="vertical-align: 0.3em">.</span> Italian,
+                Poutine</span
+              >
+          </p>
+        </div>
+      </div>
       <button
         id="reviewButton"
         class="btn btn-outline-danger btn-lg"
@@ -157,10 +163,9 @@ onBeforeUnmount(() => {
     <div class="line"></div>
     <div class="d-flex align-items-baseline">
       <strong class="header">Location & Hours</strong>
-      <a class="edit">Suggest an edit <i class="fa-solid fa-pen"></i></a>
     </div>
 
-    <div class="d-flex flex-row">
+    <div class="flex-row">
       <div class="map-container">
         <div id="map" class="map">
           <iframe
@@ -198,7 +203,6 @@ onBeforeUnmount(() => {
       <div
         id="sideContainer"
         :class="['side-container', isSticky ? 'sticky' : '']"
-        ref="sideContainer"
       >
         <div class="contact-info">
           <p>{{ restaurant.phone }}</p>
@@ -280,6 +284,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+
 .restaurant-genre-price {
   position: absolute;
   color: white;
@@ -336,16 +341,16 @@ onBeforeUnmount(() => {
   background-color: Ghostwhite;
   border-radius: 10px;
   margin-right: 40px;
+  margin-top: 40px;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
   position: absolute;
-  top: 635px;
-  right: 20px;
+  right: 1.5%;
   transform: translateY(-50%);
 }
 
 .sticky {
   position: fixed;
-  top: 180px;
+  top: 13%;
   transform: translateY(-50%);
 }
 
@@ -415,6 +420,32 @@ onBeforeUnmount(() => {
 
 @media (max-width: 1439px) {
   .side-container {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-fluid {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 576px) {
+  .mobile-title {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .lg-screen-title {
     display: none;
   }
 }
