@@ -214,16 +214,16 @@ export default {
 
 #user-profile-picture {
   border-radius: 50%;
-  max-width: 70px;
+  max-width: 55px;
+  max-height: 55px;
   width: 70%;
   height: 70%;
-  max-height: 70px;
 }
 
 #user-profile-picture:hover {
   border-radius: 50%;
-  max-width: 70px;
-  max-height: 70px;
+  max-width: 55px;
+  max-height: 55px;
   opacity: 0.8;
   cursor: pointer;
   transform: scale(1.1);
