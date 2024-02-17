@@ -4,6 +4,7 @@
       <input
         class="form-control custom-search-input mb-2"
         v-model="searchTerm"
+        @input="handleInput"
         placeholder="Restaurant's Name..."
         aria-label="Search"
         style="border-radius: 30px; height: 40px"
@@ -48,15 +49,10 @@ export default {
       selectedRestaurant: "",
     };
   },
-  props: {
-    restaurantData: {
-      type: Array,
-      default: () => [],
-    },
-  },
   methods: {
-    search() {
-      console.log("lol");
+    handleInput() {
+      console.log("User typed:", this.searchTerm);
+      this.$store.dispatch("updateSearchTerm", this.searchTerm);
     },
   },
 };

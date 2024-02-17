@@ -10,22 +10,29 @@
     </div>
     <div class="row restaurant-cards">
       <div
-        v-for="(chunk, chunkIndex) in chunkedCardData"
-        :key="chunkIndex"
+        v-for="(restaurant, index) in filteredCardData"
+        :key="index"
         class="col-12 col-md-6 col-lg-4 mb-4"
       >
-        <div
-          v-for="(cardItem, index) in chunk"
-          :key="index"
-          class="card-wrapper"
-        >
+        <div class="card-wrapper">
           <CardComponent
-            :imageSrc="cardItem.imageSrc"
-            :lastUpdated="cardItem.lastUpdated"
-            :restaurantDescription="cardItem.restaurantDescription"
-            :restaurantName="cardItem.restaurantName"
+            :imageSrc="restaurant.pictures"
+            :restaurantDescription="restaurant.restaurantDescription"
+            :restaurantName="restaurant.name"
           ></CardComponent>
         </div>
+      </div>
+    </div>
+    <div id="users">
+      <div v-for="(user, index) in users" :key="index">
+        <h3>{{ user.name }}</h3>
+        <!-- Display other user details as needed -->
+      </div>
+    </div>
+    <div id="restaurant">
+      <div v-for="(restaurant, index) in restaurants" :key="index">
+        <h3>{{ restaurant.name }}</h3>
+        <!-- Display other user details as needed -->
       </div>
     </div>
   </div>
@@ -36,6 +43,8 @@ import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue"
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 import { EventBus } from "@/App.vue";
+import * as data from "@/javascript/Resto";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -53,81 +62,24 @@ export default {
       closingHour: "22:00",
       openingHour: "08:00",
       isModalVisible: false,
-      cardData: [
-        {
-          imageSrc: "https://placekitten.com/300/300",
-          restaurantName: "Restaurant 1",
-          restaurantDescription: "Description 1",
-          lastUpdated: "Last updated 3 mins ago",
-          restaurantHour: true,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 2",
-          restaurantDescription: "Description 2",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 3",
-          restaurantDescription: "Description 3",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 4",
-          restaurantDescription: "Description 4",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 5",
-          restaurantDescription: "Description 5",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 6",
-          restaurantDescription: "Description 6",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 7",
-          restaurantDescription: "Description 7",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 8",
-          restaurantDescription: "Description 8",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-        {
-          imageSrc: "https://placekitten.com/300/301",
-          restaurantName: "Restaurant 9",
-          restaurantDescription: "Description 9",
-          lastUpdated: "Last updated 5 mins ago",
-          restaurantHour: false,
-        },
-      ],
+      cardData: data.resto,
+      searchTerm: " ",
     };
   },
   computed: {
-    chunkedCardData() {
-      const chunkSize = 3;
-      const chunks = [];
-      for (let i = 0; i < this.cardData.length; i += chunkSize) {
-        chunks.push(this.cardData.slice(i, i + chunkSize));
-      }
-      return chunks;
+    filteredCardData() {
+      const searchTerm = this.$store.getters.getSearchTerm;
+      return this.restaurants.filter((cardItem) =>
+        cardItem.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
+      );
+    },
+    ...mapGetters(["getRestaurants"]),
+    restaurants() {
+      return this.getRestaurants;
+    },
+    ...mapGetters(["getUsers"]),
+    users() {
+      return this.getUsers;
     },
   },
   methods: {

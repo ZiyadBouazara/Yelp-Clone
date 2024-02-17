@@ -14,7 +14,6 @@
       <h5 class="card-title">{{ restaurantName }}</h5>
       <p class="card-text">{{ restaurantDescription }}</p>
       <p class="card-text">
-        <small class="text-body-secondary">{{ lastUpdated }}</small>
       </p>
       <p :style="{ color: restaurantHour ? 'green' : 'red' }" class="card-text">
         {{ restaurantHour ? "Open" : "Closed" }}
@@ -44,27 +43,10 @@ export default {
   name: "CardComponent",
   components: { FontAwesomeIcon },
   props: {
-    imageSrc: {
-      type: String,
-      default: "https://placekitten.com/300/300",
-    },
-    restaurantName: {
-      type: String,
-      default: "Name of Restaurant",
-    },
-    restaurantDescription: {
-      type: String,
-      default:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-    },
-    lastUpdated: {
-      type: String,
-      default: "Last updated 3 mins ago",
-    },
-    restaurantHour: {
-      type: Boolean,
-      default: true,
-    },
+    imageSrc: String,
+    restaurantName: String,
+    restaurantDescription: String,
+    restaurantHour: Boolean,
     // filter: {
     //   type: Array,
     //   // eslint-disable-next-line vue/require-valid-default-prop
