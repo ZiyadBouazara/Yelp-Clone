@@ -2,6 +2,7 @@ import Vuex from "vuex";
 const SERVER_URL = 'https://ufoodapi.herokuapp.com/unsecure'
 
 
+
 export default new Vuex.Store({
   state: {
     searchTerm: "",
