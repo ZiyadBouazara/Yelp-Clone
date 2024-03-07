@@ -36,6 +36,11 @@ export default {
       isHomePage,
     };
   },
+  created() {
+    EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
+    this.$store.dispatch("fetchRestaurant");
+    this.$store.dispatch("fetchUsers");
+  },
 };
 </script>
 
