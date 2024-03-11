@@ -16,23 +16,14 @@
       >
         <div class="card-wrapper">
           <CardComponent
-            :imageSrc="restaurant.pictures"
+            :picture="restaurantPictures(restaurant)"
             :restaurantDescription="restaurant.restaurantDescription"
             :restaurantName="restaurant.name"
+            :restaurant-hour="restaurantHours(restaurant)"
+            :restaurant-number="restaurant.tel"
+            :restaurant-genres="restaurant.genres"
           ></CardComponent>
         </div>
-      </div>
-    </div>
-    <div id="users">
-      <div v-for="(user, index) in users" :key="index">
-        <h3>{{ user.name }}</h3>
-        <!-- Display other user details as needed -->
-      </div>
-    </div>
-    <div id="restaurant">
-      <div v-for="(restaurant, index) in restaurants" :key="index">
-        <h3>{{ restaurant.name }}</h3>
-        <!-- Display other user details as needed -->
       </div>
     </div>
   </div>
@@ -57,20 +48,15 @@ export default {
   },
   data() {
     return {
-      value: null,
-      isRestaurantOpen: true,
-      closingHour: "22:00",
-      openingHour: "08:00",
       isModalVisible: false,
       cardData: data.resto,
-      searchTerm: " ",
     };
   },
   computed: {
     filteredCardData() {
       const searchTerm = this.$store.getters.getSearchTerm;
       return this.restaurants.filter((cardItem) =>
-        cardItem.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
+        cardItem.name.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     },
     ...mapGetters(["getRestaurants"]),
@@ -83,11 +69,20 @@ export default {
     },
   },
   methods: {
+    restaurantGenres(restaurant) {
+      const restaurantId = restaurant.id;
+      return this.$store.getters.getRestaurantGenre(restaurantId);
+    },
+    restaurantHours(restaurant) {
+      const restaurantId = restaurant.id;
+      return this.$store.getters.getRestaurantHours(restaurantId);
+    },
+    restaurantPictures(restaurant) {
+      const restaurantId = restaurant.id;
+      return this.$store.getters.getRestaurantPictures(restaurantId);
+    },
     openAuthenticationModal() {
       this.isModalVisible = true;
-    },
-    closeAuthenticationModal() {
-      this.isModalVisible = false;
     },
   },
 };
@@ -109,13 +104,13 @@ export default {
 
 @media (min-width: 768px) {
   .col-md-6 .card-wrapper {
-    margin: 0; /* Reset margin for larger screens */
+    margin: 0;
   }
 }
 
 @media (min-width: 992px) {
   .col-lg-4 .card-wrapper {
-    margin: 0; /* Reset margin for larger screens */
+    margin: 0;
   }
 }
 
