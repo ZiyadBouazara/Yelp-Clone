@@ -54,6 +54,28 @@ export default new Vuex.Store({
         });
       }
     },
+    SET_PRICE_RESTAURANT(state, { restaurantId, price_range }) {
+      const restaurantIndex = state.restaurants.findIndex(
+        (r) => r.id === restaurantId,
+      );
+      if (restaurantIndex !== -1) {
+        Vue.set(state.restaurants, restaurantIndex, {
+          ...state.restaurants[restaurantIndex],
+          hour: price_range,
+        });
+      }
+    },
+    SET_RATING_RESTAURANT(state, { restaurantId, rating }) {
+      const restaurantIndex = state.restaurants.findIndex(
+        (r) => r.id === restaurantId,
+      );
+      if (restaurantIndex !== -1) {
+        Vue.set(state.restaurants, restaurantIndex, {
+          ...state.restaurants[restaurantIndex],
+          hour: rating,
+        });
+      }
+    },
   },
   actions: {
     updateSearchTerm({ commit }, searchTerm) {
@@ -131,6 +153,36 @@ export default new Vuex.Store({
         console.error("Error fetching restaurant genres:", error);
       }
     },
+    async fetchRestaurantPriceRange({ commit }, restaurantId) {
+      try {
+        const response = await fetch(
+          `${SERVER_URL}/restaurants/${restaurantId}`,
+        );
+        if (response.status !== 200) {
+          throw new Error("Restaurant price_range not loaded");
+        }
+        const jsonResponse = await response.json();
+        const hour = jsonResponse.price_range || [];
+        commit("SET_PRICE_RESTAURANT", { restaurantId, price_range });
+      } catch (error) {
+        console.error("Error fetching restaurant price_range:", error);
+      }
+    },
+    async fetchRestaurantRating({ commit }, restaurantId) {
+      try {
+        const response = await fetch(
+          `${SERVER_URL}/restaurants/${restaurantId}`,
+        );
+        if (response.status !== 200) {
+          throw new Error("Restaurant rating not loaded");
+        }
+        const jsonResponse = await response.json();
+        const hour = jsonResponse.rating || [];
+        commit("SET_RATING_RESTAURANT", { restaurantId, rating });
+      } catch (error) {
+        console.error("Error fetching restaurant rating:", error);
+      }
+    },
   },
   getters: {
     getRestoClicked: (state) => state.restoClicked,
@@ -149,6 +201,14 @@ export default new Vuex.Store({
     getRestaurantGenre: (state) => (restaurantId) => {
       const restaurant = state.restaurants.find((r) => r.id === restaurantId);
       return restaurant ? state.restaurants.genres || [] : [];
+    },
+    getRestaurantPriceRange: (state) => (restaurantId) => {
+      const restaurant = state.restaurants.find((r) => r.id === restaurantId);
+      return restaurant ? state.restaurants.price_range || [] : [];
+    },
+    getRestaurantRating: (state) => (restaurantId) => {
+      const restaurant = state.restaurants.find((r) => r.id === restaurantId);
+      return restaurant ? state.restaurants.rating || [] : [];
     },
   },
 });

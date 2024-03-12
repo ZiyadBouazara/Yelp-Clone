@@ -46,7 +46,6 @@
     </div>
     <div class="card-body" style="height: 250px; text-align: center">
       <h5 class="card-title">{{ restaurantName }}</h5>
-      <p class="card-text">{{ restaurantDescription }}</p>
       <p class="card-text"></p>
       <p
         :style="{ color: isRestaurantOpen() ? 'green' : 'red' }"
@@ -55,10 +54,17 @@
         {{ isRestaurantOpen() ? "Open" : "Closed" }}
       </p>
       <p class="card-text">
-        <span v-for="(genre, index) in restaurantGenres" :key="index">
+        <span
+          v-for="(genre, index) in restaurantGenres"
+          class="badge text-bg-light badge-inline"
+          :key="index"
+        >
           {{ genre }}
           {{ index < restaurantGenres.length - 1 ? ", " : "" }}
         </span>
+      </p>
+      <p class="card-text badge text-bg-light badge-inline">
+        {{ displayPriceRangeSymbol }}
       </p>
       <p
         class="card-text"
@@ -93,11 +99,10 @@ export default {
   props: {
     picture: Array,
     restaurantName: String,
-    restaurantDescription: String,
     restaurantHour: Object,
     restaurantNumber: String,
-    index: Number,
     restaurantGenres: Array,
+    restaurantPriceRange: Number,
   },
   data() {
     return {
@@ -106,6 +111,10 @@ export default {
     };
   },
   computed: {
+    displayPriceRangeSymbol() {
+      const priceRange = this.restaurantPriceRange;
+      return "$".repeat(priceRange);
+    },
     currentPicture() {
       if (this.picture && this.picture.length > 0) {
         return this.picture[this.imageIndex % this.picture.length];

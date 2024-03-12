@@ -17,11 +17,11 @@
         <div class="card-wrapper">
           <CardComponent
             :picture="restaurantPictures(restaurant)"
-            :restaurantDescription="restaurant.restaurantDescription"
             :restaurantName="restaurant.name"
             :restaurant-hour="restaurantHours(restaurant)"
             :restaurant-number="restaurant.tel"
             :restaurant-genres="restaurant.genres"
+            :restaurant-price-range="restaurant.price_range"
           ></CardComponent>
         </div>
       </div>
@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      cardData: data.resto,
     };
   },
   computed: {
@@ -69,10 +68,6 @@ export default {
     },
   },
   methods: {
-    restaurantGenres(restaurant) {
-      const restaurantId = restaurant.id;
-      return this.$store.getters.getRestaurantGenre(restaurantId);
-    },
     restaurantHours(restaurant) {
       const restaurantId = restaurant.id;
       return this.$store.getters.getRestaurantHours(restaurantId);

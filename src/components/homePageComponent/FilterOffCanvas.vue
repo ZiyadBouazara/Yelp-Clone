@@ -210,9 +210,7 @@ body {
 .row,
 .comp {
   margin: 10px;
-  /*box-shadow: 0 -4px 6px rgba(235, 235, 235, 1);*/
   border-bottom: 1px solid rgb(221, 221, 221);
-  /*border-radius: 30px;*/
   display: flex;
   flex-direction: column;
   align-items: center;
