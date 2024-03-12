@@ -185,7 +185,6 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getRestoClicked: (state) => state.restoClicked,
     getSearchTerm: (state) => state.searchTerm,
     getRestaurants: (state) => state.restaurants,
     getUsers: (state) => state.users,

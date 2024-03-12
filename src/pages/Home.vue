@@ -34,7 +34,6 @@ import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue"
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 import { EventBus } from "@/App.vue";
-import * as data from "@/javascript/Resto";
 import { mapGetters } from "vuex";
 
 export default {

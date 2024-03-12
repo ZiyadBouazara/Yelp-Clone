@@ -60,16 +60,13 @@
           :key="index"
         >
           {{ genre }}
-          {{ index < restaurantGenres.length - 1 ? ", " : "" }}
+          {{ index < restaurantGenres.length - 1 ? " " : "" }}
         </span>
       </p>
       <p class="card-text badge text-bg-light badge-inline">
         {{ displayPriceRangeSymbol }}
       </p>
-      <p
-        class="card-text"
-        style="position: absolute; bottom: 0; left: 0; margin: 10px"
-      >
+      <p class="card-text">
         {{ restaurantNumber }}
       </p>
       <router-link to="/restaurant/id"
