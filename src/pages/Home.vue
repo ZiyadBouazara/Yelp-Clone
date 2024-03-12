@@ -16,9 +16,9 @@
       >
         <div class="card-wrapper">
           <CardComponent
-            :picture="restaurantPictures(restaurant)"
-            :restaurantName="restaurant.name"
-            :restaurant-hour="restaurantHours(restaurant)"
+            :picture="getRestaurant(restaurant).pictures"
+            :restaurantName="getRestaurant(restaurant).name"
+            :restaurant-hour="getRestaurant(restaurant).opening_hours"
             :restaurant-number="restaurant.tel"
             :restaurant-genres="restaurant.genres"
             :restaurant-price-range="restaurant.price_range"
@@ -67,31 +67,18 @@ export default {
     },
   },
   methods: {
-    restaurantHours(restaurant) {
-      const restaurantId = restaurant.id;
-      return this.$store.getters.getRestaurantHours(restaurantId);
-    },
-    restaurantPictures(restaurant) {
-      const restaurantId = restaurant.id;
-      return this.$store.getters.getRestaurantPictures(restaurantId);
-    },
     openAuthenticationModal() {
       this.isModalVisible = true;
+    },
+    getRestaurant(restaurant) {
+      const restaurantId = restaurant.id;
+      return this.$store.getters.getRestaurantById(restaurantId);
     },
   },
 };
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-}
-
-.card-container {
-  flex: 1 0 100%;
-}
-
 .card-wrapper {
   margin: 0 auto;
 }
