@@ -58,16 +58,34 @@
           v-for="(genre, index) in restaurantGenres"
           class="badge text-bg-light badge-inline"
           :key="index"
+          style="background-color: lightgrey"
         >
           {{ genre }}
           {{ index < restaurantGenres.length - 1 ? " " : "" }}
         </span>
       </p>
-      <p class="card-text badge text-bg-light badge-inline">
+      <p
+        class="card-text badge text-bg-light badge-inline"
+        style="background-color: lightgrey"
+      >
         {{ displayPriceRangeSymbol }}
       </p>
       <p class="card-text">
         {{ restaurantNumber }}
+      </p>
+      <p class="card-text">
+        <span
+          v-for="(number, index) in displayRatingSymbol"
+          class="badge"
+          :key="index"
+          style="background-color: orange"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'star']"
+            class="icon"
+            v-if="number === 'star'"
+          />
+        </span>
       </p>
       <router-link to="/restaurant/id"
         ><button
@@ -87,9 +105,11 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(faArrowRight);
+library.add(faStar);
 export default {
   name: "CardComponent",
   components: { FontAwesomeIcon },
@@ -100,6 +120,7 @@ export default {
     restaurantNumber: String,
     restaurantGenres: Array,
     restaurantPriceRange: Number,
+    restaurantRating: Number,
   },
   data() {
     return {
@@ -111,6 +132,10 @@ export default {
     displayPriceRangeSymbol() {
       const priceRange = this.restaurantPriceRange;
       return "$".repeat(priceRange);
+    },
+    displayRatingSymbol() {
+      const array = Math.floor(this.restaurantRating);
+      return Array.from({ length: array }, () => "star");
     },
     currentPicture() {
       if (this.picture && this.picture.length > 0) {

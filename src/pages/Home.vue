@@ -19,9 +19,10 @@
             :picture="getRestaurant(restaurant).pictures"
             :restaurantName="getRestaurant(restaurant).name"
             :restaurant-hour="getRestaurant(restaurant).opening_hours"
-            :restaurant-number="restaurant.tel"
-            :restaurant-genres="restaurant.genres"
-            :restaurant-price-range="restaurant.price_range"
+            :restaurant-number="getRestaurant(restaurant).tel"
+            :restaurant-genres="getRestaurant(restaurant).genres"
+            :restaurant-price-range="getRestaurant(restaurant).price_range"
+            :restaurant-rating="getRestaurant(restaurant).rating"
           ></CardComponent>
         </div>
       </div>
