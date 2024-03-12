@@ -13,34 +13,34 @@
       />
       <button
         class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExample"
         data-bs-slide="prev"
+        data-bs-target="#carouselExample"
         style="
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           left: 5px;
         "
+        type="button"
         @click="decrementeIndex()"
       >
-        <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+        <span aria-hidden="false" class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Previous</span>
       </button>
       <button
         class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExample"
         data-bs-slide="next"
+        data-bs-target="#carouselExample"
         style="
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           right: 5px;
         "
+        type="button"
         @click="incrementeIndex()"
       >
-        <span class="carousel-control-next-icon" aria-hidden="false"></span>
+        <span aria-hidden="false" class="carousel-control-next-icon"></span>
         <span class="visually-hidden">Next</span>
       </button>
     </div>
@@ -56,8 +56,8 @@
       <p class="card-text">
         <span
           v-for="(genre, index) in restaurantGenres"
-          class="badge text-bg-light badge-inline"
           :key="index"
+          class="badge text-bg-light badge-inline"
           style="background-color: lightgrey"
         >
           {{ genre }}
@@ -87,17 +87,16 @@
           />
         </span>
       </p>
-      <router-link to="/restaurant/id"
-        ><button
+      <router-link to="/restaurant/id">
+        <button
           class="btn btn-outline-danger btn-lg"
           style="position: absolute; bottom: 0; right: 0; margin: 10px"
           type="button"
         >
-          <font-awesome-icon
-            :icon="['fas', 'arrow-right']"
-            class="icon"
-          /></button
-      ></router-link>
+          <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
+        </button>
+      </router-link>
+      <AddVisit />
     </div>
   </div>
 </template>
@@ -107,12 +106,13 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import AddVisit from "@/components/visitComponent/AddVisit.vue";
 
 library.add(faArrowRight);
 library.add(faStar);
 export default {
   name: "CardComponent",
-  components: { FontAwesomeIcon },
+  components: { AddVisit, FontAwesomeIcon },
   props: {
     picture: Array,
     restaurantName: String,
