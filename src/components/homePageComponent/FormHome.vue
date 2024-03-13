@@ -11,8 +11,9 @@
       />
       <input
         class="form-control custom-search-input mb-2"
-        type="search"
-        placeholder="Dining Preference..."
+        v-model="searchGenre"
+        @input="handleInput"
+        placeholder="Genres Preference..."
         aria-label="Search"
         style="border-radius: 30px; height: 40px"
       />
@@ -26,13 +27,16 @@ export default {
   data() {
     return {
       searchTerm: "",
+      searchGenre: "",
       selectedRestaurant: "",
     };
   },
   methods: {
     handleInput() {
       console.log("User typed:", this.searchTerm);
+      console.log("User typed:", this.searchGenre);
       this.$store.dispatch("updateSearchTerm", this.searchTerm);
+      this.$store.dispatch("updateSearchTermGenre", this.searchGenre);
     },
   },
 };

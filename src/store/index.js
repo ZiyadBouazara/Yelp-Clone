@@ -5,11 +5,15 @@ const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 export default new Vuex.Store({
   state: {
     searchTerm: "",
+    searchTermGenre: "",
     restaurants: [],
     users: [],
     imageIndex: 0,
   },
   mutations: {
+    SET_SEARCH_TERM_GENRE(state, searchTermGenre) {
+      state.searchTermGenre = searchTermGenre;
+    },
     SET_SEARCH_TERM(state, searchTerm) {
       state.searchTerm = searchTerm;
     },
@@ -24,6 +28,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    updateSearchTermGenre({ commit }, searchTermGenre) {
+      commit("SET_SEARCH_TERM_GENRE", searchTermGenre);
+    },
     updateSearchTerm({ commit }, searchTerm) {
       commit("SET_SEARCH_TERM", searchTerm);
     },
@@ -56,6 +63,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    getSearchTermGenre: (state) => state.searchTermGenre,
     getSearchTerm: (state) => state.searchTerm,
     getRestaurants: (state) => state.restaurants,
     getUsers: (state) => state.users,
