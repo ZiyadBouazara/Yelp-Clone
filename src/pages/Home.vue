@@ -2,7 +2,9 @@
   <div class="text-center">
     <div class="row bs-gutter-x-0" style="margin-top: 10px; margin-right: 0px">
       <div class="col-md-3">
-        <filter-off-canvas></filter-off-canvas>
+        <filter-off-canvas
+        :filter="restaurants.genres"
+        ></filter-off-canvas>
       </div>
       <div class="col-md-6">
         <FormHome></FormHome>

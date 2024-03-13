@@ -153,6 +153,9 @@
 
 <script>
 export default {
+  props: {
+    Filters: Array,
+  },
   data() {
     return {
       selectedDistance: null,
@@ -164,19 +167,19 @@ export default {
         { id: 4, name: "Walking (2 km.)" },
         { id: 5, name: "Within 4 blocks" },
       ],
-      Filters: [
-        { id: 1, name: "Italian" },
-        { id: 2, name: "Moroccan" },
-        { id: 3, name: "Poutine" },
-        { id: 4, name: "Pizza" },
-        { id: 5, name: "Fast-Food" },
-        { id: 6, name: "Lebanese" },
-        { id: 7, name: "Kebab" },
-        { id: 8, name: "Alchool" },
-        { id: 9, name: "Bar" },
-        { id: 10, name: "European" },
-        { id: 11, name: "French" },
-      ],
+      // Filters: [
+      //   { id: 1, name: "Italian" },
+      //   { id: 2, name: "Moroccan" },
+      //   { id: 3, name: "Poutine" },
+      //   { id: 4, name: "Pizza" },
+      //   { id: 5, name: "Fast-Food" },
+      //   { id: 6, name: "Lebanese" },
+      //   { id: 7, name: "Kebab" },
+      //   { id: 8, name: "Alchool" },
+      //   { id: 9, name: "Bar" },
+      //   { id: 10, name: "European" },
+      //   { id: 11, name: "French" },
+      // ],
     };
   },
   methods: {
