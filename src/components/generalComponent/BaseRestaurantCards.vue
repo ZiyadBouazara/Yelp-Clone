@@ -174,15 +174,16 @@ export default {
     getDisplayHours() {
       const currentDay = this.getCurrentDay();
       if (this.isRestaurantOpen()) {
-        const [openingHour] = this.restaurantHour[currentDay].split("-");
-        return openingHour;
-      } else {
-        const [closingHour] = this.restaurantHour[currentDay].split("-");
+        const [openingHour, closingHour] =
+          this.restaurantHour[currentDay].split("-");
         return closingHour;
+      } else {
+        const [openingHour, closingHour] =
+          this.restaurantHour[currentDay].split("-");
+        return openingHour;
       }
     },
     isRestaurantOpen() {
-      //arrange the open until
       const currentDay = this.getCurrentDay();
       const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
