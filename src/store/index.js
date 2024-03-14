@@ -10,7 +10,6 @@ export default createStore({
     restaurants: [],
     users: [],
     imageIndex: 0,
-
   },
   mutations: {
     ADD_TO_GENRE_ARRAY(state, newItem) {
@@ -36,10 +35,10 @@ export default createStore({
     },
   },
   actions: {
-    addSelectedFilter({ commit }, newItem) {
+    addSelectedFilter({ commit, state }, newItem) {
       commit("ADD_TO_GENRE_ARRAY", newItem);
     },
-    removeGenre({ commit, state }, removedItem) {
+    removeGenre({ commit, state }, removedItem) {;
       if (state.genres.includes(removedItem)) {
         commit("REMOVE_FROM_GENRE_ARRAY", removedItem);
       }

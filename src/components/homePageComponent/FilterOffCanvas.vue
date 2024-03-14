@@ -21,7 +21,6 @@
         />
       </svg>
     </button>
-
     <div
       class="offcanvas offcanvas-start"
       tabIndex="-1"
@@ -57,10 +56,9 @@
             </li>
           </ul>
         </div>
-
         <div class="col-12 d-flex flex-wrap">
           <span
-            v-for="selectedOption in selectedFilter"
+            v-for="selectedOption in getGenres"
             :key="selectedOption.id"
             class="badge text-bg-light badge-inline"
             style="margin-bottom: 10px"
@@ -69,7 +67,6 @@
           </span>
         </div>
       </div>
-
       <div class="row">
         <div class="btn-group">
           <button
@@ -93,7 +90,6 @@
           </ul>
         </div>
       </div>
-
       <div class="row">
         <p style="font-weight: bold">Select a price...</p>
         <div class="price-label">
@@ -161,7 +157,6 @@ export default {
   data() {
     return {
       selectedDistance: null,
-      selectedFilter: [],
       Distance: [
         { id: 1, name: "Bird's-eye View" },
         { id: 2, name: "Driving (8 km.)" },
@@ -193,20 +188,14 @@ export default {
     ...mapActions(["addSelectedFilter"]),
     addFilter(filter) {
       this.addSelectedFilter(filter);
-      console.log(this.getGenres);
-    },
-    updateSelectedFilter(filter) {
-      if (this.selectedFilter.includes(filter)) {
-        this.selectedFilter = this.selectedFilter.filter(
-          (selectedOption) => selectedOption !== filter,
-        );
-      } else {
-        this.selectedFilter.push(filter);
-      }
     },
     handleFilterClick(filter) {
-      this.updateSelectedFilter(filter);
-      this.addFilter(filter);
+      var foundable = filter.toLowerCase();
+      if (this.getGenres.includes(foundable)) {
+        this.removeFilterFromStore(foundable);
+      } else {
+        this.addFilter(foundable);
+      }
     },
     updateSelectedDistance(distance) {
       this.selectedDistance = distance;
