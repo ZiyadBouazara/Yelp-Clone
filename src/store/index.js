@@ -10,6 +10,7 @@ export default createStore({
     restaurants: [],
     users: [],
     imageIndex: 0,
+
   },
   mutations: {
     ADD_TO_GENRE_ARRAY(state, newItem) {
