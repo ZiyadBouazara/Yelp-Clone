@@ -180,10 +180,12 @@ export default {
       }
     },
     isRestaurantOpen() {
+      //arrange the open until
       const currentDay = this.getCurrentDay();
       const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
       console.log("currentDay:", currentDay);
+      console.log("this.restaurantName:", this.restaurantName);
       console.log("this.restaurantHour:", this.restaurantHour);
 
       if (this.restaurantHour[currentDay]) {

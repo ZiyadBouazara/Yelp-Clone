@@ -1,16 +1,23 @@
-import Vuex from "vuex";
+import { createStore } from "vuex";
 
 const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 
-export default new Vuex.Store({
+export default createStore({
   state: {
     searchTerm: "",
     searchTermGenre: "",
+    genres: [],
     restaurants: [],
     users: [],
     imageIndex: 0,
   },
   mutations: {
+    ADD_TO_GENRE_ARRAY(state, newItem) {
+      state.genres.push(newItem);
+    },
+    REMOVE_FROM_GENRE_ARRAY(state, removedItem) {
+      state.genres = state.genres.filter((item) => item !== removedItem);
+    },
     SET_SEARCH_TERM_GENRE(state, searchTermGenre) {
       state.searchTermGenre = searchTermGenre;
     },
@@ -28,6 +35,14 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    addSelectedFilter({ commit }, newItem) {
+      commit("ADD_TO_GENRE_ARRAY", newItem);
+    },
+    removeGenre({ commit, state }, removedItem) {
+      if (state.genres.includes(removedItem)) {
+        commit("REMOVE_FROM_GENRE_ARRAY", removedItem);
+      }
+    },
     updateSearchTermGenre({ commit }, searchTermGenre) {
       commit("SET_SEARCH_TERM_GENRE", searchTermGenre);
     },
@@ -63,6 +78,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    getGenres: (state) => state.genres,
     getSearchTermGenre: (state) => state.searchTermGenre,
     getSearchTerm: (state) => state.searchTerm,
     getRestaurants: (state) => state.restaurants,

@@ -2,7 +2,7 @@
   <div class="text-center">
     <div class="row bs-gutter-x-0" style="margin-top: 10px; margin-right: 0px">
       <div class="col-md-3">
-        <filter-off-canvas :filter="restaurants.genres"></filter-off-canvas>
+        <filter-off-canvas :filter="genres"></filter-off-canvas>
       </div>
       <div class="col-md-6">
         <FormHome></FormHome>
@@ -53,13 +53,25 @@ export default {
   },
   computed: {
     filteredCardData() {
+      const filterSelected = this.$store.getters.getGenres;
       const searchTerm = this.$store.getters.getSearchTerm;
       const searchGenre = this.$store.getters.getSearchTermGenre;
       return this.restaurants.filter((cardItem) => {
-        const hasMatchingName = cardItem.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const hasMatchingGenre = cardItem.genres.some((genre) => genre.toLowerCase().includes(searchGenre.toLowerCase()));
+        const hasMatchingName = cardItem.name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        const hasMatchingGenre = cardItem.genres.some((genre) =>
+          genre.toLowerCase().includes(searchGenre.toLowerCase()),
+        );
+        const filterSelectedd =
+          filterSelected.length === 0 ||
+          cardItem.genres.some((genre) =>
+            filterSelected.some((selected) =>
+              genre.toLowerCase().includes(selected.toLowerCase()),
+            ),
+          );
 
-        return hasMatchingName && hasMatchingGenre;
+        return hasMatchingName && hasMatchingGenre && filterSelectedd;
       });
     },
     ...mapGetters(["getRestaurants"]),

@@ -51,7 +51,7 @@
             <li
               v-for="option in Filters"
               :key="option.id"
-              @click="updateSelectedFilter(option.name)"
+              @click="handleFilterClick(option.name)"
             >
               <a class="dropdown-item" href="#">{{ option.name }}</a>
             </li>
@@ -152,9 +152,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   props: {
-    Filters: Array,
+    Genres: Array,
   },
   data() {
     return {
@@ -167,22 +169,32 @@ export default {
         { id: 4, name: "Walking (2 km.)" },
         { id: 5, name: "Within 4 blocks" },
       ],
-      // Filters: [
-      //   { id: 1, name: "Italian" },
-      //   { id: 2, name: "Moroccan" },
-      //   { id: 3, name: "Poutine" },
-      //   { id: 4, name: "Pizza" },
-      //   { id: 5, name: "Fast-Food" },
-      //   { id: 6, name: "Lebanese" },
-      //   { id: 7, name: "Kebab" },
-      //   { id: 8, name: "Alchool" },
-      //   { id: 9, name: "Bar" },
-      //   { id: 10, name: "European" },
-      //   { id: 11, name: "French" },
-      // ],
+      Filters: [
+        { id: 1, name: "Bistro" },
+        { id: 2, name: "Fast-Food" },
+        { id: 3, name: "Ambiance" },
+        { id: 4, name: "Libanais" },
+        { id: 5, name: "Hamburgers" },
+        { id: 6, name: "Café" },
+        { id: 7, name: "Italien" },
+      ],
     };
   },
+  computed: {
+    ...mapGetters(["getGenres"]),
+    selectedFilters() {
+      return this.getGenres;
+    },
+  },
   methods: {
+    removeFilterFromStore(filter) {
+      this.$store.dispatch("removeGenre", filter);
+    },
+    ...mapActions(["addSelectedFilter"]),
+    addFilter(filter) {
+      this.addSelectedFilter(filter);
+      console.log(this.getGenres);
+    },
     updateSelectedFilter(filter) {
       if (this.selectedFilter.includes(filter)) {
         this.selectedFilter = this.selectedFilter.filter(
@@ -191,6 +203,10 @@ export default {
       } else {
         this.selectedFilter.push(filter);
       }
+    },
+    handleFilterClick(filter) {
+      this.updateSelectedFilter(filter);
+      this.addFilter(filter);
     },
     updateSelectedDistance(distance) {
       this.selectedDistance = distance;
