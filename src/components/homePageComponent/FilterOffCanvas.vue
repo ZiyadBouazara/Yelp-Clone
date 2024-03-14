@@ -21,7 +21,6 @@
         />
       </svg>
     </button>
-
     <div
       class="offcanvas offcanvas-start"
       tabIndex="-1"
@@ -51,16 +50,15 @@
             <li
               v-for="option in Filters"
               :key="option.id"
-              @click="updateSelectedFilter(option.name)"
+              @click="handleFilterClick(option.name)"
             >
               <a class="dropdown-item" href="#">{{ option.name }}</a>
             </li>
           </ul>
         </div>
-
         <div class="col-12 d-flex flex-wrap">
           <span
-            v-for="selectedOption in selectedFilter"
+            v-for="selectedOption in getGenres"
             :key="selectedOption.id"
             class="badge text-bg-light badge-inline"
             style="margin-bottom: 10px"
@@ -69,7 +67,6 @@
           </span>
         </div>
       </div>
-
       <div class="row">
         <div class="btn-group">
           <button
@@ -93,7 +90,6 @@
           </ul>
         </div>
       </div>
-
       <div class="row">
         <p style="font-weight: bold">Select a price...</p>
         <div class="price-label">
@@ -152,11 +148,15 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
+  props: {
+    Genres: Array,
+  },
   data() {
     return {
       selectedDistance: null,
-      selectedFilter: [],
       Distance: [
         { id: 1, name: "Bird's-eye View" },
         { id: 2, name: "Driving (8 km.)" },
@@ -165,28 +165,36 @@ export default {
         { id: 5, name: "Within 4 blocks" },
       ],
       Filters: [
-        { id: 1, name: "Italian" },
-        { id: 2, name: "Moroccan" },
-        { id: 3, name: "Poutine" },
-        { id: 4, name: "Pizza" },
-        { id: 5, name: "Fast-Food" },
-        { id: 6, name: "Lebanese" },
-        { id: 7, name: "Kebab" },
-        { id: 8, name: "Alchool" },
-        { id: 9, name: "Bar" },
-        { id: 10, name: "European" },
-        { id: 11, name: "French" },
+        { id: 1, name: "Bistro" },
+        { id: 2, name: "Fast-Food" },
+        { id: 3, name: "Ambiance" },
+        { id: 4, name: "Libanais" },
+        { id: 5, name: "Hamburgers" },
+        { id: 6, name: "Café" },
+        { id: 7, name: "Italien" },
       ],
     };
   },
+  computed: {
+    ...mapGetters(["getGenres"]),
+    selectedFilters() {
+      return this.getGenres;
+    },
+  },
   methods: {
-    updateSelectedFilter(filter) {
-      if (this.selectedFilter.includes(filter)) {
-        this.selectedFilter = this.selectedFilter.filter(
-          (selectedOption) => selectedOption !== filter,
-        );
+    removeFilterFromStore(filter) {
+      this.$store.dispatch("removeGenre", filter);
+    },
+    ...mapActions(["addSelectedFilter"]),
+    addFilter(filter) {
+      this.addSelectedFilter(filter);
+    },
+    handleFilterClick(filter) {
+      var foundable = filter.toLowerCase();
+      if (this.getGenres.includes(foundable)) {
+        this.removeFilterFromStore(foundable);
       } else {
-        this.selectedFilter.push(filter);
+        this.addFilter(foundable);
       }
     },
     updateSelectedDistance(distance) {

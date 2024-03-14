@@ -4,7 +4,6 @@
       :data-bs-target="`#visitModal${props.restaurantId}`"
       class="btn btn-outline-danger btn-lg"
       data-bs-toggle="modal"
-      style="position: absolute; bottom: 0; right: 60px; margin: 10px"
       type="button"
     >
       <i class="fa-regular fa-star"></i> Write a review
