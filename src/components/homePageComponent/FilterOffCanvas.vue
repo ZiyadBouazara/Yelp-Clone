@@ -26,7 +26,11 @@
       tabIndex="-1"
       id="offcanvasExample"
       aria-labelledby="offcanvasExampleLabel"
-      style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)"
+      style="
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 250px;
+        border-radius: 30px;
+      "
     >
       <h5
         class="offcanvas-title"
@@ -67,29 +71,29 @@
           </span>
         </div>
       </div>
-      <div class="row">
-        <div class="btn-group">
-          <button
-            type="button"
-            class="btn dropdown-toggle black hover"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            style="border-radius: 30px; margin-top: 50px; margin-bottom: 50px"
-          >
-            {{ selectedDistance || "Choose Distance" }}
-          </button>
-          <ul class="dropdown-menu">
-            <li v-for="optionDistance in Distance" :key="optionDistance.id">
-              <a
-                class="dropdown-item"
-                @click="updateSelectedDistance(optionDistance.name)"
-              >
-                {{ optionDistance.name }}</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
+      <!--      <div class="row">-->
+      <!--        <div class="btn-group">-->
+      <!--          <button-->
+      <!--            type="button"-->
+      <!--            class="btn dropdown-toggle black hover"-->
+      <!--            data-bs-toggle="dropdown"-->
+      <!--            aria-expanded="false"-->
+      <!--            style="border-radius: 30px; margin-top: 50px; margin-bottom: 50px"-->
+      <!--          >-->
+      <!--            {{ selectedDistance || "Choose Distance" }}-->
+      <!--          </button>-->
+      <!--          <ul class="dropdown-menu">-->
+      <!--            <li v-for="optionDistance in Distance" :key="optionDistance.id">-->
+      <!--              <a-->
+      <!--                class="dropdown-item"-->
+      <!--                @click="updateSelectedDistance(optionDistance.name)"-->
+      <!--              >-->
+      <!--                {{ optionDistance.name }}</a-->
+      <!--              >-->
+      <!--            </li>-->
+      <!--          </ul>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div class="row">
         <p style="font-weight: bold">Select a price...</p>
         <div class="price-label">
@@ -98,49 +102,22 @@
             type="range"
             class="form-range"
             id="customRange1"
+            min="0"
+            max="2"
+            step="1"
             style="margin-top: 50px; margin-bottom: 50px"
+            @input="handleUserPriceChoice"
           />
           <span>$$$</span>
         </div>
       </div>
       <div class="row comp">
-        <p style="font-weight: bold">Features</p>
-        <div
-          class="form-check form-check-inline hover"
-          style="margin-top: 20px"
-        >
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox1"
-            value="option1"
-          />
-          <label
-            class="form-check-label"
-            for="inlineCheckbox1"
-            style="margin-left: 20px"
-            >Take Reservations</label
-          >
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox2"
-            value="option2"
-          />
-          <label
-            class="form-check-label"
-            for="inlineCheckbox2"
-            style="margin-left: 20px"
-            >Offers Takeout</label
-          >
-        </div>
         <button
           class="btn black hover"
           style="margin-top: 10px; margin-right: 10px"
+          @click="resetPrice"
         >
-          See all
+          Reset Price Options
         </button>
       </div>
     </div>
@@ -156,14 +133,6 @@ export default {
   },
   data() {
     return {
-      selectedDistance: null,
-      Distance: [
-        { id: 1, name: "Bird's-eye View" },
-        { id: 2, name: "Driving (8 km.)" },
-        { id: 3, name: "Biking (4 km.)" },
-        { id: 4, name: "Walking (2 km.)" },
-        { id: 5, name: "Within 4 blocks" },
-      ],
       Filters: [
         { id: 1, name: "Bistro" },
         { id: 2, name: "Fast-Food" },
@@ -176,12 +145,33 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getPrice"]),
+    getPricee() {
+      return this.getPrice;
+    },
     ...mapGetters(["getGenres"]),
     selectedFilters() {
       return this.getGenres;
     },
   },
   methods: {
+    handleUserPriceChoice(event) {
+      const value = parseInt(event.target.value);
+      if (value === 0) {
+        this.setNewPrice("$");
+      } else if (value === 1) {
+        this.setNewPrice("$$");
+      } else if (value === 2) {
+        this.setNewPrice("$$$");
+      }
+    },
+    resetPrice() {
+      const priceReseter = "";
+      this.$store.dispatch("updatePrice", priceReseter);
+    },
+    setNewPrice(price) {
+      this.$store.dispatch("updatePrice", price);
+    },
     removeFilterFromStore(filter) {
       this.$store.dispatch("removeGenre", filter);
     },

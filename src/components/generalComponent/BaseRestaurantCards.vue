@@ -70,7 +70,7 @@
       </p>
       <p
         class="card-text badge badge-inline"
-        style="background-color: lightgrey; color: black;"
+        style="background-color: lightgrey; color: black"
       >
         {{ displayPriceRangeSymbol }}
       </p>

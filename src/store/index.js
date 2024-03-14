@@ -4,6 +4,7 @@ const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 
 export default createStore({
   state: {
+    price: "",
     searchTerm: "",
     searchTermGenre: "",
     genres: [],
@@ -20,6 +21,9 @@ export default createStore({
     },
     REMOVE_FROM_GENRE_ARRAY(state, removedItem) {
       state.genres = state.genres.filter((item) => item !== removedItem);
+    },
+    SET_PRICE(state, price) {
+      state.price = price;
     },
     SET_SEARCH_TERM_GENRE(state, searchTermGenre) {
       state.searchTermGenre = searchTermGenre;
@@ -47,10 +51,13 @@ export default createStore({
     },
   },
   actions: {
+    updatePrice({ commit }, newPrice) {
+      commit("SET_PRICE", newPrice);
+    },
     addSelectedFilter({ commit, state }, newItem) {
       commit("ADD_TO_GENRE_ARRAY", newItem);
     },
-    removeGenre({ commit, state }, removedItem) {;
+    removeGenre({ commit, state }, removedItem) {
       if (state.genres.includes(removedItem)) {
         commit("REMOVE_FROM_GENRE_ARRAY", removedItem);
       }
@@ -155,6 +162,7 @@ export default createStore({
     },
   },
   getters: {
+    getPrice: (state) => state.price,
     getGenres: (state) => state.genres,
     getSearchTermGenre: (state) => state.searchTermGenre,
     getSearchTerm: (state) => state.searchTerm,
