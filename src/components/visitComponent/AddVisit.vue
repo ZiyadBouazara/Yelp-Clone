@@ -1,8 +1,8 @@
 <template>
   <div>
     <button
+      :data-bs-target="`#visitModal${props.restaurantId}`"
       class="btn btn-outline-danger btn-lg"
-      data-bs-target="#visitModal"
       data-bs-toggle="modal"
       style="position: absolute; bottom: 0; right: 60px; margin: 10px"
       type="button"
@@ -11,7 +11,7 @@
     </button>
 
     <div
-      id="visitModal"
+      :id="`visitModal${props.restaurantId}`"
       aria-hidden="true"
       aria-labelledby="exampleModalLabel"
       class="modal fade"
@@ -34,21 +34,21 @@
                 <label class="col-form-label" for="recipient-name">Date:</label>
                 <input
                   id="recipient-name"
-                  v-model="review.date"
+                  v-model="visitData.date"
                   class="form-control"
                   required
-                  type="date"
+                  type="datetime-local"
                 />
               </div>
               <div class="mb-3">
-                <label class="col-form-label">Grade:</label>
-                <div class="grade-section d-flex align-items-center">
+                <label class="col-form-label">Rating:</label>
+                <div class="rating-section d-flex align-items-center">
                   <span
                     v-for="n in 5"
                     :key="n"
-                    :class="{ checked: review.grade >= n }"
+                    :class="{ checked: visitData.rating >= n }"
                     class="star me-1"
-                    @click="setGrade(n)"
+                    @click="setRating(n)"
                   >
                     <i class="fas fa-star"></i>
                   </span>
@@ -60,7 +60,7 @@
                 >
                 <textarea
                   id="message-text"
-                  v-model="review.comment"
+                  v-model="visitData.comment"
                   class="form-control"
                   required
                 ></textarea>
@@ -77,21 +77,42 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
+import moment from "moment";
 
-const review = ref({
+const store = useStore();
+
+const props = defineProps({ restaurantId: String });
+const userId = computed(() => store.getters.getLoggedInUser.id);
+
+const visitData = ref({
   date: "",
-  grade: 0,
+  rating: 0,
   comment: "",
 });
 
 const submitReview = () => {
-  console.log("Submitting review:", review.value);
-  review.value = { date: "", grade: 0, comment: "" }; // Reset form after submit
+  visitData.value.date = moment(visitData.value.date)
+    .utc()
+    .format("YYYY-MM-DDTHH:mm:ssZ");
+  const combinedData = {
+    restaurant_id: props.restaurantId,
+    ...visitData.value,
+  };
+  store.dispatch("createVisit", {
+    userId: userId.value,
+    visitData: combinedData,
+  });
+  resetForm();
 };
 
-const setGrade = (grade) => {
-  review.value.grade = grade;
+const resetForm = () => {
+  visitData.value = { date: "", rating: 0, comment: "" };
+};
+
+const setRating = (rating) => {
+  visitData.value.rating = rating;
 };
 </script>
 
@@ -114,15 +135,15 @@ label {
   cursor: pointer;
 }
 
-.grade-section {
+.rating-section {
   font-size: 20px;
 }
 
-.grade-section .star {
+.rating-section .star {
   font-size: 24px;
 }
 
-.grade-section .star.checked i {
+.rating-section .star.checked i {
   color: gold;
 }
 </style>

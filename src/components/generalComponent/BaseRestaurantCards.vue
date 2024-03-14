@@ -81,7 +81,7 @@
           <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
         </button>
       </router-link>
-      <AddVisit />
+      <AddVisit :restaurant-id="id" />
     </div>
   </div>
 </template>
@@ -97,6 +97,7 @@ export default {
   name: "CardComponent",
   components: { AddVisit, FontAwesomeIcon },
   props: {
+    id: String,
     picture: Array,
     restaurantName: String,
     restaurantHour: Object,

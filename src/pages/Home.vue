@@ -16,12 +16,13 @@
       >
         <div class="card-wrapper">
           <CardComponent
+            :id="restaurant.id"
             :picture="getRestaurant(restaurant).pictures"
-            :restaurantName="getRestaurant(restaurant).name"
+            :restaurant-genres="restaurant.genres"
             :restaurant-hour="getRestaurant(restaurant).opening_hours"
             :restaurant-number="restaurant.tel"
-            :restaurant-genres="restaurant.genres"
             :restaurant-price-range="restaurant.price_range"
+            :restaurantName="getRestaurant(restaurant).name"
           ></CardComponent>
         </div>
       </div>
