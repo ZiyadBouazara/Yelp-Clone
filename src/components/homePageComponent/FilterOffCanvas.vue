@@ -26,7 +26,11 @@
       tabIndex="-1"
       id="offcanvasExample"
       aria-labelledby="offcanvasExampleLabel"
-      style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 250px; border-radius: 30px"
+      style="
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 250px;
+        border-radius: 30px;
+      "
     >
       <h5
         class="offcanvas-title"
@@ -67,29 +71,29 @@
           </span>
         </div>
       </div>
-<!--      <div class="row">-->
-<!--        <div class="btn-group">-->
-<!--          <button-->
-<!--            type="button"-->
-<!--            class="btn dropdown-toggle black hover"-->
-<!--            data-bs-toggle="dropdown"-->
-<!--            aria-expanded="false"-->
-<!--            style="border-radius: 30px; margin-top: 50px; margin-bottom: 50px"-->
-<!--          >-->
-<!--            {{ selectedDistance || "Choose Distance" }}-->
-<!--          </button>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li v-for="optionDistance in Distance" :key="optionDistance.id">-->
-<!--              <a-->
-<!--                class="dropdown-item"-->
-<!--                @click="updateSelectedDistance(optionDistance.name)"-->
-<!--              >-->
-<!--                {{ optionDistance.name }}</a-->
-<!--              >-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div class="row">-->
+      <!--        <div class="btn-group">-->
+      <!--          <button-->
+      <!--            type="button"-->
+      <!--            class="btn dropdown-toggle black hover"-->
+      <!--            data-bs-toggle="dropdown"-->
+      <!--            aria-expanded="false"-->
+      <!--            style="border-radius: 30px; margin-top: 50px; margin-bottom: 50px"-->
+      <!--          >-->
+      <!--            {{ selectedDistance || "Choose Distance" }}-->
+      <!--          </button>-->
+      <!--          <ul class="dropdown-menu">-->
+      <!--            <li v-for="optionDistance in Distance" :key="optionDistance.id">-->
+      <!--              <a-->
+      <!--                class="dropdown-item"-->
+      <!--                @click="updateSelectedDistance(optionDistance.name)"-->
+      <!--              >-->
+      <!--                {{ optionDistance.name }}</a-->
+      <!--              >-->
+      <!--            </li>-->
+      <!--          </ul>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div class="row">
         <p style="font-weight: bold">Select a price...</p>
         <div class="price-label">
