@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     filteredCardData() {
+      const priceSelected = this.$store.getters.getPrice;
       const filterSelected = this.$store.getters.getGenres;
       const searchTerm = this.$store.getters.getSearchTerm;
       const searchGenre = this.$store.getters.getSearchTermGenre;
@@ -70,8 +71,20 @@ export default {
               genre.toLowerCase().includes(selected.toLowerCase()),
             ),
           );
+        if (!priceSelected) {
+          return hasMatchingName && hasMatchingGenre && filterSelectedd;
+        }
 
-        return hasMatchingName && hasMatchingGenre && filterSelectedd;
+        const priceRangeSymbol = this.getPriceRangeSymbol(cardItem.price_range);
+
+        const filteredPrice = priceRangeSymbol === priceSelected;
+
+        return (
+          hasMatchingName &&
+          hasMatchingGenre &&
+          filterSelectedd &&
+          filteredPrice
+        );
       });
     },
     ...mapGetters(["getRestaurants"]),
@@ -84,6 +97,18 @@ export default {
     },
   },
   methods: {
+    getPriceRangeSymbol(priceRange) {
+      switch (priceRange) {
+        case 1:
+          return "$";
+        case 2:
+          return "$$";
+        case 3:
+          return "$$$";
+        default:
+          return " ";
+      }
+    },
     openAuthenticationModal() {
       this.isModalVisible = true;
     },
