@@ -10,6 +10,7 @@ export default new Vuex.Store({
     imageIndex: 0,
     loggedInUser: null,
     visits: [],
+    favorites: [],
   },
   mutations: {
     SET_SEARCH_TERM(state, searchTerm) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     SET_IMAGE_INDEX(state, imageIndex) {
       state.imageIndex = imageIndex;
+    },
+    SET_USER_FAVORITES(state, favorites) {
+      state.favorites = favorites;
     },
     SET_LOGGED_IN_USER(state, user) {
       state.loggedInUser = user;
@@ -63,8 +67,9 @@ export default new Vuex.Store({
       }
     },
     async login({ commit, state }) {
-      // TODO : implement real login logic
-      const dummyUser = state.users[0];
+      // TODO : implement real login logic, changed to user[1] because he has many visits and favorites
+      const dummyUser = state.users[1];
+
       commit("SET_LOGGED_IN_USER", dummyUser);
     },
     async createVisit({ commit, dispatch }, { userId, visitData }) {
@@ -108,11 +113,30 @@ export default new Vuex.Store({
         console.error(`Error fetching visits for user:`, error);
       }
     },
+    async fetchUserFavorites({ commit }, userId) {
+      try {
+        const response = await fetch(`${SERVER_URL}/users/${userId}/favorites`);
+        if (response.status !== 200) {
+          throw new Error("Favorites do not load");
+        }
+        const jsonResponse = await response.json();
+
+        const selectedFavorites = jsonResponse.items.map((item) => ({
+          name: item.name,
+          restaurants: item.restaurants,
+        }));
+
+        commit("SET_USER_FAVORITES", selectedFavorites);
+      } catch (error) {
+        console.error("Error fetching user favorites", error);
+      }
+    },
   },
   getters: {
     getSearchTerm: (state) => state.searchTerm,
     getRestaurants: (state) => state.restaurants,
     getUsers: (state) => state.users,
+    getUserFavorites: (state) => state.favorites,
     getImageIndex: (state) => state.imageIndex,
     getRestaurantById: (state) => (restaurantId) => {
       return state.restaurants.find((r) => r.id === restaurantId);

@@ -1,92 +1,3 @@
-<script setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
-import "leaflet/dist/leaflet.css";
-
-const restaurant = ref({
-  name: "Test Restaurant",
-  address: {
-    street: "1065 Av. de la Médecine",
-    city: "Québec",
-    province: "QC",
-    zipCode: "G1V 0A6",
-  },
-  phone: "(888) 888-8888",
-  openingHours: {
-    Mon: "11:30 AM - 9:00 PM",
-    Tue: "11:30 AM - 9:00 PM",
-    Wed: "11:30 AM - 9:00 PM",
-    Thu: "11:30 AM - 9:00 PM",
-    Fri: "11:30 AM - 9:00 PM",
-    Sat: "11:30 AM - 9:00 PM",
-    Sun: "11:30 AM - 9:00 PM",
-  },
-});
-
-const mapIframeSrc = ref(
-  "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
-);
-
-const map = ref(null);
-
-const restaurantImages = ref([
-  "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg",
-  "https://cdn.pixabay.com/photo/2017/06/06/22/46/mediterranean-cuisine-2378758_1280.jpg",
-  "https://cdn.pixabay.com/photo/2017/02/15/10/57/pizza-2068272_1280.jpg",
-]);
-
-const initMap = async () => {
-  try {
-    const leaflet = await import("leaflet");
-    map.value = leaflet.map("map").setView([46.7799, -71.2772], 15);
-
-    leaflet
-      .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap contributors",
-      })
-      .addTo(map.value);
-
-    const restaurantLocation = [46.7799, -71.2772];
-
-    const customIcon = leaflet.divIcon({
-      className: "custom-leaflet-div-icon",
-      html: '<i class="fas fa-map-marker-alt fa-3x text-danger"></i>',
-      iconAnchor: [18, 36],
-    });
-
-    leaflet.marker(restaurantLocation, { icon: customIcon }).addTo(map.value);
-  } catch (error) {
-    console.error("Error loading Leaflet:", error);
-  }
-};
-
-const getDirections = () => {
-  const destination = "46.7799,-71.2772"; // Coordinates for the destination address
-  const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
-  window.open(url);
-};
-
-// const isSticky = ref(false);
-//
-// const handleScroll = () => {
-//   const topDistance = 450;
-//   isSticky.value = window.scrollY >= topDistance;
-// };
-
-const description = ref(
-  "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
-    "        poutines, options végétariennes et Vgan.",
-);
-
-onMounted(() => {
-  initMap();
-  // window.addEventListener("scroll", handleScroll);
-});
-//
-// onBeforeUnmount(() => {
-//   window.removeEventListener("scroll", handleScroll);
-// });
-</script>
-
 <template>
   <div>
     <div class="row">
@@ -246,6 +157,94 @@ onMounted(() => {
     <div class="line"></div>
   </div>
 </template>
+<script setup>
+import { onMounted, onBeforeUnmount, ref } from "vue";
+import "leaflet/dist/leaflet.css";
+
+const restaurant = ref({
+  name: "Test Restaurant",
+  address: {
+    street: "1065 Av. de la Médecine",
+    city: "Québec",
+    province: "QC",
+    zipCode: "G1V 0A6",
+  },
+  phone: "(888) 888-8888",
+  openingHours: {
+    Mon: "11:30 AM - 9:00 PM",
+    Tue: "11:30 AM - 9:00 PM",
+    Wed: "11:30 AM - 9:00 PM",
+    Thu: "11:30 AM - 9:00 PM",
+    Fri: "11:30 AM - 9:00 PM",
+    Sat: "11:30 AM - 9:00 PM",
+    Sun: "11:30 AM - 9:00 PM",
+  },
+});
+
+const mapIframeSrc = ref(
+  "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
+);
+
+const map = ref(null);
+
+const restaurantImages = ref([
+  "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg",
+  "https://cdn.pixabay.com/photo/2017/06/06/22/46/mediterranean-cuisine-2378758_1280.jpg",
+  "https://cdn.pixabay.com/photo/2017/02/15/10/57/pizza-2068272_1280.jpg",
+]);
+
+const initMap = async () => {
+  try {
+    const leaflet = await import("leaflet");
+    map.value = leaflet.map("map").setView([46.7799, -71.2772], 15);
+
+    leaflet
+      .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+      })
+      .addTo(map.value);
+
+    const restaurantLocation = [46.7799, -71.2772];
+
+    const customIcon = leaflet.divIcon({
+      className: "custom-leaflet-div-icon",
+      html: '<i class="fas fa-map-marker-alt fa-3x text-danger"></i>',
+      iconAnchor: [18, 36],
+    });
+
+    leaflet.marker(restaurantLocation, { icon: customIcon }).addTo(map.value);
+  } catch (error) {
+    console.error("Error loading Leaflet:", error);
+  }
+};
+
+const getDirections = () => {
+  const destination = "46.7799,-71.2772"; // Coordinates for the destination address
+  const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
+  window.open(url);
+};
+
+// const isSticky = ref(false);
+//
+// const handleScroll = () => {
+//   const topDistance = 450;
+//   isSticky.value = window.scrollY >= topDistance;
+// };
+
+const description = ref(
+  "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
+    "        poutines, options végétariennes et Vgan.",
+);
+
+onMounted(() => {
+  initMap();
+  // window.addEventListener("scroll", handleScroll);
+});
+//
+// onBeforeUnmount(() => {
+//   window.removeEventListener("scroll", handleScroll);
+// });
+</script>
 
 <style scoped>
 .restaurant-genre-price {

@@ -18,6 +18,9 @@
             :visited-restaurants="visitedRestaurants"
           ></VisitedRestaurants>
         </div>
+        <div class="col-12 d-flex justify-content-center">
+          <SectionFavorite :userId="currentUserId" />
+        </div>
       </div>
     </div>
   </div>
@@ -26,15 +29,17 @@
 <script>
 import ProfileCard from "@/components/profileComponent/ProfileCard.vue";
 import VisitedRestaurants from "@/components/profileComponent/VisitedRestaurants.vue";
-
+import SectionFavorite from "@/components/profileComponent/SectionFavorite.vue";
 export default {
   components: {
     VisitedRestaurants,
     ProfileCard,
+    SectionFavorite,
   },
   data() {
     return {
       name: "Bob Washington",
+      currentUserId: "625792ae43cb87000460b7c0",
       location: "Montreal, QC",
       score: 75,
       visitedRestaurants: [

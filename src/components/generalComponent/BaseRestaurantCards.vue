@@ -129,23 +129,15 @@ export default {
       const currentDay = this.getCurrentDay();
       const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
-      console.log("currentDay:", currentDay);
-      console.log("this.restaurantHour:", this.restaurantHour);
+      if (!this.restaurantHour || !this.restaurantHour[currentDay]) return false;
 
-      if (this.restaurantHour[currentDay]) {
-        const [openingHour, closingHour] =
-          this.restaurantHour[currentDay].split("-");
-        console.log("openingHour:", openingHour);
-        console.log("closingHour:", closingHour);
+      const [openingHour, closingHour] = this.restaurantHour[currentDay].split("-");
 
-        const isOpen =
-          this.compareTimes(currentTime, openingHour) >= 0 &&
-          this.compareTimes(currentTime, closingHour) <= 0;
-        console.log("bool:", isOpen);
-        return isOpen;
-      }
+      const isOpen =
+        this.compareTimes(currentTime, openingHour) >= 0 &&
+        this.compareTimes(currentTime, closingHour) <= 0;
 
-      return false;
+      return isOpen;
     },
     compareTimes(time1, time2) {
       const [hours1, minutes1] = time1.split(":").map(Number);
