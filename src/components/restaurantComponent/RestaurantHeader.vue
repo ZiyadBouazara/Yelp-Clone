@@ -1,37 +1,58 @@
 <script setup>
 const props = defineProps({
-  images: Array,
   restaurant: Object,
 });
+
+const priceRange = (range) => {
+  return "$".repeat(range);
+};
+
+const genresList = (genres) => {
+  return genres.join(", ");
+};
 </script>
 
 <template>
-  <div class="row">
+  <div v-if="restaurant?.pictures" class="row">
     <div
-      v-for="(imageUrl, index) in images"
+      v-for="(imageUrl, index) in restaurant.pictures.slice(0, 3)"
       :key="index"
       class="col-md-4"
       style="padding-left: 0; padding-right: 0"
     >
       <div style="position: relative">
         <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />
-        <div class="lg-screen-title">
+        <div v-if="restaurant?.name" class="lg-screen-title">
           <span class="restaurant-title" v-if="index === 0">{{
             restaurant.name
           }}</span>
-          <div class="restaurant-rating" v-if="index === 0">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <span style="color: white; margin-left: 5px">4.0</span>
+          <div
+            class="restaurant-rating"
+            v-if="index === 0 && restaurant?.rating"
+          >
+            <i
+              v-for="n in Math.round(restaurant.rating)"
+              :key="n"
+              class="fa-solid fa-star"
+            ></i>
+            <i
+              v-for="n in 5 - Math.round(restaurant.rating)"
+              :key="n"
+              class="fa-regular fa-star"
+            ></i>
+            <span style="color: white; margin-left: 5px">{{
+              restaurant.rating.toFixed(1)
+            }}</span>
           </div>
-          <div v-if="index === 0" class="restaurant-genre-price">
+          <div
+            v-if="index === 0 && restaurant?.price_range && restaurant?.genres"
+            class="restaurant-genre-price"
+          >
             <p>
               <span
-                >$$ <span style="vertical-align: 0.3em">.</span> Italian,
-                Poutine</span
+                >{{ priceRange(restaurant.price_range) }}
+                <span style="vertical-align: 0.3em">.</span>
+                {{ genresList(restaurant.genres) }}</span
               >
             </p>
           </div>
@@ -89,16 +110,21 @@ const props = defineProps({
   font-size: 4vw;
 }
 
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
+
 @media (max-width: 576px) {
   .lg-screen-title {
     display: none;
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .img-fluid {
-    width: 100%;
-    height: auto;
+    width: 2000px;
+    height: 350px;
   }
 }
 </style>

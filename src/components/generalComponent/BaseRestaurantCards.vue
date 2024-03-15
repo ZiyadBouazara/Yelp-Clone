@@ -127,19 +127,13 @@ export default {
       const currentDay = this.getCurrentDay();
       const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
-      console.log("currentDay:", currentDay);
-      console.log("this.restaurantHour:", this.restaurantHour);
-
       if (this.restaurantHour[currentDay]) {
         const [openingHour, closingHour] =
           this.restaurantHour[currentDay].split("-");
-        console.log("openingHour:", openingHour);
-        console.log("closingHour:", closingHour);
 
         const isOpen =
           this.compareTimes(currentTime, openingHour) >= 0 &&
           this.compareTimes(currentTime, closingHour) <= 0;
-        console.log("bool:", isOpen);
         return isOpen;
       }
 

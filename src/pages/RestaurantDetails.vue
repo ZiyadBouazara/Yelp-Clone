@@ -1,9 +1,19 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import "leaflet/dist/leaflet.css";
 import LocationAndHours from "@/components/restaurantComponent/LocationAndHours.vue";
 import SideContainer from "@/components/restaurantComponent/SideContainer.vue";
 import RestaurantHeader from "@/components/restaurantComponent/RestaurantHeader.vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+
+const store = useStore();
+const route = useRoute();
+const restaurantId = route.params.id;
+const getRestaurant = (restaurantId) => {
+  return store.getters.getRestaurantById(restaurantId);
+};
+console.log("this is resto id; " + restaurantId);
 
 const restaurant = ref({
   name: "Test Restaurant",
@@ -30,12 +40,6 @@ const mapIframeSrc = ref(
 );
 
 const map = ref(null);
-
-const restaurantImages = ref([
-  "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg",
-  "https://cdn.pixabay.com/photo/2017/06/06/22/46/mediterranean-cuisine-2378758_1280.jpg",
-  "https://cdn.pixabay.com/photo/2017/02/15/10/57/pizza-2068272_1280.jpg",
-]);
 
 const initMap = async () => {
   try {
@@ -74,7 +78,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <restaurant-header :images="restaurantImages" :restaurant="restaurant" />
+    <restaurant-header :restaurant="getRestaurant(restaurantId)" />
     <div class="main-container">
       <button
         id="reviewButton"
