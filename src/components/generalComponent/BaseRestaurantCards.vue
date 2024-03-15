@@ -72,17 +72,15 @@
       >
         {{ restaurantNumber }}
       </p>
-      <router-link to="/restaurant/id"
-        ><button
+      <router-link v-bind:to="'/restaurant/' + restaurantId">
+        <button
           class="btn btn-outline-danger btn-lg"
           style="position: absolute; bottom: 0; right: 0; margin: 10px"
           type="button"
         >
-          <font-awesome-icon
-            :icon="['fas', 'arrow-right']"
-            class="icon"
-          /></button
-      ></router-link>
+          <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -103,6 +101,7 @@ export default {
     restaurantNumber: String,
     restaurantGenres: Array,
     restaurantPriceRange: Number,
+    restaurantId: String,
   },
   data() {
     return {

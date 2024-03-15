@@ -22,6 +22,7 @@
             :restaurant-number="restaurant.tel"
             :restaurant-genres="restaurant.genres"
             :restaurant-price-range="restaurant.price_range"
+            :restaurant-id="restaurant.id"
           ></CardComponent>
         </div>
       </div>

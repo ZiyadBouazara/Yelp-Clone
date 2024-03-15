@@ -39,9 +39,10 @@ const routes = [
     component: Navigation,
   },
   {
-    path: "/restaurant/id",
+    path: "/restaurant/:id",
     name: "Restaurant details",
     component: RestaurantDetails,
+    props: true,
   },
 ];
 
