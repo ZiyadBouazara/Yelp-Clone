@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 
 const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
+const LIMIT = 50;
 
 export default createStore({
   state: {
@@ -89,8 +90,15 @@ export default createStore({
         if (response.status !== 200) {
           throw new Error("Users do not load");
         }
-        const jsonResponse = await response.json();
-        commit("SET_USERS", jsonResponse.items);
+        const rawJsonResponse = await response.json();
+
+        const users = rawJsonResponse.items.map((user) => {
+          const parsedUser = { ...user };
+          parsedUser.name = parsedUser.name.replace(/["'\\]/g, ""); // Remove leading and trailing quotes, excluding escaped quotes
+          parsedUser.email = parsedUser.email.replace(/["'\\]/g, "");
+          return parsedUser;
+        });
+        commit("SET_USERS", users);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -100,6 +108,10 @@ export default createStore({
       const dummyUser = state.users[7];
       console.log("loggedin user: " + dummyUser.id);
       commit("SET_LOGGED_IN_USER", dummyUser);
+    },
+    async logout({ commit, state }) {
+      // TODO : implement real logout logic
+      commit("SET_LOGGED_IN_USER", null);
     },
     async createVisit({ commit, dispatch }, { userId, visitData }) {
       try {
@@ -125,7 +137,7 @@ export default createStore({
       const userId = state.loggedInUser.id;
       try {
         const response = await fetch(
-          `${SERVER_URL}/users/${userId}/restaurants/visits?page=4`,
+          `${SERVER_URL}/users/${userId}/restaurants/visits?limit=${LIMIT}`,
           {
             method: "GET",
             headers: {

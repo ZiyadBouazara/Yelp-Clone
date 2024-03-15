@@ -3,7 +3,7 @@
     <img
       alt="Profile picture"
       class="profile-picture"
-      src="@/assets/UFood_Profile_Picture.png"
+      src="@/assets/default_user_avatar.png"
     />
     <div class="card-body">
       <div class="row mb-3">
