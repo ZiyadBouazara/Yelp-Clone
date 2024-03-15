@@ -1,10 +1,13 @@
-import Vuex from "vuex";
+import { createStore } from "vuex";
 
 const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 
-export default new Vuex.Store({
+export default createStore({
   state: {
+    price: "",
     searchTerm: "",
+    searchTermGenre: "",
+    genres: [],
     restaurants: [],
     users: [],
     imageIndex: 0,
@@ -13,6 +16,18 @@ export default new Vuex.Store({
     favorites: [],
   },
   mutations: {
+    ADD_TO_GENRE_ARRAY(state, newItem) {
+      state.genres.push(newItem);
+    },
+    REMOVE_FROM_GENRE_ARRAY(state, removedItem) {
+      state.genres = state.genres.filter((item) => item !== removedItem);
+    },
+    SET_PRICE(state, price) {
+      state.price = price;
+    },
+    SET_SEARCH_TERM_GENRE(state, searchTermGenre) {
+      state.searchTermGenre = searchTermGenre;
+    },
     SET_SEARCH_TERM(state, searchTerm) {
       state.searchTerm = searchTerm;
     },
@@ -36,6 +51,20 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    updatePrice({ commit }, newPrice) {
+      commit("SET_PRICE", newPrice);
+    },
+    addSelectedFilter({ commit, state }, newItem) {
+      commit("ADD_TO_GENRE_ARRAY", newItem);
+    },
+    removeGenre({ commit, state }, removedItem) {
+      if (state.genres.includes(removedItem)) {
+        commit("REMOVE_FROM_GENRE_ARRAY", removedItem);
+      }
+    },
+    updateSearchTermGenre({ commit }, searchTermGenre) {
+      commit("SET_SEARCH_TERM_GENRE", searchTermGenre);
+    },
     updateSearchTerm({ commit }, searchTerm) {
       commit("SET_SEARCH_TERM", searchTerm);
     },
@@ -68,7 +97,7 @@ export default new Vuex.Store({
     },
     async login({ commit, state }) {
       // TODO : implement real login logic, changed to user[1] because he has many visits and favorites
-      const dummyUser = state.users[1];
+      const dummyUser = state.users[7];
       console.log("loggedin user: " + dummyUser.id);
       commit("SET_LOGGED_IN_USER", dummyUser);
     },
@@ -134,6 +163,9 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    getPrice: (state) => state.price,
+    getGenres: (state) => state.genres,
+    getSearchTermGenre: (state) => state.searchTermGenre,
     getSearchTerm: (state) => state.searchTerm,
     getRestaurants: (state) => state.restaurants,
     getUsers: (state) => state.users,
