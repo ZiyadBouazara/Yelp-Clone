@@ -9,11 +9,7 @@
       </div>
     </div>
     <div class="row restaurant-cards">
-      <div
-        v-for="(restaurant, index) in filteredCardData"
-        :key="index"
-        class="col-12 col-md-6 col-lg-4 mb-4"
-      >
+      <div v-for="(restaurant, index) in paginatedRestaurants" :key="index" class="col-12 col-md-6 col-lg-4 mb-4">
         <div class="card-wrapper">
           <CardComponent
             :id="restaurant.id"
@@ -27,6 +23,11 @@
           ></CardComponent>
         </div>
       </div>
+    </div>
+    <div class="pagination">
+      <button @click="previousPage" :disabled="page === 1">Previous</button>
+      <span>Page {{ page }}</span>
+      <button @click="nextPage" :disabled="page === totalPages">Next</button>
     </div>
   </div>
 </template>
@@ -49,6 +50,7 @@ export default {
   },
   data() {
     return {
+      itemsPerPage: 10,
       isModalVisible: false,
     };
   },
@@ -88,6 +90,10 @@ export default {
         );
       });
     },
+    ...mapGetters(["getPage"]),
+    page() {
+      return this.getPage;
+    },
     ...mapGetters(["getRestaurants"]),
     restaurants() {
       return this.getRestaurants;
@@ -96,8 +102,27 @@ export default {
     users() {
       return this.getUsers;
     },
+    totalPages() {
+      console.log(this.filteredCardData.length);
+      return Math.ceil(this.filteredCardData.length / this.itemsPerPage);
+    },
+    paginatedRestaurants() {
+      const startIndex = (this.page - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.filteredCardData.slice(startIndex, endIndex);
+    },
   },
   methods: {
+    nextPage() {
+      if (this.page < this.totalPages) {
+        this.$store.dispatch("updatePage", this.page + 1);
+      }
+    },
+    previousPage() {
+      if (this.page > 1) {
+        this.$store.dispatch("updatePage", this.page - 1);
+      }
+    },
     getPriceRangeSymbol(priceRange) {
       switch (priceRange) {
         case 1:

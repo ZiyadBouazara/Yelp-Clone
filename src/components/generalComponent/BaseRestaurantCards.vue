@@ -176,34 +176,31 @@ export default {
     },
     getDisplayHours() {
       const currentDay = this.getCurrentDay();
-
-      if (!this.restaurantHour || !this.restaurantHour[currentDay]) {
-        return "N/A"; // Return a default value or handle the absence of opening hours
+      if (this.isRestaurantOpen()) {
+        const [openingHour, closingHour] =
+          this.restaurantHour[currentDay].split("-");
+        return closingHour;
+      } else {
+        const [openingHour, closingHour] =
+          this.restaurantHour[currentDay].split("-");
+        return openingHour;
       }
-
-      const [openingHour, closingHour] =
-        this.restaurantHour[currentDay].split("-");
-
-      if (!openingHour || !closingHour) {
-        return "N/A"; // Handle invalid opening hours format
-      }
-
-      return this.isRestaurantOpen() ? closingHour : openingHour;
     },
     isRestaurantOpen() {
       const currentDay = this.getCurrentDay();
       const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
-      if (!this.restaurantHour || !this.restaurantHour[currentDay])
-        return false;
+      if (this.restaurantHour[currentDay]) {
+        const [openingHour, closingHour] =
+          this.restaurantHour[currentDay].split("-");
 
-      const [openingHour, closingHour] =
-        this.restaurantHour[currentDay].split("-");
+        const isOpen =
+          this.compareTimes(currentTime, openingHour) >= 0 &&
+          this.compareTimes(currentTime, closingHour) <= 0;
+        return isOpen;
+      }
 
-      return (
-        this.compareTimes(currentTime, openingHour) >= 0 &&
-        this.compareTimes(currentTime, closingHour) <= 0
-      );
+      return false;
     },
     compareTimes(time1, time2) {
       const [hours1, minutes1] = time1.split(":").map(Number);

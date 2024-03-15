@@ -15,6 +15,7 @@ export default createStore({
     loggedInUser: null,
     visits: [],
     favorites: [],
+    page: 1,
   },
   mutations: {
     ADD_TO_GENRE_ARRAY(state, newItem) {
@@ -50,6 +51,9 @@ export default createStore({
     SET_VISITS(state, visits) {
       state.visits = visits;
     },
+    SET_PAGE(state, page) {
+      state.page = page;
+    },
   },
   actions: {
     updatePrice({ commit }, newPrice) {
@@ -72,9 +76,14 @@ export default createStore({
     updateImageIndex({ commit }, imageIndex) {
       commit("SET_IMAGE_INDEX", imageIndex);
     },
-    async fetchRestaurant({ commit }) {
+    updatePage({ commit }, newPage) {
+      commit("SET_PAGE", newPage);
+    },
+    async fetchRestaurant({ commit, state }) {
       try {
-        const response = await fetch(`${SERVER_URL}/restaurants`);
+        const response = await fetch(
+          `${SERVER_URL}/restaurants?limit=300`,
+        );
         if (response.status !== 200) {
           throw new Error("Restaurants not loaded");
         }
@@ -175,6 +184,7 @@ export default createStore({
     },
   },
   getters: {
+    getPage: (state) => state.page,
     getPrice: (state) => state.price,
     getGenres: (state) => state.genres,
     getSearchTermGenre: (state) => state.searchTermGenre,
