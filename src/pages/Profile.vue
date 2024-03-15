@@ -19,7 +19,7 @@
           ></VisitedRestaurants>
         </div>
         <div class="col-12 d-flex justify-content-center">
-          <SectionFavorite :userId="currentUserId" />
+          <SectionFavorite />
         </div>
       </div>
     </div>
@@ -39,7 +39,6 @@ export default {
   data() {
     return {
       name: "Bob Washington",
-      currentUserId: "625792ae43cb87000460b7c0",
       location: "Montreal, QC",
       score: 75,
       visitedRestaurants: [

@@ -69,7 +69,7 @@ export default new Vuex.Store({
     async login({ commit, state }) {
       // TODO : implement real login logic, changed to user[1] because he has many visits and favorites
       const dummyUser = state.users[1];
-
+      console.log("loggedin user: " + dummyUser.id);
       commit("SET_LOGGED_IN_USER", dummyUser);
     },
     async createVisit({ commit, dispatch }, { userId, visitData }) {
@@ -125,6 +125,7 @@ export default new Vuex.Store({
           name: item.name,
           restaurants: item.restaurants,
         }));
+        console.log("Selected Favorites: " + JSON.stringify(selectedFavorites));
 
         commit("SET_USER_FAVORITES", selectedFavorites);
       } catch (error) {

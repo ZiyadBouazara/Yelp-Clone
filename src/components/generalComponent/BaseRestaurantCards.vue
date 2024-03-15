@@ -129,15 +129,16 @@ export default {
       const currentDay = this.getCurrentDay();
       const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
-      if (!this.restaurantHour || !this.restaurantHour[currentDay]) return false;
+      if (!this.restaurantHour || !this.restaurantHour[currentDay])
+        return false;
 
-      const [openingHour, closingHour] = this.restaurantHour[currentDay].split("-");
+      const [openingHour, closingHour] =
+        this.restaurantHour[currentDay].split("-");
 
-      const isOpen =
+      return (
         this.compareTimes(currentTime, openingHour) >= 0 &&
-        this.compareTimes(currentTime, closingHour) <= 0;
-
-      return isOpen;
+        this.compareTimes(currentTime, closingHour) <= 0
+      );
     },
     compareTimes(time1, time2) {
       const [hours1, minutes1] = time1.split(":").map(Number);
