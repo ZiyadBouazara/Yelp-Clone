@@ -1,34 +1,34 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <div class="col-sm-2 col-12 application-logo" @click="authenticateUser">
+      <div class="col-sm-2 col-12 application-logo">
         <Logo />
         <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          class="navbar-toggler"
+          data-bs-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          type="button"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
       <div class="col-sm-6 col-12 search-bar">
         <div
-          :class="['collapse', 'navbar-collapse']"
           id="navbarSupportedContent"
+          :class="['collapse', 'navbar-collapse']"
         >
           <SearchForm />
           <ul class="navbar-nav me-auto">
             <div class="btn-group button-restaurant">
               <button
-                type="button"
+                aria-expanded="false"
+                aria-haspopup="true"
                 class="btn btn-outline-danger m-1 dropdown-toggle"
                 data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+                type="button"
               >
                 Restaurants
               </button>
@@ -43,11 +43,11 @@
 
             <div class="btn-group button-location">
               <button
-                type="button"
+                aria-expanded="false"
+                aria-haspopup="true"
                 class="btn btn-outline-danger m-1 dropdown-toggle"
                 data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+                type="button"
               >
                 Location
               </button>
@@ -67,20 +67,20 @@
             class="p-1 user-authentication-sign-in d-lg-none"
             @click="navigateTo('/login')"
           >
-            <button type="button" class="btn btn-outline-danger">Log In</button>
+            <button class="btn btn-outline-danger" type="button">Log In</button>
           </div>
         </div>
       </div>
       <div
+        v-if="!loggedInUser"
         class="col-sm-4 d-flex justify-content-end authentication"
-        v-if="!isUserAuthenticated"
       >
         <router-link style="display: none" to="/login">Log In</router-link>
         <router-link style="display: none" to="/signup">Sign Up</router-link>
         <div class="p-1 user-authentication-sign-up d-none d-lg-block">
           <button
-            type="button"
             class="btn btn-outline-danger"
+            type="button"
             @click="navigateTo('/signup')"
           >
             Sign Up
@@ -90,23 +90,25 @@
           class="p-1 user-authentication-sign-in d-none d-lg-block"
           @click="navigateTo('/login')"
         >
-          <button type="button" class="btn btn-outline-danger">Log In</button>
+          <button class="btn btn-outline-danger" type="button">Log In</button>
         </div>
       </div>
       <div
+        v-if="loggedInUser"
         class="col-sm-4 justify-content-end authenticated-user"
-        v-if="isUserAuthenticated"
       >
+        <button class="btn btn-outline-danger" type="button" @click="logout">
+          Log Out
+        </button>
         <div class="photo d-flex align-items-center">
           <img
             id="user-profile-picture"
-            src="@/assets/UFood_Profile_Picture.png"
             alt="A user's profile picture"
+            src="@/assets/default_user_avatar.png"
             @click="navigateTo('/profile')"
           />
           <div class="user-name-lastname ml-2">
-            <h6>Bob</h6>
-            <h6>Washington</h6>
+            <h6>{{ loggedInUser.name }}</h6>
           </div>
         </div>
       </div>
@@ -121,6 +123,7 @@ import SearchForm from "@/components/navBarComponent/NavBarSearchForm.vue";
 import Links from "@/components/navBarComponent/NavBarLinks.vue";
 import { ref } from "vue";
 import { EventBus } from "@/App.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -132,8 +135,10 @@ export default {
     return {
       isModalVisible: false,
       routeQuery: ref(this.$route.query.authenticatedUser),
-      isUserAuthenticated: ref(false),
     };
+  },
+  computed: {
+    ...mapState(["loggedInUser"]),
   },
   methods: {
     openModal() {
@@ -145,9 +150,9 @@ export default {
     navigateTo(path) {
       this.$router.push(path);
     },
-    authenticateUser() {
-      this.isUserAuthenticated = !this.isUserAuthenticated;
-      console.log("user authentified? :" + this.isUserAuthenticated);
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/login");
     },
   },
   setup() {
@@ -248,6 +253,7 @@ export default {
     display: none;
   }
 }
+
 .profile-dropdown-btn {
   display: flex;
   align-items: center;
