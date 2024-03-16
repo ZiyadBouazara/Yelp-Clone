@@ -109,6 +109,7 @@
             :data-bs-target="`#consultModal${id}`"
             class="btn btn-outline-danger btn-lg"
             data-bs-toggle="modal"
+            style="position: absolute; bottom: 0; left: 0; margin: 10px"
             type="button"
           >
             <i class="fa-solid fa-eye"></i> View visit details
@@ -121,6 +122,7 @@
             :disabled="!loggedInUser"
             class="btn btn-outline-danger btn-lg"
             data-bs-toggle="modal"
+            style="position: absolute; bottom: 0; left: 0; margin: 10px"
             type="button"
           >
             <i class="fa-regular fa-star"></i> Write a review
