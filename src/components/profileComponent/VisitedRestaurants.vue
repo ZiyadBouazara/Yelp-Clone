@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="scroll-container" title="Visited Restaurants">
-      <div v-if="props.visits.length === 0" class="no-visited-restaurants">
+      <div v-if="visits.length === 0" class="no-visited-restaurants">
         <p class="no-restaurants-message">You have no visited restaurants</p>
         <a class="link-to-home" href="#">Browse restaurants here</a>
       </div>
 
       <div
-        v-for="(visit, index) in paginatedVisits"
+        v-for="visit in paginatedVisits"
         v-else
         id="visited-restaurant-card"
-        :key="index"
+        :key="visit.restaurant_id"
       >
         <CardComponent
-          :id="getRestaurantFromVisit(visit).id"
+          :id="visit.restaurant_id"
           :picture="getRestaurantFromVisit(visit).pictures"
           :readOnly="true"
           :restaurant-genres="getRestaurantFromVisit(visit).genres"
@@ -61,17 +61,32 @@ const getRestaurantFromVisit = (visit) => {
   return restaurant || {};
 };
 
-const visitsPerPage = ref(10); // Number of visits displayed per page
-const currentPage = ref(1); // Current page number (starts at 1)
+const visitsPerPage = ref(10);
+const currentPage = ref(1);
+
+const uniqueVisits = computed(() => {
+  const duplicateRestaurants = new Set();
+  const unique = [];
+
+  props.visits.forEach((visit) => {
+    const visitId = visit.restaurant_id;
+    if (!duplicateRestaurants.has(visitId)) {
+      duplicateRestaurants.add(visitId);
+      unique.push(visit);
+    }
+  });
+
+  return unique;
+});
 
 const totalPages = computed(() => {
-  return Math.ceil(props.visits.length / visitsPerPage.value);
+  return Math.ceil(uniqueVisits.value.length / visitsPerPage.value);
 });
 
 const paginatedVisits = computed(() => {
   const start = (currentPage.value - 1) * visitsPerPage.value;
   const end = start + visitsPerPage.value;
-  return props.visits.slice(start, end);
+  return uniqueVisits.value.slice(start, end);
 });
 
 const nextPage = () => {
