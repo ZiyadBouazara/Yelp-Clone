@@ -15,6 +15,7 @@ import Navigation from "@/pages/Navigation.vue";
 import PageFooter from "@/pages/PageFooter.vue";
 import { useRoute } from "vue-router";
 import mitt from "mitt";
+
 export const EventBus = mitt();
 import NavBarAnimation from "@/components/navBarComponent/NavBarAnimation.vue";
 
@@ -39,7 +40,11 @@ export default {
   created() {
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
     this.$store.dispatch("fetchRestaurant");
-    this.$store.dispatch("fetchUsers");
+    this.$store.dispatch("fetchUsers").then(() => {
+      this.$store.dispatch("login").then(() => {
+        this.$store.dispatch("fetchVisitsForLoggedInUser");
+      });
+    });
   },
 };
 </script>

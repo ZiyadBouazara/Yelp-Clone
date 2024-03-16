@@ -18,6 +18,9 @@
             :visited-restaurants="visitedRestaurants"
           ></VisitedRestaurants>
         </div>
+        <div class="col-12 d-flex justify-content-center">
+          <SectionFavorite />
+        </div>
       </div>
     </div>
   </div>
@@ -26,11 +29,12 @@
 <script>
 import ProfileCard from "@/components/profileComponent/ProfileCard.vue";
 import VisitedRestaurants from "@/components/profileComponent/VisitedRestaurants.vue";
-
+import SectionFavorite from "@/components/profileComponent/SectionFavorite.vue";
 export default {
   components: {
     VisitedRestaurants,
     ProfileCard,
+    SectionFavorite,
   },
   data() {
     return {
