@@ -13,7 +13,6 @@ const restaurantId = route.params.id;
 const getRestaurant = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };
-console.log("this is resto id; " + restaurantId);
 
 const restaurant = ref({
   name: "Test Restaurant",
@@ -39,41 +38,10 @@ const mapIframeSrc = ref(
   "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
 );
 
-const map = ref(null);
-
-const initMap = async () => {
-  try {
-    const leaflet = await import("leaflet");
-    map.value = leaflet.map("map").setView([46.7799, -71.2772], 15);
-
-    leaflet
-      .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap contributors",
-      })
-      .addTo(map.value);
-
-    const restaurantLocation = [46.7799, -71.2772];
-
-    const customIcon = leaflet.divIcon({
-      className: "custom-leaflet-div-icon",
-      html: '<i class="fas fa-map-marker-alt fa-3x text-danger"></i>',
-      iconAnchor: [18, 36],
-    });
-
-    leaflet.marker(restaurantLocation, { icon: customIcon }).addTo(map.value);
-  } catch (error) {
-    console.error("Error loading Leaflet:", error);
-  }
-};
-
 const description = ref(
   "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
     "        poutines, options végétariennes et Vgan.",
 );
-
-onMounted(() => {
-  initMap();
-});
 </script>
 
 <template>
@@ -106,7 +74,7 @@ onMounted(() => {
     <div class="flex-row">
       <LocationAndHours
         :map-iframe-src="mapIframeSrc"
-        :restaurant="restaurant"
+        :restaurant="getRestaurant(restaurantId)"
       />
       <side-container :restaurant="restaurant" />
     </div>
