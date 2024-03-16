@@ -1,26 +1,90 @@
 <template>
-  <div class="scroll-container" title="Visited Restaurants">
-    <div v-if="props.visits.length === 0" class="no-visited-restaurants">
-      <p class="no-restaurants-message">You have no visited restaurants</p>
-      <a class="link-to-home" href="#">Browse restaurants here</a>
-    </div>
+  <div>
+    <div class="scroll-container" title="Visited Restaurants">
+      <div v-if="props.visits.length === 0" class="no-visited-restaurants">
+        <p class="no-restaurants-message">You have no visited restaurants</p>
+        <a class="link-to-home" href="#">Browse restaurants here</a>
+      </div>
 
-    <div
-      v-for="(visit, index) in props.visits"
-      v-else
-      :key="index"
-      class="visited-restaurant-card"
-    >
-      {{ visit.restaurant_id }}
-      {{ visit.total }}
+      <div
+        v-for="(visit, index) in paginatedVisits"
+        v-else
+        id="visited-restaurant-card"
+        :key="index"
+      >
+        <CardComponent
+          :id="getRestaurantFromVisit(visit).id"
+          :picture="getRestaurantFromVisit(visit).pictures"
+          :readOnly="true"
+          :restaurant-genres="getRestaurantFromVisit(visit).genres"
+          :restaurant-hour="getRestaurantFromVisit(visit).opening_hours"
+          :restaurant-number="getRestaurantFromVisit(visit).tel"
+          :restaurant-price-range="getRestaurantFromVisit(visit).price_range"
+          :restaurant-rating="getRestaurantFromVisit(visit).rating"
+          :restaurantName="getRestaurantFromVisit(visit).name"
+        ></CardComponent>
+      </div>
+    </div>
+    <div v-if="totalPages > 1" id="pagination" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li :class="{ disabled: currentPage === 1 }" class="page-item">
+          <button class="page-link bg-danger text-white" @click="prevPage">
+            Previous
+          </button>
+        </li>
+        <li class="page-item disabled">
+          <span class="page-link bg-danger text-white"
+            >Page {{ currentPage }} of {{ totalPages }}</span
+          >
+        </li>
+        <li :class="{ disabled: currentPage === totalPages }" class="page-item">
+          <button class="page-link bg-danger text-white" @click="nextPage">
+            Next
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 
+const store = useStore();
+
 const props = defineProps({ visits: Array });
+
+const getRestaurantFromVisit = (visit) => {
+  const restaurant = store.getters.getRestaurantById(visit.restaurant_id);
+  return restaurant || {};
+};
+
+const visitsPerPage = ref(10); // Number of visits displayed per page
+const currentPage = ref(1); // Current page number (starts at 1)
+
+const totalPages = computed(() => {
+  return Math.ceil(props.visits.length / visitsPerPage.value);
+});
+
+const paginatedVisits = computed(() => {
+  const start = (currentPage.value - 1) * visitsPerPage.value;
+  const end = start + visitsPerPage.value;
+  return props.visits.slice(start, end);
+});
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
 </script>
 
 <style scoped>
@@ -61,7 +125,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.visited-restaurant-card {
+#visited-restaurant-card {
   height: 500px;
 }
 
