@@ -29,15 +29,27 @@
       </div>
     </div>
     <div class="pagination">
-      <button @click="previousPage" :disabled="currentPage === 1">
+      <button
+        class="btn btn-outline-danger btn-lg buttonBas"
+        type="button"
+        @click="previousPage"
+        :disabled="currentPage === 1"
+      >
         Previous
       </button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="currentPage === totalPages">
+      <span class="buttonBas textBas" style="margin-top:12.5px">
+        Page {{ currentPage }} of {{ totalPages }}</span
+      >
+      <button
+        class="btn btn-outline-danger btn-lg buttonBas"
+        type="button"
+        @click="nextPage"
+        :disabled="currentPage === totalPages"
+      >
         Next
       </button>
       <form @submit.prevent="goToPage">
-        <label for="pageNumber">Go to Page:</label>
+        <label class="buttonBas textBas" for="pageNumber">Go to Page:</label>
         <input
           type="number"
           id="pageNumber"
@@ -45,8 +57,9 @@
           min="1"
           :max="totalPages"
           required
+          style="margin-right: 10px"
         />
-        <button type="submit">Go</button>
+        <button class="btn btn-outline-danger btn-lg" type="submit">Go</button>
       </form>
     </div>
   </div>
@@ -71,6 +84,7 @@ export default {
   },
   data() {
     return {
+      inputPage: 0,
       currentPage: 1,
       itemsPerPage: 10,
       isModalVisible: false,
@@ -86,6 +100,20 @@ export default {
 </script>
 
 <style scoped>
+.textBas {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.buttonBas {
+  margin-left: 10px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: rgba(45, 46, 47, 1);
+}
 .card-wrapper {
   margin: 0 auto;
 }
