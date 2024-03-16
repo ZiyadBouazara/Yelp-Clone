@@ -1,15 +1,5 @@
 <template>
   <div>
-    <button
-      :data-bs-target="`#visitModal${props.restaurantId}`"
-      :disabled="!loggedInUser"
-      class="btn btn-outline-danger btn-lg"
-      data-bs-toggle="modal"
-      type="button"
-    >
-      <i class="fa-regular fa-star"></i> Write a review
-    </button>
-
     <div
       :id="`visitModal${props.restaurantId}`"
       aria-hidden="true"

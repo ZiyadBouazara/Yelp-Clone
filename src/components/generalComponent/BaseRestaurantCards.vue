@@ -78,17 +78,17 @@
         <p class="card-text">
           <span
             v-for="(number, index) in displayRatingSymbol"
-            class="badge"
             :key="index"
             :style="{
               backgroundColor: getColorBasedOnNumber(getRatingFloor),
               marginRight: '3px',
             }"
+            class="badge"
           >
             <font-awesome-icon
+              v-if="number === 'star'"
               :icon="['fas', 'star']"
               class="icon"
-              v-if="number === 'star'"
             />
           </span>
         </p>
@@ -98,12 +98,21 @@
         <router-link to="/restaurant/id">
           <button
             class="btn btn-outline-danger btn-lg"
-            type="button"
             style="position: absolute; bottom: 0; right: 0; margin: 10px"
+            type="button"
           >
             <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
           </button>
         </router-link>
+        <button
+          :data-bs-target="`#visitModal${id}`"
+          :disabled="!loggedInUser"
+          class="btn btn-outline-danger btn-lg"
+          data-bs-toggle="modal"
+          type="button"
+        >
+          <i class="fa-regular fa-star"></i> Write a review
+        </button>
         <AddVisit
           :restaurant-id="id"
           style="position: absolute; bottom: 0; left: 0; margin: 10px"
@@ -142,7 +151,10 @@ export default {
   },
   computed: {
     getRatingFloor() {
-      if (typeof this.restaurantRating === 'number' && !isNaN(this.restaurantRating)) {
+      if (
+        typeof this.restaurantRating === "number" &&
+        !isNaN(this.restaurantRating)
+      ) {
         return Number(this.restaurantRating.toFixed(1));
       } else {
         return 0;
@@ -163,7 +175,11 @@ export default {
         return null;
       }
     },
+    loggedInUser() {
+      return this.$store.state.loggedInUser;
+    },
   },
+
   methods: {
     getColorBasedOnNumber(number) {
       if (number >= 1 && number < 2) {
