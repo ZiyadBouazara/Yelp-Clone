@@ -1,35 +1,26 @@
 <template>
   <div class="scroll-container" title="Visited Restaurants">
-    <div v-if="visitedRestaurants.length === 0" class="no-visited-restaurants">
+    <div v-if="props.visits.length === 0" class="no-visited-restaurants">
       <p class="no-restaurants-message">You have no visited restaurants</p>
       <a class="link-to-home" href="#">Browse restaurants here</a>
     </div>
 
     <div
-      v-for="(restaurant, index) in visitedRestaurants"
+      v-for="(visit, index) in props.visits"
       v-else
       :key="index"
       class="visited-restaurant-card"
     >
-      <CardComponent
-        :imageSrc="restaurant.imageSrc"
-        :restaurantDescription="'My visits : ' + restaurant.visits"
-        :restaurantName="restaurant.name"
-      ></CardComponent>
+      {{ visit.restaurant_id }}
+      {{ visit.total }}
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 
-export default {
-  name: "VisitedRestaurants",
-  components: { CardComponent },
-  props: {
-    visitedRestaurants: Array,
-  },
-};
+const props = defineProps({ visits: Array });
 </script>
 
 <style scoped>

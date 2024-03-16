@@ -1,11 +1,11 @@
 <template>
-  <div class="container-fluid mt-5">
+  <div v-if="loggedInUser" class="container-fluid mt-5">
     <div class="row justify-content-center">
       <div class="col-12 d-flex justify-content-center">
         <ProfileCard
-          :location="location"
-          :name="name"
-          :score="score"
+          :email="loggedInUser.email"
+          :name="loggedInUser.name"
+          :rating="loggedInUser.rating"
         ></ProfileCard>
       </div>
       <div
@@ -14,9 +14,7 @@
       >
         <h4 class="visited-restaurants-title">Visited restaurants</h4>
         <div class="col-12 d-flex justify-content-center">
-          <VisitedRestaurants
-            :visited-restaurants="visitedRestaurants"
-          ></VisitedRestaurants>
+          <VisitedRestaurants :visits="visits"></VisitedRestaurants>
         </div>
         <div class="col-12 d-flex justify-content-center">
           <SectionFavorite />
@@ -26,62 +24,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ProfileCard from "@/components/profileComponent/ProfileCard.vue";
 import VisitedRestaurants from "@/components/profileComponent/VisitedRestaurants.vue";
 import SectionFavorite from "@/components/profileComponent/SectionFavorite.vue";
-export default {
-  components: {
-    VisitedRestaurants,
-    ProfileCard,
-    SectionFavorite,
-  },
-  data() {
-    return {
-      name: "Bob Washington",
-      location: "Montreal, QC",
-      score: 75,
-      visitedRestaurants: [
-        {
-          name: "Restaurant A",
-          location: "City X",
-          visits: 10,
-          imageSrc: "https://placekitten.com/300/300",
-        },
-        {
-          name: "Restaurant A",
-          location: "City X",
-          visits: 10,
-          imageSrc: "https://placekitten.com/300/300",
-        },
-        {
-          name: "Restaurant A",
-          location: "City X",
-          visits: 10,
-          imageSrc: "https://placekitten.com/300/300",
-        },
-        {
-          name: "Restaurant A",
-          location: "City X",
-          visits: 10,
-          imageSrc: "https://placekitten.com/300/300",
-        },
-        {
-          name: "Restaurant A",
-          location: "City X",
-          visits: 10,
-          imageSrc: "https://placekitten.com/300/300",
-        },
-        {
-          name: "Restaurant A",
-          location: "City X",
-          visits: 10,
-          imageSrc: "https://placekitten.com/300/300",
-        },
-      ],
-    };
-  },
-};
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+const store = useStore();
+
+const loggedInUser = computed(() => store.getters.getLoggedInUser);
+const visits = computed(() => store.getters.getVisits);
 </script>
 <style scoped>
 .container-fluid {

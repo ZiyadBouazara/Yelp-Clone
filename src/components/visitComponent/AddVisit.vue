@@ -2,6 +2,7 @@
   <div>
     <button
       :data-bs-target="`#visitModal${props.restaurantId}`"
+      :disabled="!loggedInUser"
       class="btn btn-outline-danger btn-lg"
       data-bs-toggle="modal"
       type="button"
@@ -83,7 +84,8 @@ import moment from "moment";
 const store = useStore();
 
 const props = defineProps({ restaurantId: String });
-const userId = computed(() => store.getters.getLoggedInUser.id);
+const loggedInUser = computed(() => store.getters.getLoggedInUser);
+const userId = computed(() => loggedInUser.value?.id);
 
 const visitData = ref({
   date: "",
