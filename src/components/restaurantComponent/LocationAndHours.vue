@@ -3,8 +3,11 @@ import { onMounted, ref } from "vue";
 
 const props = defineProps({
   restaurant: Object,
-  mapIframeSrc: String,
 });
+
+const mapIframeSrc = ref(
+  "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
+);
 
 const getDirections = (destination) => {
   const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;

@@ -6,6 +6,7 @@ import SideContainer from "@/components/restaurantComponent/SideContainer.vue";
 import RestaurantHeader from "@/components/restaurantComponent/RestaurantHeader.vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import AboutRestaurant from "@/components/restaurantComponent/AboutRestaurant.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -16,11 +17,6 @@ const getRestaurant = (restaurantId) => {
 
 const mapIframeSrc = ref(
   "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
-);
-
-const description = ref(
-  "hamburgers, poutines, vegetarians and vegan options. burgers gourmets,\n" +
-    "        poutines, options végétariennes et Vgan.",
 );
 </script>
 
@@ -52,17 +48,11 @@ const description = ref(
     </div>
 
     <div class="flex-row">
-      <LocationAndHours
-        :map-iframe-src="mapIframeSrc"
-        :restaurant="getRestaurant(restaurantId)"
-      />
+      <LocationAndHours :restaurant="getRestaurant(restaurantId)" />
       <side-container :restaurant="getRestaurant(restaurantId)" />
     </div>
     <div class="line"></div>
-    <div class="about-commerce">
-      <strong class="header">About the Business</strong>
-      <p class="description">{{ description }}</p>
-    </div>
+    <about-restaurant :restaurant="getRestaurant(restaurantId)" />
     <div class="line"></div>
   </div>
 </template>
