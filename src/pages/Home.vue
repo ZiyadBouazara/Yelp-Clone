@@ -57,7 +57,8 @@ import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue"
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 import { EventBus } from "@/App.vue";
-import { mapGetters } from "vuex";
+import { homePageMethods } from "@/javascript/pages/homePage/homePageMethods";
+import { homePageComputed } from "@/javascript/pages/homePage/homePageComputed";
 
 export default {
   components: {
@@ -66,7 +67,6 @@ export default {
     CardComponent,
   },
   created() {
-    this.$store.dispatch("fetchRestaurant");
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
   },
   data() {
@@ -77,96 +77,10 @@ export default {
     };
   },
   computed: {
-    filteredCardData() {
-      const priceSelected = this.$store.getters.getPrice;
-      const filterSelected = this.$store.getters.getGenres;
-      const searchTerm = this.$store.getters.getSearchTerm;
-      const searchGenre = this.$store.getters.getSearchTermGenre;
-
-      let filteredRestaurants = this.restaurants.filter((cardItem) => {
-        const hasMatchingName = cardItem.name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        const hasMatchingGenre = cardItem.genres.some((genre) =>
-          genre.toLowerCase().includes(searchGenre.toLowerCase()),
-        );
-        const filterSelectedd =
-          filterSelected.length === 0 ||
-          cardItem.genres.some((genre) =>
-            filterSelected.some((selected) =>
-              genre.toLowerCase().includes(selected.toLowerCase()),
-            ),
-          );
-        if (!priceSelected) {
-          return hasMatchingName && hasMatchingGenre && filterSelectedd;
-        }
-
-        const priceRangeSymbol = this.getPriceRangeSymbol(cardItem.price_range);
-        const filteredPrice = priceRangeSymbol === priceSelected;
-
-        return (
-          hasMatchingName &&
-          hasMatchingGenre &&
-          filterSelectedd &&
-          filteredPrice
-        );
-      });
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      return filteredRestaurants.slice(startIndex, endIndex);
-    },
-
-    ...mapGetters(["getRestaurants"]),
-    restaurants() {
-      return this.getRestaurants;
-    },
-    ...mapGetters(["getUsers"]),
-    users() {
-      return this.getUsers;
-    },
-    totalPages() {
-      // return Math.ceil(this.filteredCardData.length / this.itemsPerPage);
-      return Math.ceil(130 / this.itemsPerPage);
-    },
+    ...homePageComputed,
   },
   methods: {
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    previousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-    goToPage() {
-      const pageNumber = parseInt(this.inputPage);
-      if (pageNumber >= 1 && pageNumber <= this.totalPages) {
-        this.currentPage = pageNumber;
-      } else {
-        alert("Please enter a valid page number.");
-      }
-    },
-    getPriceRangeSymbol(priceRange) {
-      switch (priceRange) {
-        case 1:
-          return "$";
-        case 2:
-          return "$$";
-        case 3:
-          return "$$$";
-        default:
-          return " ";
-      }
-    },
-    openAuthenticationModal() {
-      this.isModalVisible = true;
-    },
-    getRestaurant(restaurant) {
-      const restaurantId = restaurant.id;
-      return this.$store.getters.getRestaurantById(restaurantId);
-    },
+    ...homePageMethods,
   },
 };
 </script>

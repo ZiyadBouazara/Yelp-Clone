@@ -1,7 +1,7 @@
 const LIMIT = 50;
 const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 
-export const actions  = {
+export const actions = {
   updatePrice({ commit }, newPrice) {
     commit("SET_PRICE", newPrice);
   },
@@ -22,16 +22,6 @@ export const actions  = {
   updateImageIndex({ commit }, imageIndex) {
     commit("SET_IMAGE_INDEX", imageIndex);
   },
-  async fetchJsonData() {
-    try {
-      const response = await fetch(apiUrl);
-      const jsonData = await response.json();
-      return jsonData;
-    } catch (error) {
-      console.error("Error fetching JSON data:", error);
-      throw error;
-    }
-  },
   async getTotalValue({ commit }) {
     try {
       const response = await fetch(`${SERVER_URL}/restaurants`);
@@ -44,7 +34,9 @@ export const actions  = {
   },
   async fetchRestaurant({ commit, state }) {
     try {
-      const response = await fetch(`${SERVER_URL}/restaurants?limit=500`);
+      const response = await fetch(
+        `${SERVER_URL}/restaurants?limit=${state.totalRestaurant}`,
+      );
       if (response.status !== 200) {
         throw new Error("Restaurants not loaded");
       }
@@ -53,7 +45,6 @@ export const actions  = {
     } catch (error) {
       console.error("Error fetching restaurants:", error);
     }
-    console.log(state.restaurants.length);
   },
   async fetchUsers({ commit }) {
     try {
