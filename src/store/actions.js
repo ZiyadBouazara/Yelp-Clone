@@ -1,4 +1,4 @@
-const LIMIT = 50;
+const LIMIT = 1000;
 const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 
 export const actions = {
@@ -85,9 +85,8 @@ export const actions = {
     }
   },
   async login({ commit, state }) {
-    // TODO : implement real login logic, changed to user[1] because he has many visits and favorites
+    // TODO : implement real login logic
     const dummyUser = state.users[7];
-    console.log("loggedin user: " + dummyUser.id);
     commit("SET_LOGGED_IN_USER", dummyUser);
   },
   async logout({ commit, state }) {
@@ -133,6 +132,28 @@ export const actions = {
       commit("SET_VISITS", jsonResponse.items);
     } catch (error) {
       console.error(`Error fetching visits for user:`, error);
+    }
+  },
+  async fetchVisitsForRestaurant({ state }, { restaurantId }) {
+    const userId = state.loggedInUser.id;
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/users/${userId}/restaurants/${restaurantId}/visits?limit=${LIMIT}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+      return await response.json();
+      // console.log(jsonResponse.items);
+      // return jsonResponse.items;
+    } catch (error) {
+      console.error(`Error fetching visits for restaurant:`, error);
     }
   },
   async fetchUserFavorites({ commit }, userId) {

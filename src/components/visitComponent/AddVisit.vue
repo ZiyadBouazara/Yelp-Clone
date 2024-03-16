@@ -7,13 +7,13 @@
       class="modal fade"
       tabindex="-1"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-4">Tell us more about your visit !</h2>
+          <div class="modal-header bg-danger text-white">
+            <h3 class="modal-title fs-4">Tell us more about your visit !</h3>
             <button
               aria-label="Close"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               type="button"
             ></button>
@@ -115,11 +115,11 @@ label {
 }
 
 .modal-title {
-  font-size: 22px;
-  font-weight: 700;
-  text-align: left;
-  margin-bottom: 15px;
-  color: #dc3545;
+  text-align: center;
+}
+
+.btn-close-white {
+  color: white;
 }
 
 .star {

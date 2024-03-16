@@ -78,17 +78,17 @@
         <p class="card-text">
           <span
             v-for="(number, index) in displayRatingSymbol"
-            class="badge"
             :key="index"
             :style="{
               backgroundColor: getColorBasedOnNumber(getRatingFloor),
               marginRight: '3px',
             }"
+            class="badge"
           >
             <font-awesome-icon
+              v-if="number === 'star'"
               :icon="['fas', 'star']"
               class="icon"
-              v-if="number === 'star'"
             />
           </span>
         </p>
@@ -98,25 +98,37 @@
         <router-link to="/restaurant/id">
           <button
             class="btn btn-outline-danger btn-lg"
-            type="button"
             style="position: absolute; bottom: 0; right: 0; margin: 10px"
+            type="button"
           >
             <font-awesome-icon :icon="['fas', 'arrow-right']" class="icon" />
           </button>
         </router-link>
-        <button
-          :data-bs-target="`#visitModal${id}`"
-          :disabled="!loggedInUser"
-          class="btn btn-outline-danger btn-lg"
-          data-bs-toggle="modal"
-          type="button"
-        >
-          <i class="fa-regular fa-star"></i> Write a review
-        </button>
-        <AddVisit
-          :restaurant-id="id"
-          style="position: absolute; bottom: 0; left: 0; margin: 10px"
-        />
+        <div v-if="readOnly">
+          <button
+            :data-bs-target="`#consultModal${id}`"
+            class="btn btn-outline-danger btn-lg"
+            data-bs-toggle="modal"
+            style="position: absolute; bottom: 0; left: 0; margin: 10px"
+            type="button"
+          >
+            <i class="fa-solid fa-eye"></i> View visit details
+          </button>
+          <ConsultVisit :restaurant-id="id" />
+        </div>
+        <div v-else>
+          <button
+            :data-bs-target="`#visitModal${id}`"
+            :disabled="!loggedInUser"
+            class="btn btn-outline-danger btn-lg"
+            data-bs-toggle="modal"
+            style="position: absolute; bottom: 0; left: 0; margin: 10px"
+            type="button"
+          >
+            <i class="fa-regular fa-star"></i> Write a review
+          </button>
+          <AddVisit :restaurant-id="id" />
+        </div>
       </div>
     </div>
   </div>
@@ -129,12 +141,13 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import AddVisit from "@/components/visitComponent/AddVisit.vue";
 import { baseRestaurantCardsMethods } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsMethods";
 import { baseRestaurantCardsComputed } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsComputed";
+import ConsultVisit from "@/components/visitComponent/ConsultVisit.vue";
 
 library.add(faArrowRight);
 library.add(faStar);
 export default {
   name: "CardComponent",
-  components: { AddVisit, FontAwesomeIcon },
+  components: { ConsultVisit, AddVisit, FontAwesomeIcon },
   props: {
     id: String,
     picture: Array,
@@ -144,6 +157,10 @@ export default {
     restaurantGenres: Array,
     restaurantPriceRange: Number,
     restaurantRating: Number,
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
