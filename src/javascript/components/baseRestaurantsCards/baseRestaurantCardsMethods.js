@@ -28,23 +28,24 @@ export const baseRestaurantCardsMethods = {
       const [openingHour, closingHour] =
         this.restaurantHour[currentDay].split("-");
 
-      const isOpen =
-        this.compareTimes(currentTime, openingHour) >= 0 &&
-        this.compareTimes(currentTime, closingHour) <= 0;
-      return isOpen;
+      const [openHours, openMinutes] = openingHour.split(":").map(Number);
+      const [closeHours, closeMinutes] = closingHour.split(":").map(Number);
+
+      const currentMinutes =
+        new Date().getHours() * 60 + new Date().getMinutes();
+      const openingMinutes = openHours * 60 + openMinutes;
+      let closingMinutes = closeHours * 60 + closeMinutes;
+
+      if (closingMinutes < openingMinutes) {
+        closingMinutes += 24 * 60;
+      }
+
+      return (
+        currentMinutes >= openingMinutes && currentMinutes <= closingMinutes
+      );
     }
 
     return false;
-  },
-  compareTimes(time1, time2) {
-    const [hours1, minutes1] = time1.split(":").map(Number);
-    const [hours2, minutes2] = time2.split(":").map(Number);
-
-    if (hours1 !== hours2) {
-      return hours1 - hours2;
-    } else {
-      return minutes1 - minutes2;
-    }
   },
   getCurrentDay() {
     const days = [

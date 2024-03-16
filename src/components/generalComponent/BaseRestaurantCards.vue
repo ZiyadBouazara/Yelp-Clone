@@ -46,17 +46,17 @@
     </div>
     <div class="card-body" style="height: 250px; text-align: left">
       <h5 class="card-title">{{ restaurantName }}</h5>
-      <!--      <div class="hours-container">-->
-      <!--        <p-->
-      <!--          :style="{ color: isRestaurantOpen() ? 'green' : 'red' }"-->
-      <!--          class="card-text"-->
-      <!--        >-->
-      <!--          {{ isRestaurantOpen() ? "Open" : "Closed" }}-->
-      <!--        </p>-->
-      <!--        <p class="card-text" style="margin-left: 5px; margin-bottom: 16px">-->
-      <!--          {{ "until " + getDisplayHours() }}-->
-      <!--        </p>-->
-      <!--      </div>-->
+      <div class="hours-container">
+        <p
+          :style="{ color: isRestaurantOpen() ? 'green' : 'red' }"
+          class="card-text"
+        >
+          {{ isRestaurantOpen() ? "Open" : "Closed" }}
+        </p>
+        <p class="card-text" style="margin-left: 5px; margin-bottom: 16px">
+          {{ "until " + getDisplayHours() }}
+        </p>
+      </div>
       <p class="card-text">
         <span
           v-for="(genre, index) in restaurantGenres"
