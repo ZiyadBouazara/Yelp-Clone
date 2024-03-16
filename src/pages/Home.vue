@@ -9,7 +9,11 @@
       </div>
     </div>
     <div class="row restaurant-cards">
-      <div v-for="(restaurant, index) in paginatedRestaurants" :key="index" class="col-12 col-md-6 col-lg-4 mb-4">
+      <div
+        v-for="(restaurant, index) in filteredCardData"
+        :key="index"
+        class="col-12 col-md-6 col-lg-4 mb-4"
+      >
         <div class="card-wrapper">
           <CardComponent
             :id="restaurant.id"
@@ -25,9 +29,25 @@
       </div>
     </div>
     <div class="pagination">
-      <button @click="previousPage" :disabled="page === 1">Previous</button>
-      <span>Page {{ page }}</span>
-      <button @click="nextPage" :disabled="page === totalPages">Next</button>
+      <button @click="previousPage" :disabled="currentPage === 1">
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button @click="nextPage" :disabled="currentPage === totalPages">
+        Next
+      </button>
+      <form @submit.prevent="goToPage">
+        <label for="pageNumber">Go to Page:</label>
+        <input
+          type="number"
+          id="pageNumber"
+          v-model.number="inputPage"
+          min="1"
+          :max="totalPages"
+          required
+        />
+        <button type="submit">Go</button>
+      </form>
     </div>
   </div>
 </template>
@@ -46,10 +66,12 @@ export default {
     CardComponent,
   },
   created() {
+    this.$store.dispatch("fetchRestaurant");
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
   },
   data() {
     return {
+      currentPage: 1,
       itemsPerPage: 10,
       isModalVisible: false,
     };
@@ -60,7 +82,8 @@ export default {
       const filterSelected = this.$store.getters.getGenres;
       const searchTerm = this.$store.getters.getSearchTerm;
       const searchGenre = this.$store.getters.getSearchTermGenre;
-      return this.restaurants.filter((cardItem) => {
+
+      let filteredRestaurants = this.restaurants.filter((cardItem) => {
         const hasMatchingName = cardItem.name
           .toLowerCase()
           .includes(searchTerm.toLowerCase());
@@ -79,7 +102,6 @@ export default {
         }
 
         const priceRangeSymbol = this.getPriceRangeSymbol(cardItem.price_range);
-
         const filteredPrice = priceRangeSymbol === priceSelected;
 
         return (
@@ -89,11 +111,11 @@ export default {
           filteredPrice
         );
       });
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return filteredRestaurants.slice(startIndex, endIndex);
     },
-    ...mapGetters(["getPage"]),
-    page() {
-      return this.getPage;
-    },
+
     ...mapGetters(["getRestaurants"]),
     restaurants() {
       return this.getRestaurants;
@@ -103,24 +125,27 @@ export default {
       return this.getUsers;
     },
     totalPages() {
-      console.log(this.filteredCardData.length);
-      return Math.ceil(this.filteredCardData.length / this.itemsPerPage);
-    },
-    paginatedRestaurants() {
-      const startIndex = (this.page - 1) * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      return this.filteredCardData.slice(startIndex, endIndex);
+      // return Math.ceil(this.filteredCardData.length / this.itemsPerPage);
+      return Math.ceil(130 / this.itemsPerPage);
     },
   },
   methods: {
     nextPage() {
-      if (this.page < this.totalPages) {
-        this.$store.dispatch("updatePage", this.page + 1);
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
       }
     },
     previousPage() {
-      if (this.page > 1) {
-        this.$store.dispatch("updatePage", this.page - 1);
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToPage() {
+      const pageNumber = parseInt(this.inputPage);
+      if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+        this.currentPage = pageNumber;
+      } else {
+        alert("Please enter a valid page number.");
       }
     },
     getPriceRangeSymbol(priceRange) {

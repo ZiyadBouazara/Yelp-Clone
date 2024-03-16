@@ -1,4 +1,4 @@
-import { createStore } from "vuex";
+import {createStore} from "vuex";
 
 const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
 const LIMIT = 50;
@@ -16,6 +16,7 @@ export default createStore({
     visits: [],
     favorites: [],
     page: 1,
+    totalRestaurant: 0,
   },
   mutations: {
     ADD_TO_GENRE_ARRAY(state, newItem) {
@@ -54,6 +55,9 @@ export default createStore({
     SET_PAGE(state, page) {
       state.page = page;
     },
+    SET_TOTAL_RESTAURANT(state, total) {
+      state.totalRestaurant = total;
+    },
   },
   actions: {
     updatePrice({ commit }, newPrice) {
@@ -79,11 +83,29 @@ export default createStore({
     updatePage({ commit }, newPage) {
       commit("SET_PAGE", newPage);
     },
+    async fetchJsonData() {
+      try {
+        const response = await fetch(apiUrl);
+        const jsonData = await response.json();
+        return jsonData;
+      } catch (error) {
+        console.error("Error fetching JSON data:", error);
+        throw error;
+      }
+    },
+    async getTotalValue({ commit }) {
+      try {
+        const response = await fetch(`${SERVER_URL}/restaurants`);
+        const jsonResponse = await response.json();
+        commit("SET_TOTAL_RESTAURANT", jsonResponse.total);
+      } catch (error) {
+        console.error("Error getting total value:", error);
+        throw error;
+      }
+    },
     async fetchRestaurant({ commit, state }) {
       try {
-        const response = await fetch(
-          `${SERVER_URL}/restaurants?limit=300`,
-        );
+        const response = await fetch(`${SERVER_URL}/restaurants?limit=500`);
         if (response.status !== 200) {
           throw new Error("Restaurants not loaded");
         }
@@ -92,6 +114,7 @@ export default createStore({
       } catch (error) {
         console.error("Error fetching restaurants:", error);
       }
+      console.log(state.restaurants.length);
     },
     async fetchUsers({ commit }) {
       try {
@@ -184,6 +207,7 @@ export default createStore({
     },
   },
   getters: {
+    getTotalRestaurant: (state) => state.totalRestaurant,
     getPage: (state) => state.page,
     getPrice: (state) => state.price,
     getGenres: (state) => state.genres,
