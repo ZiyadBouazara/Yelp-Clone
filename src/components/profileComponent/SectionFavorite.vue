@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-container" title="Favorites">
-    <h4 id="title" class="col-12 justify-content-start">My Favorites</h4>
+    <h4 class="col-12 justify-content-start" id="title">My Favorites</h4>
     <div v-if="!userFavoritesIsNotEmpty">
       <div
         :class="{ 'border-danger': isHovered }"
@@ -20,15 +20,15 @@
     </div>
 
     <form class="buttons-control">
-      <input v-model="listName" class="list-name" placeholder="List Name" />
+      <input class="list-name" placeholder="List Name" v-model="listName" />
       <button class="btn btn-outline-danger" @click="addFavoriteList">
         Create Favorite
       </button>
     </form>
     <div class="favorites-section">
       <div
-        v-for="favorite in userFavorites"
         id="favorites-card"
+        v-for="favorite in userFavorites"
         :key="favorite.id"
         class="favorite-item"
       >

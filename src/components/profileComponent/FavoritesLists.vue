@@ -22,13 +22,13 @@
             Add List
           </button>
         </div>
-        <!--        <ModalFavoriteList/> -->
+<!--        <ModalFavoriteList/> -->
         <div class="favorite-lists">
           <div
             v-for="favoriteList in getUserFavoritesList"
             :key="favoriteList.id"
-            class="favorite-pill"
             @click="handleClickedList(favoriteList)"
+            class="favorite-pill"
           >
             <h5>{{ favoriteList.name }}</h5>
           </div>
