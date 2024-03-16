@@ -28,6 +28,40 @@
         </div>
       </div>
     </div>
+    <div class="pagination">
+      <button
+        class="btn btn-outline-danger btn-lg buttonBas"
+        type="button"
+        @click="previousPage"
+        :disabled="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="buttonBas textBas" style="margin-top:12.5px">
+        Page {{ currentPage }} of {{ totalPages }}</span
+      >
+      <button
+        class="btn btn-outline-danger btn-lg buttonBas"
+        type="button"
+        @click="nextPage"
+        :disabled="currentPage === totalPages"
+      >
+        Next
+      </button>
+      <form @submit.prevent="goToPage">
+        <label class="buttonBas textBas" for="pageNumber">Go to Page:</label>
+        <input
+          type="number"
+          id="pageNumber"
+          v-model.number="inputPage"
+          min="1"
+          :max="totalPages"
+          required
+          style="margin-right: 10px"
+        />
+        <button class="btn btn-outline-danger btn-lg" type="submit">Go</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -36,7 +70,8 @@ import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue"
 import FormHome from "@/components/homePageComponent/FormHome.vue";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 import { EventBus } from "@/App.vue";
-import { mapGetters } from "vuex";
+import { homePageMethods } from "@/javascript/pages/homePage/homePageMethods";
+import { homePageComputed } from "@/javascript/pages/homePage/homePageComputed";
 
 export default {
   components: {
@@ -49,79 +84,36 @@ export default {
   },
   data() {
     return {
+      inputPage: 0,
+      currentPage: 1,
+      itemsPerPage: 10,
       isModalVisible: false,
     };
   },
   computed: {
-    filteredCardData() {
-      const priceSelected = this.$store.getters.getPrice;
-      const filterSelected = this.$store.getters.getGenres;
-      const searchTerm = this.$store.getters.getSearchTerm;
-      const searchGenre = this.$store.getters.getSearchTermGenre;
-      return this.restaurants.filter((cardItem) => {
-        const hasMatchingName = cardItem.name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        const hasMatchingGenre = cardItem.genres.some((genre) =>
-          genre.toLowerCase().includes(searchGenre.toLowerCase()),
-        );
-        const filterSelectedd =
-          filterSelected.length === 0 ||
-          cardItem.genres.some((genre) =>
-            filterSelected.some((selected) =>
-              genre.toLowerCase().includes(selected.toLowerCase()),
-            ),
-          );
-        if (!priceSelected) {
-          return hasMatchingName && hasMatchingGenre && filterSelectedd;
-        }
-
-        const priceRangeSymbol = this.getPriceRangeSymbol(cardItem.price_range);
-
-        const filteredPrice = priceRangeSymbol === priceSelected;
-
-        return (
-          hasMatchingName &&
-          hasMatchingGenre &&
-          filterSelectedd &&
-          filteredPrice
-        );
-      });
-    },
-    ...mapGetters(["getRestaurants"]),
-    restaurants() {
-      return this.getRestaurants;
-    },
-    ...mapGetters(["getUsers"]),
-    users() {
-      return this.getUsers;
-    },
+    ...homePageComputed,
   },
   methods: {
-    getPriceRangeSymbol(priceRange) {
-      switch (priceRange) {
-        case 1:
-          return "$";
-        case 2:
-          return "$$";
-        case 3:
-          return "$$$";
-        default:
-          return " ";
-      }
-    },
-    openAuthenticationModal() {
-      this.isModalVisible = true;
-    },
-    getRestaurant(restaurant) {
-      const restaurantId = restaurant.id;
-      return this.$store.getters.getRestaurantById(restaurantId);
-    },
+    ...homePageMethods,
   },
 };
 </script>
 
 <style scoped>
+.textBas {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.buttonBas {
+  margin-left: 10px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: rgba(45, 46, 47, 1);
+}
 .card-wrapper {
   margin: 0 auto;
 }
