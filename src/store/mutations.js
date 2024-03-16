@@ -30,7 +30,7 @@ export const mutations = {
     state.visits = visits;
   },
   SET_USER_FAVORITES(state, favorites) {
-    state.favorites = favorites;
+    state.userFavorites = favorites;
   },
   SET_IMAGE_INDEX(state, imageIndex) {
     state.imageIndex = imageIndex;
