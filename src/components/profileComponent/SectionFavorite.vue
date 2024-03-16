@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-container" title="Favorites">
-    <h4 class="col-12 justify-content-center" id="title">My Favorites</h4>
+    <h4 id="title" class="col-12 justify-content-start">My Favorites</h4>
     <div v-if="!userFavoritesIsNotEmpty">
       <div
         :class="{ 'border-danger': isHovered }"
@@ -11,14 +11,24 @@
           <h5 class="card-title justify-content-center">
             You have no favorites yet
           </h5>
-          <font-awesome-icon icon="dog" size="3x" />
         </div>
       </div>
     </div>
+
+    <div class="col-12 d-flex justify-content-center">
+      <FavoritesLists />
+    </div>
+
+    <form class="buttons-control">
+      <input v-model="listName" class="list-name" placeholder="List Name" />
+      <button class="btn btn-outline-danger" @click="addFavoriteList">
+        Create Favorite
+      </button>
+    </form>
     <div class="favorites-section">
       <div
-        id="favorites-card"
         v-for="favorite in userFavorites"
+        id="favorites-card"
         :key="favorite.id"
         class="favorite-item"
       >
@@ -33,23 +43,37 @@
 </template>
 
 <script setup>
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import FavoritesLists from "@/components/profileComponent/FavoritesLists.vue";
+import ModalFavoriteList from "@/components/profileComponent/ModalFavoriteList.vue";
 
+const listName = ref("");
 const isHovered = false;
 const store = useStore();
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
+const userEmail = computed(() => loggedInUser.value?.email);
 const userFavoritesIsNotEmpty = computed(
   () => store.getters.getUserFavorites.length > 0,
 );
 const userFavorites = computed(() => store.getters.getUserFavorites);
 
+const addFavoriteList = () => {
+  if (listName.value && userEmail) {
+    store.dispatch("createNewFavoritesList", {
+      listName: listName.value,
+      ownerEmail: userEmail,
+    });
+  } else {
+    console.error("List Name or user Email missing!");
+  }
+};
+
 watch(userId, (newUserId) => {
   if (newUserId !== null) {
-    store.dispatch("fetchUserFavorites", newUserId);
+    store.dispatch("getAllUserFavoritesLists", newUserId);
   }
 });
 </script>

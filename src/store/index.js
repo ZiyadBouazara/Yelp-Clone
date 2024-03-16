@@ -14,7 +14,8 @@ export default createStore({
     imageIndex: 0,
     loggedInUser: null,
     visits: [],
-    favorites: [],
+    userFavorites: [],
+    favoritesFromFavoritesListId: [],
   },
   mutations: {
     ADD_TO_GENRE_ARRAY(state, newItem) {
@@ -42,13 +43,19 @@ export default createStore({
       state.imageIndex = imageIndex;
     },
     SET_USER_FAVORITES(state, favorites) {
-      state.favorites = favorites;
+      state.userFavorites = favorites;
     },
     SET_LOGGED_IN_USER(state, user) {
       state.loggedInUser = user;
     },
     SET_VISITS(state, visits) {
       state.visits = visits;
+    },
+    SET_FAVORITES_FROM_FAVORITE_LIST_ID(state, favoritesFromListId) {
+      state.favoritesFromFavoritesListId = favoritesFromListId;
+    },
+    ADD_NEW_FAVORITES_LIST(state, newFavoriteList) {
+      state.newFavoriteList = newFavoriteList;
     },
   },
   actions: {
@@ -154,14 +161,14 @@ export default createStore({
         console.error(`Error fetching visits for user:`, error);
       }
     },
-    async fetchUserFavorites({ commit }, userId) {
+    async getAllUserFavoritesLists({ commit }, { userId }) {
       try {
         const response = await fetch(`${SERVER_URL}/users/${userId}/favorites`);
         if (response.status !== 200) {
           throw new Error("Favorites do not load");
         }
         const jsonResponse = await response.json();
-
+        console.log("jsonResponse directly: " + JSON.stringify(jsonResponse));
         const selectedFavorites = jsonResponse.items.map((item) => ({
           name: item.name,
           restaurants: item.restaurants,
@@ -173,6 +180,54 @@ export default createStore({
         console.error("Error fetching user favorites", error);
       }
     },
+    async createNewFavoritesList({ commit }, { listName, ownerEMail }) {
+      try {
+        const response = await fetch(`${SERVER_URL}/favorites`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            listName: listName,
+            ownerMail: ownerEMail,
+          }),
+        });
+
+        if (response.status !== 200) {
+          throw Error("Favorites List could not be created");
+        }
+        const jsonResponse = await response.json();
+        commit("ADD_NEW_FAVORITES_LIST", jsonResponse);
+
+        console.log("Created favorite list: " + JSON.stringify(jsonResponse));
+      } catch (error) {
+        console.log("Error creating new favorites list: ", error);
+      }
+    },
+    async getFavoriteRestaurantsByFavoriteListId(
+      { commit },
+      { favoriteListId },
+    ) {
+      try {
+        const response = await fetch(
+          `${SERVER_URL}/favorites/${favoriteListId}`,
+        );
+
+        if (response.status !== 200) {
+          throw Error("Could not retrieve favorite list items");
+        }
+
+        const jsonResponse = await response.json();
+        console.log(
+          "Favorite List 91929394 value: " + JSON.stringify(jsonResponse),
+        );
+      } catch (error) {
+        console.log(
+          "Error fetching favorite restaurants from favorite list id",
+          error,
+        );
+      }
+    },
   },
   getters: {
     getPrice: (state) => state.price,
@@ -181,12 +236,13 @@ export default createStore({
     getSearchTerm: (state) => state.searchTerm,
     getRestaurants: (state) => state.restaurants,
     getUsers: (state) => state.users,
-    getUserFavorites: (state) => state.favorites,
+    getUserFavorites: (state) => state.userFavorites,
     getImageIndex: (state) => state.imageIndex,
     getRestaurantById: (state) => (restaurantId) => {
       return state.restaurants.find((r) => r.id === restaurantId);
     },
     getLoggedInUser: (state) => state.loggedInUser,
     getVisits: (state) => state.visits,
+    getFavoritesByFavoriteListId: (state) => state.favoritesFromFavoritesListId,
   },
 });
