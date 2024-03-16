@@ -15,6 +15,11 @@ const getRestaurant = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };
 
+const getDirections = (destination) => {
+  const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
+  window.open(url);
+};
+
 const mapIframeSrc = ref(
   "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
 );
@@ -47,9 +52,17 @@ const mapIframeSrc = ref(
       <strong class="header">Location & Hours</strong>
     </div>
 
-    <div class="flex-row">
-      <LocationAndHours :restaurant="getRestaurant(restaurantId)" />
-      <side-container :restaurant="getRestaurant(restaurantId)" />
+    <div v-if="getRestaurant(restaurantId)?.address" class="flex-row">
+      <LocationAndHours
+        :restaurant="getRestaurant(restaurantId)"
+        :get-directions="getDirections"
+        :destination="getRestaurant(restaurantId).address"
+      />
+      <side-container
+        :restaurant="getRestaurant(restaurantId)"
+        :get-directions="getDirections"
+        :destination="getRestaurant(restaurantId).address"
+      />
     </div>
     <div class="line"></div>
     <about-restaurant :restaurant="getRestaurant(restaurantId)" />

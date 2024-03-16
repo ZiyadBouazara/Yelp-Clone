@@ -1,7 +1,13 @@
 <script setup>
 const props = defineProps({
   restaurant: Object,
+  getDirections: Function,
+  destination: String,
 });
+
+const openDirections = () => {
+  props.getDirections(props.destination);
+};
 </script>
 
 <template>
@@ -12,7 +18,7 @@ const props = defineProps({
     </div>
     <div class="small-line"></div>
     <div class="d-flex justify-content-between">
-      <a class="side-container-link">Get Directions</a>
+      <a class="side-container-link" @click="openDirections">Get Directions</a>
       <i class="fas fa-map-marker-alt"></i>
     </div>
     <div class="d-flex align-items-end">

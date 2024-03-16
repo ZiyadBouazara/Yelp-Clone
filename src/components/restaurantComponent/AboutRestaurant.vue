@@ -5,14 +5,14 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="about-commerce">
-    <strong class="header">Other restaurant pictures</strong>
+  <div class="header">
+    <strong class="header">Other restaurant photos</strong>
     <div v-if="restaurant?.pictures" class="row">
       <div
         v-for="(imageUrl, index) in restaurant.pictures.slice(4, 10)"
         :key="index"
         class="col-md-4"
-        style="padding-left: 0; padding-right: 0"
+        style="margin-top: 40px"
       >
         <div style="position: relative">
           <img :src="imageUrl" alt="Restaurant Image" class="img-fluid mb-3" />

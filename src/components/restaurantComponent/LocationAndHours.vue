@@ -3,16 +3,17 @@ import { onMounted, ref } from "vue";
 
 const props = defineProps({
   restaurant: Object,
+  getDirections: Function,
+  destination: String,
 });
+
+const openDirections = () => {
+  props.getDirections(props.destination);
+};
 
 const mapIframeSrc = ref(
   "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
 );
-
-const getDirections = (destination) => {
-  const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
-  window.open(url);
-};
 
 const map = ref(null);
 
@@ -68,10 +69,7 @@ onMounted(() => {
         <p class="address-container">
           <a class="side-container-link">{{ restaurant.address }}</a>
         </p>
-        <button
-          class="btn btn-outline-dark btn"
-          @click="getDirections(restaurant.address)"
-        >
+        <button class="btn btn-outline-dark btn" @click="openDirections">
           Get Directions
         </button>
       </div>
