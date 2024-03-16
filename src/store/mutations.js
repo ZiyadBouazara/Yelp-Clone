@@ -35,4 +35,10 @@ export const mutations = {
   SET_IMAGE_INDEX(state, imageIndex) {
     state.imageIndex = imageIndex;
   },
+  SET_FAVORITES_FROM_FAVORITE_LIST_ID(state, favoritesFromListId) {
+    state.favoritesFromFavoritesListId = favoritesFromListId;
+  },
+  ADD_NEW_FAVORITES_LIST(state, newFavoriteList) {
+    state.newFavoriteList = newFavoriteList;
+  },
 };

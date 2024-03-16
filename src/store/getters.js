@@ -10,6 +10,7 @@ export const getters = {
   getImageIndex: (state) => state.imageIndex,
   getLoggedInUser: (state) => state.loggedInUser,
   getVisits: (state) => state.visits,
+  getFavoritesByFavoriteListId: (state) => state.favoritesFromFavoritesListId,
   getRestaurantById: (state) => (restaurantId) => {
     return state.restaurants.find((r) => r.id === restaurantId);
   },

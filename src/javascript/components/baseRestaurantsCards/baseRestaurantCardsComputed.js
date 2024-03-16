@@ -24,4 +24,7 @@ export const baseRestaurantCardsComputed = {
       return null;
     }
   },
+  loggedInUser() {
+    return this.$store.state.loggedInUser;
+  },
 };
