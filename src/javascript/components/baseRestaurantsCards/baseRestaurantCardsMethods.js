@@ -10,24 +10,35 @@ export const baseRestaurantCardsMethods = {
   },
   getDisplayHours() {
     const currentDay = this.getCurrentDay();
-    if (this.isRestaurantOpen()) {
+    if (
+      !this.restaurantHour[currentDay] ||
+      this.restaurantHour[currentDay] === "null"
+    ) {
+      return "Closed today";
+    } else if (this.isRestaurantOpen()) {
       const [openingHour, closingHour] =
         this.restaurantHour[currentDay].split("-");
-      return closingHour;
+      return "until " + closingHour;
     } else {
       const [openingHour, closingHour] =
         this.restaurantHour[currentDay].split("-");
-      return openingHour;
+      return "until " + openingHour;
     }
   },
   isRestaurantOpen() {
     const currentDay = this.getCurrentDay();
-    const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
-    if (this.restaurantHour[currentDay]) {
-      const [openingHour, closingHour] =
-        this.restaurantHour[currentDay].split("-");
+    if (
+      !this.restaurantHour[currentDay] ||
+      this.restaurantHour[currentDay] === "null"
+    ) {
+      return false;
+    }
 
+    const [openingHour, closingHour] =
+      this.restaurantHour[currentDay].split("-");
+
+    if (openingHour && closingHour) {
       const [openHours, openMinutes] = openingHour.split(":").map(Number);
       const [closeHours, closeMinutes] = closingHour.split(":").map(Number);
 
