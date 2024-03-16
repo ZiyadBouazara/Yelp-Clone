@@ -5,9 +5,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <div id="sideContainer" class="side-container">
+  <div id="sideContainer" class="side-container" v-if="restaurant">
     <div class="contact-info">
-      <p>{{ restaurant.phone }}</p>
+      <p>{{ restaurant.tel }}</p>
       <i class="fas fa-phone-alt"></i>
     </div>
     <div class="small-line"></div>
@@ -17,9 +17,7 @@ const props = defineProps({
     </div>
     <div class="d-flex align-items-end">
       <p class="side-container-address">
-        {{ restaurant.address.street }}
-        {{ restaurant.address.city }}, <br />{{ restaurant.address.province }}
-        {{ restaurant.address.zipCode }}
+        {{ restaurant.address }}
       </p>
     </div>
     <div class="small-line"></div>

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { ref } from "vue";
 import "leaflet/dist/leaflet.css";
 import LocationAndHours from "@/components/restaurantComponent/LocationAndHours.vue";
 import SideContainer from "@/components/restaurantComponent/SideContainer.vue";
@@ -13,26 +13,6 @@ const restaurantId = route.params.id;
 const getRestaurant = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };
-
-const restaurant = ref({
-  name: "Test Restaurant",
-  address: {
-    street: "1065 Av. de la Médecine",
-    city: "Québec",
-    province: "QC",
-    zipCode: "G1V 0A6",
-  },
-  phone: "(888) 888-8888",
-  openingHours: {
-    Mon: "11:30 AM - 9:00 PM",
-    Tue: "11:30 AM - 9:00 PM",
-    Wed: "11:30 AM - 9:00 PM",
-    Thu: "11:30 AM - 9:00 PM",
-    Fri: "11:30 AM - 9:00 PM",
-    Sat: "11:30 AM - 9:00 PM",
-    Sun: "11:30 AM - 9:00 PM",
-  },
-});
 
 const mapIframeSrc = ref(
   "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
@@ -76,7 +56,7 @@ const description = ref(
         :map-iframe-src="mapIframeSrc"
         :restaurant="getRestaurant(restaurantId)"
       />
-      <side-container :restaurant="restaurant" />
+      <side-container :restaurant="getRestaurant(restaurantId)" />
     </div>
     <div class="line"></div>
     <div class="about-commerce">
