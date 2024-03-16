@@ -17,9 +17,9 @@ const mapIframeSrc = ref(
 
 const map = ref(null);
 
-const initMap = async () => {
+const initMap = async (restaurantLocation) => {
   try {
-    const restaurantLocation = [46.7799, -71.2772];
+    // const restaurantLocation = [46.7799, -71.2772];
     const leaflet = await import("leaflet");
     map.value = leaflet.map("map").setView(restaurantLocation, 15);
 
@@ -42,7 +42,7 @@ const initMap = async () => {
 };
 
 onMounted(() => {
-  initMap();
+  initMap(props.restaurant.location.coordinates);
 });
 </script>
 

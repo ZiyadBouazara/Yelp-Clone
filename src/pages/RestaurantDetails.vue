@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import "leaflet/dist/leaflet.css";
 import LocationAndHours from "@/components/restaurantComponent/LocationAndHours.vue";
 import SideContainer from "@/components/restaurantComponent/SideContainer.vue";
@@ -7,6 +6,8 @@ import RestaurantHeader from "@/components/restaurantComponent/RestaurantHeader.
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import AboutRestaurant from "@/components/restaurantComponent/AboutRestaurant.vue";
+import AddVisit from "@/components/visitComponent/AddVisit.vue";
+import { onMounted } from "vue";
 
 const store = useStore();
 const route = useRoute();
@@ -20,22 +21,27 @@ const getDirections = (destination) => {
   window.open(url);
 };
 
-const mapIframeSrc = ref(
-  "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
-);
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+onMounted(() => {
+  scrollToTop();
+});
 </script>
 
 <template>
   <div>
     <restaurant-header :restaurant="getRestaurant(restaurantId)" />
-    <div class="main-container">
-      <button
-        id="reviewButton"
-        class="btn btn-outline-danger btn-lg"
-        style="margin-left: 40px"
-      >
-        <i class="fa-regular fa-star"></i> Write a review
-      </button>
+    <div class="main-container d-flex">
+      <add-visit :restaurant-id="restaurantId" style="margin-left: 40px" />
+      <!--      <button-->
+      <!--        id="reviewButton"-->
+      <!--        class="btn btn-outline-danger btn-lg"-->
+      <!--        style="margin-left: 40px"-->
+      <!--      >-->
+      <!--        <i class="fa-regular fa-star"></i> Write a review-->
+      <!--      </button>-->
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-solid fa-camera-retro"></i> Add photo
       </button>
@@ -79,10 +85,6 @@ const mapIframeSrc = ref(
 .line {
   border-bottom: 1px solid #ccc;
   margin: 20px 530px 20px 40px;
-}
-
-.description {
-  margin: 10px 10px 30px 40px;
 }
 
 @media (min-width: 768px) {
