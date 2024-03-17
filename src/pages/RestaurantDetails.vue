@@ -7,6 +7,7 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import AboutRestaurant from "@/components/restaurantComponent/AboutRestaurant.vue";
 import AddVisit from "@/components/visitComponent/AddVisit.vue";
+import { baseRestaurantCardsComputed } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsComputed";
 import { onMounted } from "vue";
 
 const store = useStore();
@@ -34,14 +35,17 @@ onMounted(() => {
   <div>
     <restaurant-header :restaurant="getRestaurant(restaurantId)" />
     <div class="main-container d-flex">
-      <add-visit :restaurant-id="restaurantId" style="margin-left: 40px" />
-      <!--      <button-->
-      <!--        id="reviewButton"-->
-      <!--        class="btn btn-outline-danger btn-lg"-->
-      <!--        style="margin-left: 40px"-->
-      <!--      >-->
-      <!--        <i class="fa-regular fa-star"></i> Write a review-->
-      <!--      </button>-->
+      <button
+        :data-bs-target="`#visitModal${restaurantId}`"
+        :disabled="!baseRestaurantCardsComputed.loggedInUser"
+        class="btn btn-outline-danger btn-lg"
+        data-bs-toggle="modal"
+        style="margin-left: 40px"
+        type="button"
+      >
+        <i class="fa-regular fa-star"></i> Write a review
+      </button>
+      <add-visit :restaurant-id="restaurantId" />
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-solid fa-camera-retro"></i> Add photo
       </button>

@@ -1,4 +1,5 @@
 <script setup>
+import { baseRestaurantCardsMethods } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsMethods";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({
@@ -9,6 +10,11 @@ const props = defineProps({
 
 const openDirections = () => {
   props.getDirections(props.destination);
+};
+
+const isCurrentDay = (day) => {
+  const currentDay = baseRestaurantCardsMethods.getCurrentDay();
+  return day === currentDay;
 };
 
 const mapIframeSrc = ref(
@@ -85,6 +91,17 @@ onMounted(() => {
           day.slice(0, 1).toUpperCase() + day.slice(1, 3)
         }}</span>
         <span class="hours">{{ hours }}</span>
+        <span
+          v-if="isCurrentDay(day)"
+          class="opening"
+          :style="{
+            color: baseRestaurantCardsMethods.isRestaurantOpen
+              ? 'green'
+              : 'red',
+          }"
+        >
+          {{ baseRestaurantCardsMethods.isRestaurantOpen ? "Open" : "Closed" }}
+        </span>
       </div>
     </div>
   </div>
@@ -118,6 +135,10 @@ onMounted(() => {
 }
 
 .hours {
+  margin-left: 30px;
+}
+
+.opening {
   margin-left: 30px;
 }
 
