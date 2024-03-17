@@ -25,7 +25,7 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="favoriteListName" class="form-label"
-              >Favorite List Name:</label
+                >Favorite List Name:</label
               >
               <input
                 type="text"

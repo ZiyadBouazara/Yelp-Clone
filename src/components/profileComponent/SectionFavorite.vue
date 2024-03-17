@@ -15,39 +15,48 @@
       </div>
     </div>
 
-    <div class="col-12 d-flex justify-content-center">
-      <FavoritesLists />
-    </div>
-
-<!--    <form class="buttons-control">
+    <div>
+      <div class="col-12 d-flex justify-content-center">
+        <div class="favorite-lists">
+          <div
+            v-for="favoriteList in getUserFavoritesList"
+            :key="favoriteList.id"
+            @click="handleClickedList(favoriteList)"
+            class="favorite-pill"
+          >
+            <h5>{{ favoriteList.name }}</h5>
+          </div>
+        </div>
+      </div>
+      <!--    <form class="buttons-control">
       <input class="list-name" placeholder="List Name" v-model="listName" />
       <button class="btn btn-outline-danger" @click="addFavoriteList">
         Create Favorite
       </button>
     </form>-->
-    <div class="favorites-section">
-      <div
-        id="favorites-card"
-        v-for="favorite in userFavorites"
-        :key="favorite.id"
-        class="favorite-item"
-      >
-        <CardComponent
-          :imageSrc="favorite.restaurants.imageSrc"
-          :restaurantDescription="favorite.restaurants.description"
-          :restaurantName="favorite.restaurants.name"
-        ></CardComponent>
+      <div class="favorites-section">
+        <div
+          id="favorites-card"
+          v-for="favorite in userFavorites"
+          :key="favorite.id"
+          class="favorite-item"
+        >
+          <CardComponent
+            :imageSrc="favorite.restaurants.imageSrc"
+            :restaurantDescription="favorite.restaurants.description"
+            :restaurantName="favorite.restaurants.name"
+          ></CardComponent>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
-import FavoritesLists from "@/components/profileComponent/FavoritesLists.vue";
-import ModalFavoriteList from "@/components/profileComponent/ModalFavoriteList.vue";
+import data from "bootstrap/js/src/dom/data";
 
 const listName = ref("");
 const isHovered = false;
@@ -56,10 +65,12 @@ const userFavorites = ref([]);
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
+
 const userFavoritesIsNotEmpty = computed(
   () => store.getters.getUserFavorites.length > 0,
 );
 //const userFavorites = computed(() => store.getters.getUserFavorites);
+const getUserFavoritesList = computed(() => store.getters.getUserFavorites);
 
 const addFavoriteList = () => {
   if (listName.value && userEmail) {
@@ -72,15 +83,38 @@ const addFavoriteList = () => {
   }
 };
 
-const handleFavoritesClicked = (favorites) => {
-  userFavorites.value = favorites;
+const handleClickedList = (favoriteList) => {
+  console.log("entree");
+  if (favoriteList.restaurants.length > 0) {
+    const userFavoriteRestaurants = favoriteList.restaurants.value;
+    console.log("Voici les restos de cette liste: " + userFavoriteRestaurants);
+    favoriteList.restaurants.forEach((restaurant) => {
+      console.log(restaurant.id);
+    });
+  } else {
+    console.log("Aucun resto dans cette liste de fav!");
+  }
 };
 
-/*watch(userId, (newUserId) => {
+watch(userId, async (newUserId) => {
   if (newUserId !== null) {
-    store.dispatch("getAllUserFavoritesLists", newUserId);
+    try {
+      await store.dispatch("fetchUserFavorites", newUserId);
+    } catch (error) {
+      console.error("Error fetching user favorites:", error);
+    }
   }
-});*/
+});
+
+onMounted(async () => {
+  if (userId.value !== null) {
+    try {
+      await store.dispatch("fetchUserFavorites", userId.value);
+    } catch (error) {
+      console.error("Error fetching user favorites:", error);
+    }
+  }
+});
 </script>
 
 <style scoped>
@@ -118,6 +152,10 @@ a:hover {
   text-decoration: underline;
 }
 
+.favorite-lists {
+  display: inline-flex;
+}
+
 .favorites-section {
   display: flex;
   overflow-x: auto;
@@ -129,6 +167,17 @@ a:hover {
   flex: 0 0 320px;
   scroll-snap-align: start;
   margin-right: 10px;
+}
+
+.favorite-pill {
+  background-color: #ced4da;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin: 5px;
+}
+
+.favorite-pill:hover {
+  background-color: #ff6666;
 }
 
 @media screen and (max-width: 576px) {

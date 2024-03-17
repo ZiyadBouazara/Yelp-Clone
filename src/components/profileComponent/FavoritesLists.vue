@@ -49,7 +49,7 @@ const isLoading = ref(true);
 const loggedUser = computed(() => store.getters.getLoggedInUser);
 const userId = loggedUser.value?.id;
 
-const openModalFavoriteList = () => (showModal.value = true); // Adjusted this line
+const openModalFavoriteList = () => (showModal.value = true);
 
 const userFavoritesIsNotEmpty = computed(
   () => store.getters.getUserFavorites.length > 0,
@@ -69,12 +69,12 @@ const handleClickedList = (favoriteList) => {
   }
 };
 
-onMounted(async () => {
+/*onMounted(async () =>
   if (userId) {
     await store.dispatch("getAllUserFavoritesLists", { userId });
     isLoading.value = false;
   }
-});
+});*/
 </script>
 
 <style scoped>
