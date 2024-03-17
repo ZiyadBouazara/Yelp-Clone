@@ -6,11 +6,12 @@ const state = {
   restaurants: [],
   users: [],
   imageIndex: 0,
+  user: null,
   loggedInUser: null,
   visits: [],
-  user: null,
   userFavorites: [],
   favoritesFromFavoritesListId: [],
+  totalRestaurant: 0,
 };
 
 export default state;
