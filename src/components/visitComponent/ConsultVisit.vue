@@ -1,52 +1,51 @@
 <template>
   <div>
-    <button
-      class="btn btn-outline-primary btn-lg"
-      data-bs-target="#visitModal"
-      data-bs-toggle="modal"
-      style="position: absolute; bottom: 0; right: 60px; margin: 10px"
-      type="button"
-    >
-      <i class="fa-solid fa-eye"></i> View visit details
-    </button>
-
     <div
-      id="visitModal"
+      :id="`consultModal${props.restaurantId}`"
       aria-hidden="true"
       aria-labelledby="exampleModalLabel"
       class="modal fade"
       tabindex="-1"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-4">Visit Details</h2>
+          <div class="modal-header bg-danger text-white">
+            <h3 class="modal-title fs-4">You have {{ totalVisits }} visits!</h3>
             <button
               aria-label="Close"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               type="button"
             ></button>
           </div>
           <div class="modal-body">
-            <div class="mb-3">
-              <label class="col-form-label" for="recipient-name">Date:</label>
-              <br />
-              <span class="visit-info">{{ visit.date }}</span>
-            </div>
-            <div class="mb-3 d-flex justify-content-center">
-              <label class="col-form-label" for="message-text">Grade:</label>
-              <br />
-              <div class="grade-section d-flex align-items-center">
-                <span v-for="n in visit.grade" :key="n" class="star me-1">
-                  <i class="fas fa-star"></i>
-                </span>
+            <div
+              v-for="(visit, index) in visits"
+              :key="index"
+              class="visit-review"
+            >
+              <div class="mb-3">
+                <label class="col-form-label fw-bold pe-2" for="recipient-name"
+                  >Date:</label
+                >
+                <span class="visit-info">{{ parseDate(visit.date) }}</span>
               </div>
-            </div>
-            <div class="mb-3">
-              <label class="col-form-label" for="message-text">Comment:</label>
-              <br />
-              <p class="visit-info">{{ visit.comment }}</p>
+              <div class="mb-3">
+                <label class="col-form-label fw-bold pe-2" for="message-text"
+                  >Rating:</label
+                >
+                <div class="grade-section d-flex">
+                  <span v-for="n in visit.rating" :key="n" class="star me-1">
+                    <i class="fas fa-star"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="col-form-label fw-bold pe-2" for="message-text"
+                  >Comment:</label
+                >
+                <p class="visit-info">{{ visit.comment }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -56,42 +55,83 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref, onMounted } from "vue";
+import { useStore } from "vuex";
 
-//TODO : (replace with your logic)
-const visit = ref({
-  date: "2024-03-11",
-  grade: 4,
-  comment: "This was a great visit! I will definitely be back soon.",
+const store = useStore();
+
+const props = defineProps({ restaurantId: String });
+
+const data = ref(null);
+
+onMounted(async () => {
+  const response = await store.dispatch("fetchVisitsForRestaurant", {
+    restaurantId: props.restaurantId,
+  });
+  data.value = response;
 });
+
+const visits = computed(() => data.value?.items || []);
+
+const totalVisits = computed(() => data.value?.total || 0);
+
+const parseDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 </script>
 
 <style scoped>
-label {
-  font-family: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+.modal-header {
+  border-bottom: none;
 }
 
 .modal-title {
-  font-size: 22px;
-  font-weight: 700;
-  text-align: left;
-  margin-bottom: 15px;
-  color: #dc3545;
+  text-align: center;
+}
+
+.btn-close-white {
+  color: white;
 }
 
 .star {
-  cursor: default;
-  color: gold;
+  color: #f0ad4e;
 }
 
 .visit-info {
-  font-weight: normal;
   font-size: 16px;
 }
 
 .grade-section {
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+.visit-review {
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.visit-review:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+label {
+  font-size: 18px;
 }
 </style>
