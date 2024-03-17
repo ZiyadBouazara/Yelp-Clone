@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      v-if="visits.length > 0"
       :id="`consultModal${props.restaurantId}`"
       aria-hidden="true"
       aria-labelledby="exampleModalLabel"
@@ -10,7 +11,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
-            <h3 class="modal-title fs-4">You have {{ totalVisits }} visits!</h3>
+            <h3 class="modal-title fs-4">You have {{ totalVisits }} visit!</h3>
             <button
               aria-label="Close"
               class="btn-close btn-close-white"
@@ -35,8 +36,11 @@
                   >Rating:</label
                 >
                 <div class="grade-section d-flex">
-                  <span v-for="n in visit.rating" :key="n" class="star me-1">
-                    <i class="fas fa-star"></i>
+                  <span v-for="n in 5" :key="n" class="star me-1">
+                    <i
+                      :class="{ 'text-muted': n > visit.rating }"
+                      class="fas fa-star"
+                    ></i>
                   </span>
                 </div>
               </div>
