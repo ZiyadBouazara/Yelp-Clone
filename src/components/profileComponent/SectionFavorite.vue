@@ -135,7 +135,6 @@ const addFavoriteList = async (name, user) => {
   }
 };
 
-
 const deleteFavoriteList = async (name) => {
   try {
     const favoriteList = await getFavoriteListByName(name);

@@ -2,6 +2,7 @@ const state = {
   price: "",
   searchTerm: "",
   searchTermGenre: "",
+  message: "",
   genres: [],
   restaurants: [],
   users: [],
