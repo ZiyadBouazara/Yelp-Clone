@@ -6,6 +6,9 @@ export const getters = {
   getSearchTerm: (state) => state.searchTerm,
   getRestaurants: (state) => state.restaurants,
   getUsers: (state) => state.users,
+  getUserById: (state) => (userId) => {
+    return state.users.find((r) => r.id === userId);
+  },
   getUserFavorites: (state) => state.userFavorites,
   getImageIndex: (state) => state.imageIndex,
   getLoggedInUser: (state) => state.loggedInUser,

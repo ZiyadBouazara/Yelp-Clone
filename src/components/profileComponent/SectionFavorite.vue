@@ -114,8 +114,10 @@ const chosenFavList = async (favoriteList) => {
       const restaurant = await getRestaurantById(resto.id);
       userFavoriteRestaurants.value.push(restaurant);
     }
+    displayFavoritesSection.value = true;
+  } else {
+    userFavoriteRestaurants.value = []; // Clear the array when no restaurants are present
   }
-  displayFavoritesSection.value = true;
 };
 
 watch(userId, async (newUserId) => {

@@ -8,6 +8,7 @@ const state = {
   imageIndex: 0,
   loggedInUser: null,
   visits: [],
+  user: null,
   userFavorites: [],
   favoritesFromFavoritesListId: [],
 };

@@ -56,10 +56,11 @@ export const actions = {
 
       const users = rawJsonResponse.items.map((user) => {
         const parsedUser = { ...user };
-        parsedUser.name = parsedUser.name.replace(/["'\\]/g, ""); // Remove leading and trailing quotes, excluding escaped quotes
+        parsedUser.name = parsedUser.name.replace(/["'\\]/g, "");
         parsedUser.email = parsedUser.email.replace(/["'\\]/g, "");
         return parsedUser;
       });
+      console.log("users fetched: " + JSON.stringify(users));
       commit("SET_USERS", users);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -84,15 +85,39 @@ export const actions = {
       console.error("Error fetching user favorites", error);
     }
   },
-  async login({ commit, state }) {
-    // TODO : implement real login logic
-    const dummyUser = state.users[7];
-    console.log("dummy user info: " + JSON.stringify(dummyUser));
-    commit("SET_LOGGED_IN_USER", dummyUser);
+  async login({ commit, state, dispatch }) {
+    // TODO: Implement real login logic
+    const userId = "636d37d5a4823385784320a2";
+    const dummyUser = state.users[2];
+    const user = await dispatch("getUserById", userId);
+    console.log("Fetched user info: ", user);
+
+    commit("SET_LOGGED_IN_USER", user || dummyUser);
   },
   async logout({ commit, state }) {
     // TODO : implement real logout logic
     commit("SET_LOGGED_IN_USER", null);
+  },
+  async getUserById({ commit }, { userId }) {
+    try {
+      const response = await fetch(`${SERVER_URL}/users/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status !== 200) {
+        throw new Error(`Could not retrieve user with ID ${userId}`);
+      }
+
+      const userData = await response.json();
+      console.log("Fetched user info: ", userData); // Log the fetched user data
+
+      return userData; // Return the fetched user data
+    } catch (error) {
+      console.error("Error fetching user by ID:", error);
+      return null; // Return null in case of error
+    }
   },
   async createVisit({ commit, dispatch }, { userId, visitData }) {
     try {
@@ -116,7 +141,7 @@ export const actions = {
   },
   async fetchVisitsForLoggedInUser({ commit, state }) {
     const userId = state.loggedInUser.id;
-    console.log("userId loggedin "+ userId);
+    console.log("userId loggedin " + userId);
     try {
       const response = await fetch(
         `${SERVER_URL}/users/${userId}/restaurants/visits?limit=${LIMIT}`,
