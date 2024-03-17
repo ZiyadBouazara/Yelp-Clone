@@ -114,7 +114,7 @@
           >
             <i class="fa-solid fa-eye"></i> View visit details
           </button>
-<!--          <ConsultVisit :restaurant-id="id" />-->
+          <ConsultVisit :restaurant-id="id" />
         </div>
         <div v-else>
           <button
@@ -147,7 +147,7 @@ library.add(faArrowRight);
 library.add(faStar);
 export default {
   name: "CardComponent",
-  components: { AddVisit, FontAwesomeIcon },
+  components: { ConsultVisit, AddVisit, FontAwesomeIcon },
   props: {
     id: String,
     picture: Array,
