@@ -57,7 +57,7 @@
           ></CardComponent>
           <button
             class="btn btn-outline-danger"
-            @click="deleteResto(favoriteList, restaurant)"
+            @click="deleteResto(restaurant)"
           >
             Delete
           </button>
@@ -129,17 +129,25 @@ const chosenFavList = async (favoriteList) => {
   } else {
     userFavoriteRestaurants.value = [];
   }
-  currentFavoriteList.value = favoriteList.name;
+  currentFavoriteList.value = favoriteList.id;
+  console.log("current fav list at: " + currentFavoriteList.value);
 };
 
-const deleteResto = async (favoriteList, restaurant) => {
-  try {
-    await store.dispatch("deleteRestaurantFromFavoriteList", {
-      favoriteListId: favoriteList.id,
-      restaurantId: restaurant.id,
-    });
-  } catch (error) {
-    console.error("Error deleting restaurant from favorite list:", error);
+const deleteResto = async (restaurant) => {
+  console.log("restaurant:", restaurant);
+  const favoriteListId = currentFavoriteList.value; // Assuming you have currentFavoriteList defined
+  if (restaurant && restaurant.id && favoriteListId) {
+    try {
+      await store.dispatch("deleteRestaurantFromFavoriteList", {
+        favoriteListId: favoriteListId,
+        restaurantId: restaurant.id,
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting restaurant from favorite list:", error);
+    }
+  } else {
+    console.log("no delete resto");
   }
 };
 

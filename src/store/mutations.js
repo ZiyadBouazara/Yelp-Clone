@@ -44,4 +44,15 @@ export const mutations = {
   ADD_NEW_FAVORITES_LIST(state, newFavoriteList) {
     state.newFavoriteList = newFavoriteList;
   },
+  DELETE_RESTAURANT_FROM_FAVORITE_LIST(state, { favoriteListId, restaurantId }) {
+    const favoriteList = state.userFavorites.find(
+      (list) => list.id === favoriteListId,
+    );
+    if (favoriteList) {
+      const index = favoriteList.restaurants.findIndex(restaurant => restaurant.id === restaurantId);
+      if (index !== -1) {
+        favoriteList.restaurants.splice(index, 1);
+      }
+    }
+  },
 };
