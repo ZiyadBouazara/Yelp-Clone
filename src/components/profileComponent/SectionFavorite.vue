@@ -27,13 +27,15 @@
           <h5>{{ favoriteList.name }}</h5>
         </div>
       </div>
-      <!--      <form class="buttons-control">
+      <form class="buttons-control">
         <input class="list-name" placeholder="List Name" v-model="listName" />
-        <button class="btn btn-outline-danger" @click="addFavoriteList">
+        <button
+          class="btn btn-outline-danger"
+          @click="addFavoriteList(listName, userEmail)"
+        >
           Create Favorite
         </button>
       </form>
-      &ndash;&gt;-->
       <div class="favorites-section" v-if="displayFavoritesSection">
         <div
           style="margin-top: 10px"
@@ -90,11 +92,12 @@ const userFavoritesIsNotEmpty = computed(
 //const userFavorites = computed(() => store.getters.getUserFavorites);
 const getUserFavoritesList = computed(() => store.getters.getUserFavorites);
 
-const addFavoriteList = async () => {
+const addFavoriteList = async (name, user) => {
   try {
+    console.log("this is the user email: ", user);
     const listData = {
-      name: "My super favorite list",
-      owner: "didi@didi.com",
+      name: name,
+      owner: user,
     };
     const response = await store.dispatch("createFavoriteList", listData);
     console.log("New favorite list created:", response);
@@ -178,7 +181,6 @@ a:hover {
   color: #d94848;
   text-decoration: underline;
 }
-
 
 .favorites-section {
   display: flex;
