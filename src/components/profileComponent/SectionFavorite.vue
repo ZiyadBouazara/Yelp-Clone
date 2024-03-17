@@ -28,12 +28,13 @@
           </div>
         </div>
       </div>
-      <!--    <form class="buttons-control">
-      <input class="list-name" placeholder="List Name" v-model="listName" />
-      <button class="btn btn-outline-danger" @click="addFavoriteList">
-        Create Favorite
-      </button>
-    </form>-->
+      <form class="buttons-control">
+        <input class="list-name" placeholder="List Name" v-model="listName" />
+        <button class="btn btn-outline-danger" @click="addFavoriteList">
+          Create Favorite
+        </button>
+      </form>
+      -->
       <div class="favorites-section">
         <div
           id="favorites-card"
@@ -72,14 +73,17 @@ const userFavoritesIsNotEmpty = computed(
 //const userFavorites = computed(() => store.getters.getUserFavorites);
 const getUserFavoritesList = computed(() => store.getters.getUserFavorites);
 
-const addFavoriteList = () => {
-  if (listName.value && userEmail) {
-    store.dispatch("createNewFavoritesList", {
-      listName: listName.value,
-      ownerEmail: userEmail,
-    });
-  } else {
-    console.error("List Name or user Email missing!");
+const addFavoriteList = async () => {
+  try {
+    const listData = {
+      name: "My super favorite list",
+      owner: "didi@didi.com",
+    };
+    const response = await store.dispatch("createFavoriteList", listData);
+    console.log("New favorite list created:", response);
+    // Do something with the response if needed
+  } catch (error) {
+    console.error("Error creating favorite list:", error);
   }
 };
 

@@ -175,28 +175,28 @@ export const actions = {
       console.error("Error fetching user favorites", error);
     }
   },
-  async createNewFavoritesList({ commit }, { listName, ownerEMail }) {
+  async createFavoriteList({ commit }, listData) {
     try {
-      const response = await fetch(`${SERVER_URL}/favorites`, {
+      const apiUrl = `${SERVER_URL}/favorites`;
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          listName: listName,
-          ownerMail: ownerEMail,
-        }),
+        body: JSON.stringify(listData),
       });
 
-      if (response.status !== 200) {
-        throw Error("Favorites List could not be created");
+      if (!response.ok) {
+        throw new Error("Failed to create favorite list");
       }
-      const jsonResponse = await response.json();
-      commit("ADD_NEW_FAVORITES_LIST", jsonResponse);
 
-      console.log("Created favorite list: " + JSON.stringify(jsonResponse));
+      const responseData = await response.json();
+      commit("ADD_NEW_FAVORITES_LIST", responseData);
+      return responseData;
     } catch (error) {
-      console.log("Error creating new favorites list: ", error);
+      console.error("Error creating favorite list:", error);
+      throw error;
     }
   },
   async getFavoriteRestaurantsByFavoriteListId({ commit }, { favoriteListId }) {
