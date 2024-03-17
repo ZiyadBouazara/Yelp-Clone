@@ -19,12 +19,12 @@
       <FavoritesLists />
     </div>
 
-    <form class="buttons-control">
+<!--    <form class="buttons-control">
       <input class="list-name" placeholder="List Name" v-model="listName" />
       <button class="btn btn-outline-danger" @click="addFavoriteList">
         Create Favorite
       </button>
-    </form>
+    </form>-->
     <div class="favorites-section">
       <div
         id="favorites-card"
@@ -52,13 +52,14 @@ import ModalFavoriteList from "@/components/profileComponent/ModalFavoriteList.v
 const listName = ref("");
 const isHovered = false;
 const store = useStore();
+const userFavorites = ref([]);
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
 const userFavoritesIsNotEmpty = computed(
   () => store.getters.getUserFavorites.length > 0,
 );
-const userFavorites = computed(() => store.getters.getUserFavorites);
+//const userFavorites = computed(() => store.getters.getUserFavorites);
 
 const addFavoriteList = () => {
   if (listName.value && userEmail) {
@@ -71,11 +72,15 @@ const addFavoriteList = () => {
   }
 };
 
-watch(userId, (newUserId) => {
+const handleFavoritesClicked = (favorites) => {
+  userFavorites.value = favorites;
+};
+
+/*watch(userId, (newUserId) => {
   if (newUserId !== null) {
     store.dispatch("getAllUserFavoritesLists", newUserId);
   }
-});
+});*/
 </script>
 
 <style scoped>

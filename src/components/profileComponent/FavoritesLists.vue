@@ -17,12 +17,12 @@
         <div class="adding-list">
           <button
             class="btn btn-outline-danger adding-list-button"
-            @click="openModalFavoriteList()"
+            @click="openModalFavoriteList"
           >
             Add List
           </button>
         </div>
-<!--        <ModalFavoriteList/> -->
+        <ModalFavoriteList :showModal="showModal" />
         <div class="favorite-lists">
           <div
             v-for="favoriteList in getUserFavoritesList"
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, emit, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import ModalFavoriteList from "@/components/profileComponent/ModalFavoriteList.vue";
 
@@ -49,6 +49,8 @@ const isLoading = ref(true);
 const loggedUser = computed(() => store.getters.getLoggedInUser);
 const userId = loggedUser.value?.id;
 
+const openModalFavoriteList = () => (showModal.value = true); // Adjusted this line
+
 const userFavoritesIsNotEmpty = computed(
   () => store.getters.getUserFavorites.length > 0,
 );
@@ -56,12 +58,16 @@ const getUserFavoritesList = computed(() => store.getters.getUserFavorites);
 const favoriteRestaurants = computed(() => getUserFavoritesList.value);
 
 const handleClickedList = (favoriteList) => {
-  console.log("Voici les restos de cette liste:");
-  favoriteList.restaurants.forEach((restaurant) => {
-    console.log(restaurant.id);
-  });
+  if (favoriteList.restaurants.length > 0) {
+    emit("favoriteListClicked", favoriteList);
+    console.log("Voici les restos de cette liste:");
+    favoriteList.restaurants.forEach((restaurant) => {
+      console.log(restaurant.id);
+    });
+  } else {
+    console.log("Aucun resto dans cette liste de fav!");
+  }
 };
-const openModalFavoriteList = () => (showModal.value = true);
 
 onMounted(async () => {
   if (userId) {
@@ -94,6 +100,9 @@ onMounted(async () => {
   margin: 5px;
 }
 
+.favorite-pill:hover {
+  background-color: #ff6666;
+}
 .no-favorites-list {
   display: flex;
   justify-content: center;
