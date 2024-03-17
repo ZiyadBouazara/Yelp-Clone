@@ -88,37 +88,36 @@ export const actions = {
   async login({ commit, state, dispatch }) {
     // TODO: Implement real login logic
     const userId = "636d37d5a4823385784320a2";
-    const dummyUser = state.users[2];
-    const user = await dispatch("getUserById", userId);
-    console.log("Fetched user info: ", user);
+    const dummyUser = state.users[0];
+    console.log("Fetched user info: ", dummyUser);
 
-    commit("SET_LOGGED_IN_USER", user || dummyUser);
+    commit("SET_LOGGED_IN_USER", dummyUser);
   },
   async logout({ commit, state }) {
     // TODO : implement real logout logic
     commit("SET_LOGGED_IN_USER", null);
   },
-  async getUserById({ commit }, { userId }) {
-    try {
-      const response = await fetch(`${SERVER_URL}/users/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status !== 200) {
-        throw new Error(`Could not retrieve user with ID ${userId}`);
-      }
-
-      const userData = await response.json();
-      console.log("Fetched user info: ", userData); // Log the fetched user data
-
-      return userData; // Return the fetched user data
-    } catch (error) {
-      console.error("Error fetching user by ID:", error);
-      return null; // Return null in case of error
-    }
-  },
+  // async getUserById({ commit }, { userId }) {
+  //   try {
+  //     const response = await fetch(`${SERVER_URL}/users/${userId}`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (response.status !== 200) {
+  //       throw new Error(`Could not retrieve user with ID ${userId}`);
+  //     }
+  //
+  //     const userData = await response.json();
+  //     console.log("Fetched user info: ", userData); // Log the fetched user data
+  //
+  //     return userData; // Return the fetched user data
+  //   } catch (error) {
+  //     console.error("Error fetching user by ID:", error);
+  //     return null; // Return null in case of error
+  //   }
+  // },
   async createVisit({ commit, dispatch }, { userId, visitData }) {
     try {
       const response = await fetch(
