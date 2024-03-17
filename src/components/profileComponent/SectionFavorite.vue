@@ -37,14 +37,20 @@
       <div class="favorites-section">
         <div
           id="favorites-card"
-          v-for="favorite in userFavorites"
+          v-for="favorite in userFavoritesRestaurants"
           :key="favorite.id"
           class="favorite-item"
         >
           <CardComponent
-            :imageSrc="favorite.restaurants.imageSrc"
-            :restaurantDescription="favorite.restaurants.description"
-            :restaurantName="favorite.restaurants.name"
+            :id="favorite.id"
+            :picture="restaurantPicture"
+            :readOnly="readOnly"
+            :restaurant-genres="restaurantGenres"
+            :restaurant-hour="restaurantHour"
+            :restaurant-number="restaurantNumber"
+            :restaurant-price-range="restaurantPriceRange"
+            :restaurant-rating="restaurantRating"
+            :restaurantName="restaurantName"
           ></CardComponent>
         </div>
       </div>
@@ -66,30 +72,62 @@ const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
 
+let restaurantPicture = "";
+let readOnly = false;
+let restaurantGenres = [];
+let restaurantHour = {};
+let restaurantNumber = "";
+let restaurantRating = 0;
+let restaurantName = "";
+let restaurantPriceRange = 0;
+
 const userFavoritesIsNotEmpty = computed(
   () => store.getters.getUserFavorites.length > 0,
 );
 //const userFavorites = computed(() => store.getters.getUserFavorites);
 const getUserFavoritesList = computed(() => store.getters.getUserFavorites);
-
-const addFavoriteList = () => {
-  if (listName.value && userEmail) {
-    store.dispatch("createNewFavoritesList", {
-      listName: listName.value,
-      ownerEmail: userEmail,
-    });
-  } else {
-    console.error("List Name or user Email missing!");
-  }
+const getRestaurantById = (restaurantId) => {
+  return store.getters.getRestaurantById(restaurantId);
 };
 
-const handleClickedList = (favoriteList) => {
+/*const handleClickedList = (favoriteList) => {
   console.log("entree");
   if (favoriteList.restaurants.length > 0) {
     const userFavoriteRestaurants = favoriteList.restaurants.value;
     console.log("Voici les restos de cette liste: " + userFavoriteRestaurants);
     favoriteList.restaurants.forEach((restaurant) => {
-      console.log(restaurant.id);
+      const restaurant_Id = restaurant.id;
+      const restaurantPicture = getRestaurantById.value(restaurant_Id).pictures;
+      const readOnly = "true";
+      const restaurantGenres = getRestaurantById.value(restaurant_Id).genres;
+      const restaurantHour = getRestaurantById.value(restaurant_Id).opening_hours;
+      const restaurantNumber = getRestaurantById.value(restaurant_Id).tel;
+      const restaurantRating = getRestaurantById.value(restaurant_Id).rating;
+      const restaurantName = getRestaurantById.value(restaurant_Id).name;
+      console.log(restaurant.id, restaurantName);
+    });
+  } else {
+    console.log("Aucun resto dans cette liste de fav!");
+  }
+};*/
+
+const handleClickedList = (favoriteList) => {
+  if (favoriteList.restaurants && favoriteList.restaurants.length > 0) {
+    const userFavoriteRestaurants = favoriteList.restaurants.value;
+    favoriteList.forEach((restaurant) => {
+      const restaurantId = restaurant.id;
+      const restaurantData = getRestaurantById(restaurantId);
+      if (restaurantData) {
+        restaurantPicture = restaurantData.pictures;
+        readOnly = true;
+        restaurantGenres = restaurantData.genres;
+        restaurantHour = restaurantData.opening_hours;
+        restaurantPriceRange = restaurantData.price_range;
+        restaurantNumber = restaurantData.tel;
+        restaurantRating = restaurantData.rating;
+        restaurantName = restaurantData.name;
+        console.log(restaurantId, restaurantName);
+      }
     });
   } else {
     console.log("Aucun resto dans cette liste de fav!");
