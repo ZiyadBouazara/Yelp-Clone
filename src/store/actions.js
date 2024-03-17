@@ -244,4 +244,26 @@ export const actions = {
       );
     }
   },
+  async deleteFavoriteList({ commit }, id) {
+    try {
+      const apiUrl = `${SERVER_URL}/favorites/${id}`;
+
+      const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete favorite list");
+      }
+
+      const responseData = await response.json();
+      commit("SET_MESSAGE", responseData.message);
+    } catch (error) {
+      console.error("Error deleting favorite list:", error);
+      throw error;
+    }
+  },
 };

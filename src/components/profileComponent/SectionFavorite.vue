@@ -28,12 +28,28 @@
         </div>
       </div>
       <form class="buttons-control">
-        <input class="list-name" placeholder="List Name" v-model="listName" />
+        <input
+          class="list-name"
+          placeholder="List Name"
+          v-model="createListName"
+        />
         <button
           class="btn btn-outline-danger"
-          @click="addFavoriteList(listName, userEmail)"
+          @click="addFavoriteList(createListName, userEmail)"
         >
           Create Favorite
+        </button>
+        <br />
+        <input
+          class="list-name"
+          placeholder="List Name"
+          v-model="deleteListName"
+        />
+        <button
+          class="btn btn-outline-danger"
+          @click="deleteFavoriteList(deleteListName)"
+        >
+          Delete Favorite
         </button>
       </form>
       <div class="favorites-section" v-if="displayFavoritesSection">
@@ -67,7 +83,8 @@ import { useStore } from "vuex";
 import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
 import data from "bootstrap/js/src/dom/data";
 
-const listName = ref("");
+const createListName = ref("");
+const deleteListName = ref("");
 const isHovered = false;
 const store = useStore();
 const displayFavoritesSection = ref(false);
@@ -76,6 +93,11 @@ const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
 const userFavoriteRestaurants = ref([]);
+
+const getFavoriteListByName = async (name) => {
+  return await store.getters.getFavoriteListByName(name);
+};
+const favoriteList = await getFavoriteListByName("Nom de la liste");
 
 let restaurantPicture = "";
 let readOnly = false;
@@ -105,6 +127,24 @@ const addFavoriteList = async (name, user) => {
     console.error("Error creating favorite list:", error);
   }
 };
+
+const deleteFavoriteList = async (name) => {
+  try {
+    const favoriteList = await getFavoriteListByName(name);
+    if (!favoriteList) {
+      throw new Error(`Favorite list with name ${name} not found`);
+    }
+    console.log("Favorite list:", favoriteList);
+    const response = await store.dispatch(
+      "deleteFavoriteList",
+      favoriteList.id,
+    );
+    console.log("Favorite list deleted successfully:", response);
+  } catch (error) {
+    console.error("Error deleting favorite list:", error);
+  }
+};
+
 const getRestaurantById = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };

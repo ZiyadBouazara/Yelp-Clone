@@ -17,4 +17,9 @@ export const getters = {
   getRestaurantById: (state) => (restaurantId) => {
     return state.restaurants.find((r) => r.id === restaurantId);
   },
+  getFavoriteListByName: (state) => (name) => {
+    return state.userFavorites.find(
+      (favoriteList) => favoriteList.name === name,
+    );
+  },
 };
