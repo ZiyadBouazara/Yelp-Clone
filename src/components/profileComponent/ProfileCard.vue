@@ -8,8 +8,8 @@
     <div class="card-body">
       <div class="row mb-3">
         <div class="col">
-          <h4 class="card-title">{{ name }}</h4>
-          <h5 class="card-text">{{ location }}</h5>
+          <h4 class="card-title">{{ props.name }}</h4>
+          <h5 class="card-text">{{ props.email }}</h5>
         </div>
       </div>
       <div class="row mb-3">
@@ -31,30 +31,15 @@
         </div>
       </div>
       <div class="row">
-        <p><i class="far fa-star"></i> Score : {{ score }}</p>
+        <p><i class="far fa-star"></i> Rating : {{ props.rating }}</p>
       </div>
     </div>
     <hr style="background-color: #ccc; margin: 0" />
   </div>
 </template>
 
-<script>
-export default {
-  name: "ProfileCard",
-  props: {
-    name: String,
-    location: String,
-    score: Number,
-  },
-  methods: {
-    editProfile() {
-      // Handle edit profile action
-    },
-    addPhoto() {
-      // Handle add photo action
-    },
-  },
-};
+<script setup>
+const props = defineProps({ email: String, name: String, rating: Number });
 </script>
 
 <style scoped>

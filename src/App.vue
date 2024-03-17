@@ -39,6 +39,7 @@ export default {
   },
   created() {
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
+    this.$store.dispatch("getTotalValue");
     this.$store.dispatch("fetchRestaurant");
     this.$store.dispatch("fetchUsers").then(() => {
       this.$store.dispatch("login").then(() => {

@@ -1,4 +1,4 @@
-const mutations = {
+export const mutations = {
   ADD_TO_GENRE_ARRAY(state, newItem) {
     state.genres.push(newItem);
   },
@@ -17,20 +17,23 @@ const mutations = {
   SET_RESTAURANTS(state, restaurants) {
     state.restaurants = restaurants;
   },
+  SET_TOTAL_RESTAURANT(state, total) {
+    state.totalRestaurant = total;
+  },
   SET_USERS(state, users) {
     state.users = users;
-  },
-  SET_IMAGE_INDEX(state, imageIndex) {
-    state.imageIndex = imageIndex;
-  },
-  SET_USER_FAVORITES(state, favorites) {
-    state.userFavorites = favorites;
   },
   SET_LOGGED_IN_USER(state, user) {
     state.loggedInUser = user;
   },
   SET_VISITS(state, visits) {
     state.visits = visits;
+  },
+  SET_USER_FAVORITES(state, favorites) {
+    state.userFavorites = favorites;
+  },
+  SET_IMAGE_INDEX(state, imageIndex) {
+    state.imageIndex = imageIndex;
   },
   SET_FAVORITES_FROM_FAVORITE_LIST_ID(state, favoritesFromListId) {
     state.favoritesFromFavoritesListId = favoritesFromListId;
@@ -39,5 +42,3 @@ const mutations = {
     state.newFavoriteList = newFavoriteList;
   },
 };
-
-export default mutations;

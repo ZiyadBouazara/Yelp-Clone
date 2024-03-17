@@ -1,14 +1,5 @@
 <template>
   <div>
-    <button
-      :data-bs-target="`#visitModal${props.restaurantId}`"
-      class="btn btn-outline-danger btn-lg"
-      data-bs-toggle="modal"
-      type="button"
-    >
-      <i class="fa-regular fa-star"></i> Write a review
-    </button>
-
     <div
       :id="`visitModal${props.restaurantId}`"
       aria-hidden="true"
@@ -16,13 +7,13 @@
       class="modal fade"
       tabindex="-1"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-4">Tell us more about your visit !</h2>
+          <div class="modal-header bg-danger text-white">
+            <h3 class="modal-title fs-4">Tell us more about your visit !</h3>
             <button
               aria-label="Close"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               type="button"
             ></button>
@@ -83,7 +74,8 @@ import moment from "moment";
 const store = useStore();
 
 const props = defineProps({ restaurantId: String });
-const userId = computed(() => store.getters.getLoggedInUser.id);
+const loggedInUser = computed(() => store.getters.getLoggedInUser);
+const userId = computed(() => loggedInUser.value?.id);
 
 const visitData = ref({
   date: "",
@@ -123,11 +115,11 @@ label {
 }
 
 .modal-title {
-  font-size: 22px;
-  font-weight: 700;
-  text-align: left;
-  margin-bottom: 15px;
-  color: #dc3545;
+  text-align: center;
+}
+
+.btn-close-white {
+  color: white;
 }
 
 .star {
