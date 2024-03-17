@@ -53,6 +53,12 @@
             :restaurant-rating="restaurant.rating"
             :restaurantName="restaurant.name"
           ></CardComponent>
+          <button
+            class="btn btn-outline-danger"
+            @click="deleteResto(favoriteList, restaurant)"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
@@ -74,6 +80,7 @@ const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
 const userFavoriteRestaurants = ref([]);
+const currentFavoriteList = ref("");
 
 let restaurantPicture = "";
 let readOnly = false;
@@ -102,6 +109,7 @@ const addFavoriteList = async () => {
     console.error("Error creating favorite list:", error);
   }
 };
+
 const getRestaurantById = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };
@@ -116,7 +124,19 @@ const chosenFavList = async (favoriteList) => {
     }
     displayFavoritesSection.value = true;
   } else {
-    userFavoriteRestaurants.value = []; // Clear the array when no restaurants are present
+    userFavoriteRestaurants.value = [];
+  }
+  currentFavoriteList.value = favoriteList.name;
+};
+
+const deleteResto = async (favoriteList, restaurant) => {
+  try {
+    await store.dispatch("deleteRestaurantFromFavoriteList", {
+      favoriteListId: favoriteList.id,
+      restaurantId: restaurant.id,
+    });
+  } catch (error) {
+    console.error("Error deleting restaurant from favorite list:", error);
   }
 };
 
@@ -178,7 +198,6 @@ a:hover {
   color: #d94848;
   text-decoration: underline;
 }
-
 
 .favorites-section {
   display: flex;

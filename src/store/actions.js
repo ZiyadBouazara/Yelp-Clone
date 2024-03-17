@@ -194,6 +194,7 @@ export const actions = {
       const selectedFavorites = jsonResponse.items.map((item) => ({
         name: item.name,
         restaurants: item.restaurants,
+        favoriteList: item.id,
       }));
       console.log("Selected Favorites: " + JSON.stringify(selectedFavorites));
 
