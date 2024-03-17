@@ -88,7 +88,7 @@ export const actions = {
   async login({ commit, state, dispatch }) {
     // TODO: Implement real login logic
     const userId = "636d37d5a4823385784320a2";
-    const dummyUser = state.users[0];
+    const dummyUser = state.users[1];
     console.log("Fetched user info: ", dummyUser);
 
     commit("SET_LOGGED_IN_USER", dummyUser);
@@ -193,6 +193,7 @@ export const actions = {
       const selectedFavorites = jsonResponse.items.map((item) => ({
         name: item.name,
         restaurants: item.restaurants,
+        id: item.id,
       }));
       console.log("Selected Favorites: " + JSON.stringify(selectedFavorites));
 
@@ -263,6 +264,33 @@ export const actions = {
       commit("SET_MESSAGE", responseData.message);
     } catch (error) {
       console.error("Error deleting favorite list:", error);
+      throw error;
+    }
+  },
+  async deleteRestaurantFromFavoriteList(
+    { commit },
+    { favoriteListId, restaurantId },
+  ) {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/favorites/${favoriteListId}/restaurants/${restaurantId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete restaurant from favorite list");
+      }
+
+      const responseData = await response.json();
+      commit("DELETE_RESTAURANT_FROM_FAVORITE_LIST", responseData);
+      return responseData;
+    } catch (error) {
+      console.error("Error deleting restaurant from favorite list:", error);
       throw error;
     }
   },

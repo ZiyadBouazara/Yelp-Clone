@@ -71,6 +71,12 @@
             :restaurant-rating="restaurant.rating"
             :restaurantName="restaurant.name"
           ></CardComponent>
+          <button
+            class="btn btn-outline-danger"
+            @click="deleteResto(restaurant)"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
@@ -93,6 +99,7 @@ const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
 const userFavoriteRestaurants = ref([]);
+const currentFavoriteList = ref("");
 
 const getFavoriteListByName = async (name) => {
   return await store.getters.getFavoriteListByName(name);
@@ -128,6 +135,7 @@ const addFavoriteList = async (name, user) => {
   }
 };
 
+
 const deleteFavoriteList = async (name) => {
   try {
     const favoriteList = await getFavoriteListByName(name);
@@ -159,7 +167,27 @@ const chosenFavList = async (favoriteList) => {
     }
     displayFavoritesSection.value = true;
   } else {
-    userFavoriteRestaurants.value = []; // Clear the array when no restaurants are present
+    userFavoriteRestaurants.value = [];
+  }
+  currentFavoriteList.value = favoriteList.id;
+  console.log("current fav list at: " + currentFavoriteList.value);
+};
+
+const deleteResto = async (restaurant) => {
+  console.log("restaurant:", restaurant);
+  const favoriteListId = currentFavoriteList.value; // Assuming you have currentFavoriteList defined
+  if (restaurant && restaurant.id && favoriteListId) {
+    try {
+      await store.dispatch("deleteRestaurantFromFavoriteList", {
+        favoriteListId: favoriteListId,
+        restaurantId: restaurant.id,
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting restaurant from favorite list:", error);
+    }
+  } else {
+    console.log("no delete resto");
   }
 };
 
