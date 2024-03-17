@@ -11,11 +11,14 @@ export const baseRestaurantCardsMethods = {
   getDisplayHours() {
     const currentDay = this.getCurrentDay();
     if (
+      !this.restaurantHour ||
       !this.restaurantHour[currentDay] ||
       this.restaurantHour[currentDay] === "null"
     ) {
       return "Closed today";
-    } else if (this.isRestaurantOpen()) {
+    }
+
+    if (this.isRestaurantOpen()) {
       const [openingHour, closingHour] =
         this.restaurantHour[currentDay].split("-");
       return "until " + closingHour;
@@ -29,6 +32,7 @@ export const baseRestaurantCardsMethods = {
     const currentDay = this.getCurrentDay();
 
     if (
+      !this.restaurantHour ||
       !this.restaurantHour[currentDay] ||
       this.restaurantHour[currentDay] === "null"
     ) {
