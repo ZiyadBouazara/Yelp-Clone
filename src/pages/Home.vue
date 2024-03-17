@@ -37,7 +37,7 @@
       >
         Previous
       </button>
-      <span class="buttonBas textBas" style="margin-top:12.5px">
+      <span class="buttonBas textBas" style="margin-top: 12.5px">
         Page {{ currentPage }} of {{ totalPages }}</span
       >
       <button

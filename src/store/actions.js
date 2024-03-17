@@ -87,6 +87,7 @@ export const actions = {
   async login({ commit, state }) {
     // TODO : implement real login logic
     const dummyUser = state.users[7];
+    console.log("dummy user info: " + JSON.stringify(dummyUser));
     commit("SET_LOGGED_IN_USER", dummyUser);
   },
   async logout({ commit, state }) {
@@ -115,6 +116,7 @@ export const actions = {
   },
   async fetchVisitsForLoggedInUser({ commit, state }) {
     const userId = state.loggedInUser.id;
+    console.log("userId loggedin "+ userId);
     try {
       const response = await fetch(
         `${SERVER_URL}/users/${userId}/restaurants/visits?limit=${LIMIT}`,
