@@ -27,6 +27,19 @@
           <h5>{{ favoriteList.name }}</h5>
         </div>
       </div>
+      <input
+        class="rename-name"
+        placeholder="Rename"
+        v-model="renameListName"
+      />
+      <button
+        class="btn btn-outline-danger"
+        @click="
+          renameFavoriteList(renameListName.value, currentFavoriteList.value)
+        "
+      >
+        Rename List
+      </button>
       <form class="buttons-control">
         <input
           class="list-name"
@@ -72,7 +85,7 @@
             :restaurantName="restaurant.name"
           ></CardComponent>
           <button
-            class="btn btn-outline-danger"
+            class="btn btn-outline-danger mt-2 delete-button"
             @click="deleteResto(restaurant)"
           >
             Delete
@@ -91,6 +104,7 @@ import data from "bootstrap/js/src/dom/data";
 
 const createListName = ref("");
 const deleteListName = ref("");
+const renameListName = ref("");
 const isHovered = false;
 const store = useStore();
 const displayFavoritesSection = ref(false);
@@ -132,6 +146,22 @@ const addFavoriteList = async (name, user) => {
     console.log("New favorite list created:", response);
   } catch (error) {
     console.error("Error creating favorite list:", error);
+  }
+};
+
+const renameFavoriteList = async (favoriteListId, newListName) => {
+  try {
+    const favoriteList = {
+      id: favoriteListId,
+      name: newListName,
+      owner: loggedInUser.value?.email,
+    };
+    const response = await store.dispatch(
+      "editFavoriteListName",
+      favoriteList,
+    );
+  } catch (err) {
+    console.log("Error editing this favorite list", err);
   }
 };
 
@@ -247,6 +277,10 @@ a {
 a:hover {
   color: #d94848;
   text-decoration: underline;
+}
+
+.delete-button {
+  width: 310px;
 }
 
 .favorites-section {

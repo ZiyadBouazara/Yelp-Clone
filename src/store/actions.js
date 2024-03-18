@@ -88,7 +88,7 @@ export const actions = {
   async login({ commit, state, dispatch }) {
     // TODO: Implement real login logic
     const userId = "636d37d5a4823385784320a2";
-    const dummyUser = state.users[1];
+    const dummyUser = state.users[7];
     console.log("Fetched user info: ", dummyUser);
 
     commit("SET_LOGGED_IN_USER", dummyUser);
@@ -292,6 +292,29 @@ export const actions = {
     } catch (error) {
       console.error("Error deleting restaurant from favorite list:", error);
       throw error;
+    }
+  },
+  async editFavoriteListName({ commit }, favoriteList) {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/favorites/${favoriteList.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: favoriteList.name,
+            owner: favoriteList.email,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to edit favorite list name");
+      }
+    } catch (error) {
+      console.error("Error editing favorite list name:", error);
     }
   },
 };
