@@ -95,7 +95,7 @@
         <p class="noteNumeric">{{ getRatingFloor }}</p>
       </div>
       <div class="button">
-        <router-link to="/restaurant/id">
+        <router-link v-bind:to="'/restaurant/' + id">
           <button
             class="btn btn-outline-danger btn-lg"
             style="position: absolute; bottom: 0; right: 0; margin: 10px"
