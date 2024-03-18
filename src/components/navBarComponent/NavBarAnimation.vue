@@ -1,8 +1,6 @@
 <template>
   <div class="category-container">
-    <div class="container">
-      <base-sec-nav-bar></base-sec-nav-bar>
-    </div>
+    <div class="container"></div>
     <div class="text-container">
       <p class="category-text_one text_1 float-text">Welcome to uFood,</p>
       <p class="category-text_one text_2 float-text">Choose and</p>
@@ -12,11 +10,8 @@
 </template>
 
 <script>
-import BaseSecNavBar from "@/components/generalComponent/BaseSecNavBar.vue";
-
 export default {
   name: "NavBarAnimation",
-  components: { BaseSecNavBar },
 };
 </script>
 

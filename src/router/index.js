@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/pages/Home.vue";
-import Restaurant from "@/pages/Restaurant";
 import LogIn from "@/pages/LogIn.vue";
 import SignUp from "@/pages/SignUp.vue";
 import Navigation from "@/pages/Navigation.vue";
@@ -12,11 +11,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-  },
-  {
-    path: "/restaurant",
-    name: "Restaurant",
-    component: Restaurant,
   },
   {
     path: "/profile",
