@@ -44,9 +44,11 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
+const favorites = ref(null);
+
 const props = defineProps({ restaurantId: String });
 
-const userFavorites = computed(() => store.getters.getUserFavorites);
+const userFavorites = computed(() => favorites.value);
 const loggedUserId = computed(() => store.getters.getLoggedInUser.id);
 
 const restaurantIdJson = ref({
@@ -62,7 +64,10 @@ const addRestaurantToList = async (list) => {
 
 onMounted(async () => {
   try {
-    await store.dispatch("fetchUserFavorites", loggedUserId.value);
+    favorites.value = await store.dispatch(
+      "fetchUserFavorites",
+      loggedUserId.value,
+    );
   } catch (error) {
     console.error("Error fetching user favorites:", error);
   }

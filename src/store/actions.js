@@ -88,7 +88,7 @@ export const actions = {
   async login({ commit, state, dispatch }) {
     // TODO: Implement real login logic
     const userId = "636d37d5a4823385784320a2";
-    const dummyUser = state.users[7];
+    const dummyUser = state.users[0];
     console.log("Fetched user info: ", dummyUser);
 
     commit("SET_LOGGED_IN_USER", dummyUser);
@@ -198,6 +198,7 @@ export const actions = {
       console.log("Selected Favorites: " + JSON.stringify(selectedFavorites));
 
       commit("SET_USER_FAVORITES", selectedFavorites);
+      return selectedFavorites;
     } catch (error) {
       console.error("Error fetching user favorites", error);
     }
