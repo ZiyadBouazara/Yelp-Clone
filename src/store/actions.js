@@ -295,6 +295,29 @@ export const actions = {
       throw error;
     }
   },
+  async editFavoriteListName({ commit }, favoriteList) {
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/favorites/${favoriteList.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: favoriteList.name,
+            owner: favoriteList.email,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to edit favorite list name");
+      }
+    } catch (error) {
+      console.error("Error editing favorite list name:", error);
+    }
+  },
   async addRestaurantToFavoriteList(
     { state, dispatch },
     { restaurantIdJson, favoriteListId },
