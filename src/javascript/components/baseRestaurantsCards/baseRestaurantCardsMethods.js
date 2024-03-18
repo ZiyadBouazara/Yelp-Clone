@@ -15,7 +15,7 @@ export const baseRestaurantCardsMethods = {
       !this.restaurantHour[currentDay] ||
       this.restaurantHour[currentDay] === "null"
     ) {
-      return "Closed today";
+      return "today";
     }
 
     if (this.isRestaurantOpen()) {
