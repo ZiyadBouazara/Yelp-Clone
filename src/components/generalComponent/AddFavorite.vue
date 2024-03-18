@@ -1,7 +1,6 @@
 <template>
   <div>
     <div
-      v-if="userFavorites.length > 0"
       :id="`modalAddFavorite${props.restaurantId}`"
       aria-hidden="true"
       aria-labelledby="exampleModalLabel"
@@ -26,6 +25,8 @@
               v-for="list in userFavorites"
               :key="list.id"
               class="favorite-pill"
+              data-bs-backdrop="false"
+              data-bs-dismiss="modal"
               @click="addRestaurantToList(list)"
             >
               <h5>{{ list.name }}</h5>
@@ -52,8 +53,8 @@ const restaurantIdJson = ref({
   id: props.restaurantId,
 });
 
-const addRestaurantToList = (list) => {
-  store.dispatch("addRestaurantToFavoriteList", {
+const addRestaurantToList = async (list) => {
+  await store.dispatch("addRestaurantToFavoriteList", {
     restaurantIdJson: restaurantIdJson.value,
     favoriteListId: list.id,
   });
