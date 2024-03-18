@@ -53,9 +53,6 @@ onMounted(() => {
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-regular fa-share-from-square"></i> Share
       </button>
-      <!--      <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">-->
-      <!--        <i class="fa-regular fa-bookmark"></i> Save-->
-      <!--      </button>-->
       <button
         class="btn btn-outline-dark btn-lg"
         style="margin-left: 5px"
