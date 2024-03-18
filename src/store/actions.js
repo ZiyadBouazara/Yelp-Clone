@@ -88,7 +88,7 @@ export const actions = {
   async login({ commit, state, dispatch }) {
     // TODO: Implement real login logic
     const userId = "636d37d5a4823385784320a2";
-    const dummyUser = state.users[1];
+    const dummyUser = state.users[7];
     console.log("Fetched user info: ", dummyUser);
 
     commit("SET_LOGGED_IN_USER", dummyUser);
@@ -292,6 +292,37 @@ export const actions = {
     } catch (error) {
       console.error("Error deleting restaurant from favorite list:", error);
       throw error;
+    }
+  },
+  async addRestaurantToFavoriteList(
+    { state, dispatch },
+    { restaurantIdJson, favoriteListId },
+  ) {
+    const loggedUserId = state.loggedInUser.id;
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/favorites/${favoriteListId}/restaurants`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(restaurantIdJson),
+        },
+      );
+
+      if (response.status !== 200) {
+        throw Error("Could not add restaurant to favorite list");
+      }
+
+      await dispatch("fetchUserFavorites", {
+        userId: loggedUserId,
+      });
+    } catch (error) {
+      console.log(
+        "Error fetching favorite restaurants from favorite list id",
+        error,
+      );
     }
   },
 };
