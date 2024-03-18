@@ -34,9 +34,7 @@
       />
       <button
         class="btn btn-outline-danger"
-        @click="
-          renameFavoriteList(renameListName.value, currentFavoriteList.value)
-        "
+        @click="renameFavoriteList(renameListName)"
       >
         Rename List
       </button>
@@ -149,7 +147,7 @@ const addFavoriteList = async (name, user) => {
   }
 };
 
-const renameFavoriteList = async (newListName, favoriteListId) => {
+const renameFavoriteList = async (newListName) => {
   try {
     const favoriteList = {
       id: currentFavoriteList.value,
@@ -157,6 +155,7 @@ const renameFavoriteList = async (newListName, favoriteListId) => {
       owner: loggedInUser.value?.email,
     };
     const response = await store.dispatch("editFavoriteListName", favoriteList);
+    window.location.reload();
   } catch (err) {
     console.log("Error editing this favorite list", err);
   }
