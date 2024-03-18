@@ -149,17 +149,14 @@ const addFavoriteList = async (name, user) => {
   }
 };
 
-const renameFavoriteList = async (favoriteListId, newListName) => {
+const renameFavoriteList = async (newListName, favoriteListId) => {
   try {
     const favoriteList = {
-      id: favoriteListId,
+      id: currentFavoriteList.value,
       name: newListName,
       owner: loggedInUser.value?.email,
     };
-    const response = await store.dispatch(
-      "editFavoriteListName",
-      favoriteList,
-    );
+    const response = await store.dispatch("editFavoriteListName", favoriteList);
   } catch (err) {
     console.log("Error editing this favorite list", err);
   }
