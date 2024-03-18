@@ -11,7 +11,7 @@
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
             <h3 class="modal-title fs-4">
-              Add the restaurant to one of your lists !
+              Add the restaurant to one of your lists!
             </h3>
             <button
               aria-label="Close"
@@ -20,16 +20,24 @@
               type="button"
             ></button>
           </div>
-          <div class="favorite-lists">
-            <div
-              v-for="list in userFavorites"
-              :key="list.id"
-              class="favorite-pill"
-              data-bs-backdrop="false"
-              data-bs-dismiss="modal"
-              @click="addRestaurantToList(list)"
-            >
-              <h5>{{ list.name }}</h5>
+          <div class="modal-body">
+            <div class="row">
+              <div
+                v-for="list in userFavorites"
+                :key="list.id"
+                class="col-md-6"
+              >
+                <div
+                  class="favorite-pill"
+                  data-bs-backdrop="false"
+                  data-bs-dismiss="modal"
+                  @click="addRestaurantToList(list)"
+                >
+                  <h5 style="text-align: center">
+                    {{ list.name }}
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -87,10 +95,6 @@ label {
 
 .btn-close-white {
   color: white;
-}
-
-.favorite-lists {
-  display: inline-flex;
 }
 
 .favorite-pill {
