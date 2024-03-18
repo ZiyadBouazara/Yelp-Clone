@@ -9,6 +9,7 @@ import AboutRestaurant from "@/components/restaurantComponent/AboutRestaurant.vu
 import AddVisit from "@/components/visitComponent/AddVisit.vue";
 import { baseRestaurantCardsComputed } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsComputed";
 import { onMounted } from "vue";
+import AddFavorite from "@/components/generalComponent/AddFavorite.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -52,9 +53,20 @@ onMounted(() => {
       <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
         <i class="fa-regular fa-share-from-square"></i> Share
       </button>
-      <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">
+      <!--      <button class="btn btn-outline-dark btn-lg" style="margin-left: 5px">-->
+      <!--        <i class="fa-regular fa-bookmark"></i> Save-->
+      <!--      </button>-->
+      <button
+        class="btn btn-outline-dark btn-lg"
+        style="margin-left: 5px"
+        :data-bs-target="`#modalAddFavorite${restaurantId}`"
+        :disabled="!baseRestaurantCardsComputed.loggedInUser"
+        data-bs-toggle="modal"
+        type="button"
+      >
         <i class="fa-regular fa-bookmark"></i> Save
       </button>
+      <add-favorite :restaurant-id="restaurantId" />
     </div>
 
     <div class="line"></div>
