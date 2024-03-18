@@ -141,6 +141,7 @@ const addFavoriteList = async (name, user) => {
       owner: user,
     };
     const response = await store.dispatch("createFavoriteList", listData);
+    await store.dispatch("fetchUserFavorites", userId.value);
     console.log("New favorite list created:", response);
   } catch (error) {
     console.error("Error creating favorite list:", error);
@@ -155,7 +156,9 @@ const renameFavoriteList = async (newListName) => {
       owner: loggedInUser.value?.email,
     };
     const response = await store.dispatch("editFavoriteListName", favoriteList);
-    window.location.reload();
+    console.log("Favorite list renamed successfully:", response);
+
+    await store.dispatch("fetchUserFavorites", userId.value);
   } catch (err) {
     console.log("Error editing this favorite list", err);
   }
@@ -172,7 +175,7 @@ const deleteFavoriteList = async (name) => {
       "deleteFavoriteList",
       favoriteList.id,
     );
-    console.log("Favorite list deleted successfully:", response);
+    await store.dispatch("fetchUserFavorites", userId.value);
   } catch (error) {
     console.error("Error deleting favorite list:", error);
   }
@@ -207,7 +210,7 @@ const deleteResto = async (restaurant) => {
         favoriteListId: favoriteListId,
         restaurantId: restaurant.id,
       });
-      window.location.reload();
+      await store.dispatch("fetchUserFavorites", userId.value);
     } catch (error) {
       console.error("Error deleting restaurant from favorite list:", error);
     }

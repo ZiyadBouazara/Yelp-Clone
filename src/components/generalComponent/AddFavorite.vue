@@ -64,10 +64,17 @@ const restaurantIdJson = ref({
 });
 
 const addRestaurantToList = async (list) => {
-  await store.dispatch("addRestaurantToFavoriteList", {
-    restaurantIdJson: restaurantIdJson.value,
-    favoriteListId: list.id,
-  });
+  try {
+    await store.dispatch("addRestaurantToFavoriteList", {
+      restaurantIdJson: restaurantIdJson.value,
+      favoriteListId: list.id,
+    });
+    console.log("Restaurant added to list successfully");
+
+    await store.dispatch("fetchUserFavorites", loggedUserId.value);
+  } catch (error) {
+    console.error("Error adding restaurant to list:", error);
+  }
 };
 
 onMounted(async () => {
