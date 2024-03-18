@@ -53,7 +53,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="d-flex">
+  <div class="main-container">
     <div class="map-container">
       <div id="map" class="map">
         <iframe
@@ -144,7 +144,7 @@ onMounted(() => {
 
 .hours-list {
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 40px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -152,5 +152,19 @@ onMounted(() => {
 
 .map {
   margin: 10px 10px 10px 40px;
+}
+
+@media (max-width: 665px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 666px) {
+  .main-container {
+    display: flex;
+    flex-direction: row;
+  }
 }
 </style>

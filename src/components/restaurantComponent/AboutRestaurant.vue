@@ -22,4 +22,10 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 576px) {
+  .header {
+    display: none;
+  }
+}
+</style>
