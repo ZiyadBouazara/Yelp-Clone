@@ -95,7 +95,7 @@
         <p class="noteNumeric">{{ getRatingFloor }}</p>
       </div>
       <div class="button">
-        <router-link to="/restaurant/id">
+        <router-link v-bind:to="'/restaurant/' + id">
           <button
             class="btn btn-outline-danger btn-lg"
             style="position: absolute; bottom: 0; right: 0; margin: 10px"
@@ -112,7 +112,7 @@
             style="position: absolute; bottom: 0; left: 0; margin: 10px"
             type="button"
           >
-            <i class="fa-solid fa-eye"></i> View visit details
+            <i class="fa-solid fa-eye"></i> View visits
           </button>
           <ConsultVisit :restaurant-id="id" />
         </div>
@@ -129,6 +129,19 @@
           </button>
           <AddVisit :restaurant-id="id" />
         </div>
+        <div>
+          <button
+            :data-bs-target="`#modalAddFavorite${id}`"
+            :disabled="!loggedInUser"
+            class="btn btn-outline-danger btn-lg"
+            data-bs-toggle="modal"
+            style="position: absolute; bottom: 0; right: 60px; margin: 10px"
+            type="button"
+          >
+            <i class="fa-regular fa-bookmark"></i>
+          </button>
+          <AddFavorite :restaurantId="id" />
+        </div>
       </div>
     </div>
   </div>
@@ -142,12 +155,13 @@ import AddVisit from "@/components/visitComponent/AddVisit.vue";
 import { baseRestaurantCardsMethods } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsMethods";
 import { baseRestaurantCardsComputed } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsComputed";
 import ConsultVisit from "@/components/visitComponent/ConsultVisit.vue";
+import AddFavorite from "@/components/generalComponent/AddFavorite.vue";
 
 library.add(faArrowRight);
 library.add(faStar);
 export default {
   name: "CardComponent",
-  components: { ConsultVisit, AddVisit, FontAwesomeIcon },
+  components: { AddFavorite, ConsultVisit, AddVisit, FontAwesomeIcon },
   props: {
     id: String,
     picture: Array,
