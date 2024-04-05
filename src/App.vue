@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Vue, { ref, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import Navigation from "@/pages/Navigation.vue";
 import PageFooter from "@/pages/PageFooter.vue";
 import { useRoute } from "vue-router";
