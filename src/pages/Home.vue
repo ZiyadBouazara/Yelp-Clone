@@ -11,8 +11,8 @@
         <ListMapSwitch :get-list="getList" :get-map="getMap"></ListMapSwitch>
       </div>
     </div>
-    <div v-if="showMap" class="map-container">
-      <iframe class="map-iframe" :src="mapIframeSrc"></iframe>
+    <div v-if="showMap">
+      <div class="map-container" id="map"></div>
     </div>
     <div v-else>
       <div class="row restaurant-cards">
@@ -83,6 +83,8 @@ import { EventBus } from "@/App.vue";
 import { homePageMethods } from "@/javascript/pages/homePage/homePageMethods";
 import { homePageComputed } from "@/javascript/pages/homePage/homePageComputed";
 import ListMapSwitch from "@/components/homePageComponent/ListMapSwitchButtons.vue";
+import "leaflet/dist/leaflet.css";
+import leaflet from "leaflet";
 
 export default {
   components: {
@@ -94,6 +96,10 @@ export default {
   created() {
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
   },
+  mounted() {
+    // this.getLocation();
+    // this.initMarkerLocation();
+  },
   data() {
     return {
       inputPage: 0,
@@ -101,8 +107,10 @@ export default {
       itemsPerPage: 10,
       isModalVisible: false,
       showMap: false,
-      mapIframeSrc:
-        "https://www.openstreetmap.org/export/embed.html?bbox=-122.4194,37.7749,-122.4174,37.7769&layer=mapnik",
+      map: null,
+      latitude: 0,
+      longitude: 0,
+      markerLocations: [],
     };
   },
   computed: {
@@ -112,9 +120,57 @@ export default {
     ...homePageMethods,
     getMap() {
       this.showMap = true;
+      this.initMap();
     },
     getList() {
       this.showMap = false;
+    },
+    getLocation() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+          },
+          (error) => {
+            console.error("Error getting geolocation:", error);
+          },
+        );
+      }
+    },
+    initMarkerLocation() {
+      const restaurants = this.$store.getters.getRestaurants;
+      restaurants.forEach((restaurant) => {
+        const coordinates = restaurant.location.coordinates;
+        this.markerLocations.push(coordinates);
+      });
+    },
+    async initMap() {
+      try {
+        const leaflet = await import("leaflet");
+        this.getLocation();
+        this.map = leaflet
+          .map("map")
+          .setView([this.latitude, this.longitude], 4);
+
+        leaflet
+          .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "© OpenStreetMap contributors",
+          })
+          .addTo(this.map);
+        const customIcon = leaflet.divIcon({
+          className: "custom-leaflet-div-icon",
+          html: '<i class="fas fa-map-marker-alt fa-3x text-danger"></i>',
+          iconAnchor: [18, 36],
+        });
+        this.initMarkerLocation();
+        console.log(this.markerLocations);
+        this.markerLocations.forEach((location) => {
+          leaflet.marker(location, { icon: customIcon }).addTo(this.map);
+        });
+      } catch (error) {
+        console.error("Error loading Leaflet:", error);
+      }
     },
   },
 };
@@ -143,12 +199,6 @@ export default {
 .map-container {
   width: 100%;
   height: calc(100vh - 50px);
-}
-
-.map-iframe {
-  width: 100%;
-  height: 100%;
-  border: none; /* Optional: Remove iframe border */
 }
 
 @media (min-width: 768px) {

@@ -25,7 +25,6 @@ const map = ref(null);
 
 const initMap = async (restaurantLocation) => {
   try {
-    // const restaurantLocation = [46.7799, -71.2772];
     const leaflet = await import("leaflet");
     map.value = leaflet.map("map").setView(restaurantLocation, 15);
 
