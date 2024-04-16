@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -69,10 +69,9 @@ const props = defineProps({ restaurantId: String });
 const data = ref(null);
 
 onMounted(async () => {
-  const response = await store.dispatch("fetchVisitsForRestaurant", {
+  data.value = await store.dispatch("fetchVisitsForRestaurant", {
     restaurantId: props.restaurantId,
   });
-  data.value = response;
 });
 
 const visits = computed(() => data.value?.items || []);

@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { computed, emit, onMounted, ref } from "vue";
+import { computed, emit, ref } from "vue";
 import { useStore } from "vuex";
 import ModalFavoriteList from "@/components/profile/ModalFavoriteList.vue";
 

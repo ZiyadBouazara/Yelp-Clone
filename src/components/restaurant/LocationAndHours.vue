@@ -94,10 +94,10 @@ onMounted(() => {
           v-if="isCurrentDay(day)"
           class="opening"
           :style="{
-            color: utils.isRestaurantOpen ? 'green' : 'red',
+            color: utils.isRestaurantOpen() ? 'green' : 'red',
           }"
         >
-          {{ utils.isRestaurantOpen ? "Open" : "Closed" }}
+          {{ utils.isRestaurantOpen() ? "Open" : "Closed" }}
         </span>
       </div>
     </div>

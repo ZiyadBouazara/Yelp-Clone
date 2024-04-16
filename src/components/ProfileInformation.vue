@@ -1,6 +1,4 @@
 <script>
-import { isVisible } from "bootstrap/js/src/util";
-
 export default {
   name: "ProfileInformation",
   isProfileInformationVisible: false,

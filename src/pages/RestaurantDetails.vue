@@ -4,14 +4,14 @@ import LocationAndHours from "@/components/restaurant/LocationAndHours.vue";
 import SideContainer from "@/components/restaurant/SideContainer.vue";
 import RestaurantHeader from "@/components/restaurant/RestaurantHeader.vue";
 import { useRoute } from "vue-router";
-import { useStore } from "vuex";
 import AboutRestaurant from "@/components/restaurant/AboutRestaurant.vue";
 import AddVisit from "@/components/visit/AddVisit.vue";
 import { onMounted } from "vue";
 import AddFavorite from "@/components/AddFavorite.vue";
+import store from "@/store";
 
-const store = useStore();
 const route = useRoute();
+
 const restaurantId = route.params.id;
 const getRestaurant = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
@@ -101,12 +101,6 @@ onMounted(() => {
   .flex-row {
     display: flex;
     flex-direction: row;
-  }
-}
-
-@media (min-width: 576px) {
-  .mobile-title {
-    display: none;
   }
 }
 </style>
