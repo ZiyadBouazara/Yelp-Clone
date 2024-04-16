@@ -2,11 +2,7 @@
   <div v-if="loggedInUser" class="container-fluid mt-5">
     <div class="row justify-content-center">
       <div class="col-12 d-flex justify-content-center">
-        <ProfileCard
-          :email="loggedInUser.email"
-          :name="loggedInUser.name"
-          :rating="loggedInUser.rating"
-        ></ProfileCard>
+        <ProfileCard></ProfileCard>
       </div>
       <div
         class="row justify-content-center my-3 visited-restaurants-row"

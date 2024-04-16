@@ -69,7 +69,6 @@ export const homePageMethods = {
       const coordinates = restaurant.location.coordinates;
       const [longitude, latitude] = coordinates; // Reversed for Leaflet
       this.markerLocations.push([latitude, longitude]);
-      console.log("Latitude: " + latitude + ", Longitude: " + longitude);
     });
   },
   async initMap() {

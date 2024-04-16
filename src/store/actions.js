@@ -1,9 +1,9 @@
-import { authActions } from "@/javascript/storeActions/authActions";
-import { favoriteActions } from "@/javascript/storeActions/favoriteActions";
-import { restaurantActions } from "@/javascript/storeActions/restaurantActions";
-import { updateActions } from "@/javascript/storeActions/updateActions";
-import { userActions } from "@/javascript/storeActions/userActions";
-import { visitActions } from "@/javascript/storeActions/visitActions";
+import { authActions } from "@/store/actions/authActions";
+import { favoriteActions } from "@/store/actions/favoriteActions";
+import { restaurantActions } from "@/store/actions/restaurantActions";
+import { updateActions } from "@/store/actions/updateActions";
+import { userActions } from "@/store/actions/userActions";
+import { visitActions } from "@/store/actions/visitActions";
 
 export const actions = {
   ...authActions,

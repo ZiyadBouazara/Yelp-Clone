@@ -86,7 +86,7 @@ const handleSignUp = async () => {
   try {
     const name = firstName.value.concat(" ", lastName.value);
     await store.dispatch("signUp", {
-      name: name.value,
+      name: name,
       email: email.value,
       password: password.value,
     });

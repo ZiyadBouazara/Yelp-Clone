@@ -8,8 +8,8 @@
     <div class="card-body">
       <div class="row mb-3">
         <div class="col">
-          <h4 class="card-title">{{ props.name }}</h4>
-          <h5 class="card-text">{{ props.email }}</h5>
+          <h4 class="card-title">{{ loggedInUser.name }}</h4>
+          <h5 class="card-text">{{ loggedInUser.email }}</h5>
         </div>
       </div>
       <div class="row mb-3">
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="row">
-        <p><i class="far fa-star"></i> Rating : {{ props.rating }}</p>
+        <p><i class="far fa-star"></i> Rating : {{ loggedInUser.rating }}</p>
       </div>
     </div>
     <hr style="background-color: #ccc; margin: 0" />
@@ -39,7 +39,10 @@
 </template>
 
 <script setup>
-const props = defineProps({ email: String, name: String, rating: Number });
+import { computed } from "vue";
+import store from "@/store";
+
+const loggedInUser = computed(() => store.getters.getLoggedInUser);
 </script>
 
 <style scoped>
