@@ -114,20 +114,18 @@ const handleSignUp = async () => {
     emailError.value ||
     passwordError.value
   ) {
-    return;
-  }
-
-  const name = firstName.value.concat(" ", lastName.value);
-
-  try {
-    await store.dispatch("signUp", {
-      name: name,
-      email: email.value,
-      password: password.value,
-    });
-    router.push("/login");
-  } catch (error) {
-    console.error("Sign up failed:", error);
+    const name = firstName.value.concat(" ", lastName.value);
+    try {
+      await store.dispatch("signUp", {
+        name: name,
+        email: email.value,
+        password: password.value,
+      });
+      console.log("sign up complete");
+      await router.push("/login");
+    } catch (error) {
+      console.error("Sign up failed:", error);
+    }
   }
 };
 
