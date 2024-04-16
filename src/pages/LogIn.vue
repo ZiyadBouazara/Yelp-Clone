@@ -27,6 +27,9 @@
                   placeholder="Password"
                   type="password"
                 />
+                <div v-if="loginError?.length" class="error-message">
+                  {{ loginError }}
+                </div>
               </div>
               <button class="btn btn-danger" type="submit">Log In</button>
             </form>
@@ -55,12 +58,17 @@ import "@/styles/registration.css";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import store from "@/store";
+import { validateForm as loginValidation } from "@/javascript/validateForm";
 
 const router = useRouter();
 const email = ref("");
 const password = ref("");
 
+const loginError = ref("");
+
 const handleLogin = async () => {
+  loginError.value = loginValidation.validateLoginForm();
+
   try {
     await store.dispatch("login", {
       email: email.value,
@@ -85,3 +93,10 @@ const authenticateUser = (event) => {
   }
 };
 </script>
+<style scoped>
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+</style>

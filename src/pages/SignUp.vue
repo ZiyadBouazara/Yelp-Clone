@@ -19,6 +19,9 @@
                   placeholder="First Name"
                   type="text"
                 />
+                <div v-if="firstNameError?.length" class="error-message">
+                  {{ firstNameError }}
+                </div>
               </div>
               <div class="col-md-6">
                 <input
@@ -28,6 +31,9 @@
                   placeholder="Last Name"
                   type="text"
                 />
+                <div v-if="lastNameError?.length" class="error-message">
+                  {{ lastNameError }}
+                </div>
               </div>
               <div class="col-md-6">
                 <input
@@ -35,8 +41,10 @@
                   id="inputEmail"
                   class="form-control"
                   placeholder="Email"
-                  type="email"
                 />
+                <div v-if="emailError?.length" class="error-message">
+                  {{ emailError }}
+                </div>
               </div>
               <div class="col-md-6">
                 <input
@@ -44,8 +52,10 @@
                   id="inputPassword"
                   class="form-control"
                   placeholder="Password"
-                  type="password"
                 />
+                <div v-if="passwordError?.length" class="error-message">
+                  {{ passwordError }}
+                </div>
               </div>
               <div class="col-md-12">
                 <button class="btn btn-danger" type="submit">Sign Up</button>
@@ -76,15 +86,40 @@ import "@/styles/registration.css";
 import { ref } from "vue";
 import { router } from "@/router";
 import store from "@/store";
+import { validateForm as registrationValidation } from "@/javascript/validateForm";
 
 const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
 const password = ref("");
 
+const firstNameError = ref("");
+const lastNameError = ref("");
+const emailError = ref("");
+const passwordError = ref("");
+
 const handleSignUp = async () => {
+  clearErrors();
+
+  firstNameError.value = registrationValidation.validateFirstName(
+    firstName.value,
+  );
+  lastNameError.value = registrationValidation.validateLastName(lastName.value);
+  emailError.value = registrationValidation.validateEmail(email.value);
+  passwordError.value = registrationValidation.validatePassword(password.value);
+
+  if (
+    firstNameError.value ||
+    lastNameError.value ||
+    emailError.value ||
+    passwordError.value
+  ) {
+    return;
+  }
+
+  const name = firstName.value.concat(" ", lastName.value);
+
   try {
-    const name = firstName.value.concat(" ", lastName.value);
     await store.dispatch("signUp", {
       name: name,
       email: email.value,
@@ -95,4 +130,18 @@ const handleSignUp = async () => {
     console.error("Sign up failed:", error);
   }
 };
+
+const clearErrors = () => {
+  firstNameError.value = "";
+  lastNameError.value = "";
+  emailError.value = "";
+  passwordError.value = "";
+};
 </script>
+<style scoped>
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+</style>
