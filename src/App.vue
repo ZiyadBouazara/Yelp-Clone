@@ -26,6 +26,11 @@ export default {
     Navigation,
     PageFooter,
   },
+  created() {
+    store.dispatch("getTotalValue");
+    store.dispatch("fetchRestaurant");
+    store.dispatch("fetchUsers");
+  },
   setup() {
     const isHomePage = ref(false);
     const route = useRoute();
@@ -37,11 +42,7 @@ export default {
     watchEffect(() => {
       const isLoggedIn = store.state.loggedInUser;
       if (isLoggedIn) {
-        store.dispatch("fetchUsers");
         store.dispatch("fetchUserFavorites");
-        store.dispatch("getTotalValue");
-        store.dispatch("fetchRestaurant");
-        store.dispatch("fetchUsers");
         store.dispatch("fetchVisitsForLoggedInUser");
       }
     });

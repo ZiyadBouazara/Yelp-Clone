@@ -6,7 +6,7 @@ import RestaurantHeader from "@/components/restaurant/RestaurantHeader.vue";
 import { useRoute } from "vue-router";
 import AboutRestaurant from "@/components/restaurant/AboutRestaurant.vue";
 import AddVisit from "@/components/visit/AddVisit.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import AddFavorite from "@/components/AddFavorite.vue";
 import store from "@/store";
 
@@ -16,6 +16,8 @@ const restaurantId = route.params.id;
 const getRestaurant = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };
+
+const loggedInUser = ref(store.state.loggedInUser);
 
 const getDirections = (destination) => {
   const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
@@ -38,6 +40,7 @@ onMounted(() => {
       <button
         :data-bs-target="`#visitModal${restaurantId}`"
         class="btn btn-outline-danger btn-lg"
+        :disabled="!loggedInUser"
         data-bs-toggle="modal"
         style="margin-left: 40px"
         type="button"
@@ -53,6 +56,7 @@ onMounted(() => {
       </button>
       <button
         class="btn btn-outline-dark btn-lg"
+        :disabled="!loggedInUser"
         style="margin-left: 5px"
         :data-bs-target="`#modalAddFavorite${restaurantId}`"
         data-bs-toggle="modal"

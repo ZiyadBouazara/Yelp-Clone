@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/pages/Home.vue";
 import LogIn from "@/pages/LogIn.vue";
 import SignUp from "@/pages/SignUp.vue";
-import Navigation from "@/pages/Navigation.vue";
 import Profile from "@/pages/Profile.vue";
 import RestaurantDetails from "@/pages/RestaurantDetails.vue";
 import store from "@/store";
@@ -12,7 +11,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    meta: { requiresAuth: true },
   },
   {
     path: "/profile",
@@ -31,17 +29,10 @@ const routes = [
     component: SignUp,
   },
   {
-    path: "/navigation",
-    name: "Navigation",
-    component: Navigation,
-    meta: { requiresAuth: true },
-  },
-  {
     path: "/restaurant/:id",
     name: "Restaurant details",
     component: RestaurantDetails,
     props: true,
-    meta: { requiresAuth: true },
   },
 ];
 

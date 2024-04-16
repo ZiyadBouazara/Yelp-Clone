@@ -58,7 +58,7 @@ import "@/styles/registration.css";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import store from "@/store";
-import { validateForm as loginValidation } from "@/javascript/validateForm";
+import { validateForm } from "@/javascript/validateForm";
 
 const router = useRouter();
 const email = ref("");
@@ -67,29 +67,16 @@ const password = ref("");
 const loginError = ref("");
 
 const handleLogin = async () => {
-  loginError.value = loginValidation.validateLoginForm();
-
   try {
     await store.dispatch("login", {
       email: email.value,
       password: password.value,
     });
+
     router.push({ path: "/" });
   } catch (error) {
+    loginError.value = validateForm.validateLoginForm();
     console.error("Login failed:", error);
-  }
-};
-
-const authenticateUser = (event) => {
-  event.preventDefault();
-  if (router && router.push) {
-    router.push({
-      query: { authenticatedUser: true },
-      name: "Home",
-    });
-    console.log("it works!");
-  } else {
-    console.error("router not available");
   }
 };
 </script>
