@@ -38,12 +38,6 @@ export const mutations = {
   SET_MESSAGE(state, message) {
     state.message = message;
   },
-  SET_USER_BY_ID(state, user) {
-    state.user = user;
-  },
-  SET_FAVORITES_FROM_FAVORITE_LIST_ID(state, favoritesFromListId) {
-    state.favoritesFromFavoritesListId = favoritesFromListId;
-  },
   ADD_NEW_FAVORITES_LIST(state, newFavoriteList) {
     state.newFavoriteList = newFavoriteList;
   },

@@ -5,17 +5,20 @@ import SignUp from "@/pages/SignUp.vue";
 import Navigation from "@/pages/Navigation.vue";
 import Profile from "@/pages/Profile.vue";
 import RestaurantDetails from "@/pages/RestaurantDetails.vue";
+import store from "@/store";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    meta: { requiresAuth: true },
   },
   {
     path: "/profile",
     name: "Profile",
     component: Profile,
+    meta: { requiresAuth: true },
   },
   {
     path: "/login",
@@ -31,16 +34,31 @@ const routes = [
     path: "/navigation",
     name: "Navigation",
     component: Navigation,
+    meta: { requiresAuth: true },
   },
   {
     path: "/restaurant/:id",
     name: "Restaurant details",
     component: RestaurantDetails,
     props: true,
+    meta: { requiresAuth: true },
   },
 ];
 
 export const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const isLoggedIn = store.state.loggedInUser;
+    if (!isLoggedIn) {
+      next({ name: "Log In" });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });

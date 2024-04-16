@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <form class="row g-3 mx-auto">
+            <form class="row g-3 mx-auto" @submit.prevent="handleSignUp">
               <div style="padding: 0">
                 <h3 class="card-title text-center">Sign Up for UFood</h3>
                 <h4 class="card-body text-center lead" style="padding: 0">
@@ -13,6 +13,7 @@
               </div>
               <div class="col-md-6">
                 <input
+                  v-model="firstName"
                   id="inputFirstName"
                   class="form-control"
                   placeholder="First Name"
@@ -21,6 +22,7 @@
               </div>
               <div class="col-md-6">
                 <input
+                  v-model="lastName"
                   id="inputLastName"
                   class="form-control"
                   placeholder="Last Name"
@@ -29,6 +31,7 @@
               </div>
               <div class="col-md-6">
                 <input
+                  v-model="email"
                   id="inputEmail"
                   class="form-control"
                   placeholder="Email"
@@ -37,18 +40,11 @@
               </div>
               <div class="col-md-6">
                 <input
+                  v-model="password"
                   id="inputPassword"
                   class="form-control"
                   placeholder="Password"
                   type="password"
-                />
-              </div>
-              <div class="col-md-12">
-                <input
-                  id="inputZip"
-                  class="form-control"
-                  placeholder="ZIP code"
-                  type="text"
                 />
               </div>
               <div class="col-md-12">
@@ -77,4 +73,26 @@
 
 <script setup>
 import "@/styles/registration.css";
+import { ref } from "vue";
+import { router } from "@/router";
+import store from "@/store";
+
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+
+const handleSignUp = async () => {
+  try {
+    const name = firstName.value.concat(" ", lastName.value);
+    await store.dispatch("signUp", {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    });
+    router.push("/login");
+  } catch (error) {
+    console.error("Sign up failed:", error);
+  }
+};
 </script>

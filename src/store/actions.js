@@ -1,5 +1,7 @@
+import Cookies from "js.cookie";
+
 const LIMIT = 1000;
-const SERVER_URL = "https://ufoodapi.herokuapp.com/unsecure";
+const SERVER_URL = "https://ufoodapi.herokuapp.com";
 
 export const actions = {
   updatePrice({ commit }, newPrice) {
@@ -22,9 +24,83 @@ export const actions = {
   updateImageIndex({ commit }, imageIndex) {
     commit("SET_IMAGE_INDEX", imageIndex);
   },
-  async getTotalValue({ commit }) {
+  async signUp({ commit }, { name, email, password }) {
     try {
-      const response = await fetch(`${SERVER_URL}/restaurants`);
+      const formData = new URLSearchParams();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+
+      const response = await fetch(`${SERVER_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error during signup:", error);
+      throw error;
+    }
+  },
+  async login({ commit }, { email, password }) {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("email", email);
+      formData.append("password", password);
+
+      const response = await fetch(`${SERVER_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      Cookies.set("connectionToken", data.token);
+      const { email: userEmail, name: name, id: id } = data;
+      commit("SET_LOGGED_IN_USER", { email: userEmail, name: name, id: id });
+      return data;
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw error;
+    }
+  },
+  async logout({ commit }) {
+    try {
+      await fetch(`${SERVER_URL}/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      commit("SET_LOGGED_IN_USER", null);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  },
+
+  async getTotalValue({ commit }) {
+    const token = Cookies.get("connectionToken");
+
+    try {
+      const response = await fetch(`${SERVER_URL}/restaurants`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const jsonResponse = await response.json();
       commit("SET_TOTAL_RESTAURANT", jsonResponse.total);
     } catch (error) {
@@ -33,9 +109,16 @@ export const actions = {
     }
   },
   async fetchRestaurant({ commit, state }) {
+    const token = Cookies.get("connectionToken");
+
     try {
       const response = await fetch(
         `${SERVER_URL}/restaurants?limit=${state.totalRestaurant}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
       );
       if (response.status !== 200) {
         throw new Error("Restaurants not loaded");
@@ -47,8 +130,14 @@ export const actions = {
     }
   },
   async fetchUsers({ commit }) {
+    const token = Cookies.get("connectionToken");
+
     try {
-      const response = await fetch(`${SERVER_URL}/users`);
+      const response = await fetch(`${SERVER_URL}/users`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       if (response.status !== 200) {
         throw new Error("Users do not load");
       }
@@ -66,59 +155,9 @@ export const actions = {
       console.error("Error fetching users:", error);
     }
   },
-  async getAllUserFavoritesLists({ commit }, { userId }) {
-    try {
-      const response = await fetch(`${SERVER_URL}/users/${userId}/favorites`);
-      if (response.status !== 200) {
-        throw new Error("Favorites do not load");
-      }
-      const jsonResponse = await response.json();
-      console.log("jsonResponse directly: " + JSON.stringify(jsonResponse));
-      const selectedFavorites = jsonResponse.items.map((item) => ({
-        name: item.name,
-        restaurants: item.restaurants,
-      }));
-      console.log("Selected Favorites: " + JSON.stringify(selectedFavorites));
-
-      commit("SET_USER_FAVORITES", selectedFavorites);
-    } catch (error) {
-      console.error("Error fetching user favorites", error);
-    }
-  },
-  async login({ commit, state, dispatch }) {
-    // TODO: Implement real login logic
-    const userId = "636d37d5a4823385784320a2";
-    const dummyUser = state.users[0];
-    console.log("Fetched user info: ", dummyUser);
-
-    commit("SET_LOGGED_IN_USER", dummyUser);
-  },
-  async logout({ commit, state }) {
-    // TODO : implement real logout logic
-    commit("SET_LOGGED_IN_USER", null);
-  },
-  // async getUserById({ commit }, { userId }) {
-  //   try {
-  //     const response = await fetch(`${SERVER_URL}/users/${userId}`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     if (response.status !== 200) {
-  //       throw new Error(`Could not retrieve user with ID ${userId}`);
-  //     }
-  //
-  //     const userData = await response.json();
-  //     console.log("Fetched user info: ", userData); // Log the fetched user data
-  //
-  //     return userData; // Return the fetched user data
-  //   } catch (error) {
-  //     console.error("Error fetching user by ID:", error);
-  //     return null; // Return null in case of error
-  //   }
-  // },
   async createVisit({ commit, dispatch }, { userId, visitData }) {
+    const token = Cookies.get("connectionToken");
+
     try {
       const response = await fetch(
         `${SERVER_URL}/users/${userId}/restaurants/visits`,
@@ -126,6 +165,7 @@ export const actions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
           body: JSON.stringify(visitData),
         },
@@ -140,7 +180,9 @@ export const actions = {
   },
   async fetchVisitsForLoggedInUser({ commit, state }) {
     const userId = state.loggedInUser.id;
-    console.log("userId loggedin " + userId);
+    const token = Cookies.get("connectionToken");
+    console.log("userId logged " + userId);
+
     try {
       const response = await fetch(
         `${SERVER_URL}/users/${userId}/restaurants/visits?limit=${LIMIT}`,
@@ -148,6 +190,7 @@ export const actions = {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${token}`,
           },
         },
       );
@@ -162,6 +205,8 @@ export const actions = {
   },
   async fetchVisitsForRestaurant({ state }, { restaurantId }) {
     const userId = state.loggedInUser.id;
+    const token = Cookies.get("connectionToken");
+
     try {
       const response = await fetch(
         `${SERVER_URL}/users/${userId}/restaurants/${restaurantId}/visits?limit=${LIMIT}`,
@@ -169,6 +214,7 @@ export const actions = {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
         },
       );
@@ -176,15 +222,19 @@ export const actions = {
         throw new Error(`API request failed with status ${response.status}`);
       }
       return await response.json();
-      // console.log(jsonResponse.items);
-      // return jsonResponse.items;
     } catch (error) {
       console.error(`Error fetching visits for restaurant:`, error);
     }
   },
   async fetchUserFavorites({ commit }, userId) {
+    const token = Cookies.get("connectionToken");
+
     try {
-      const response = await fetch(`${SERVER_URL}/users/${userId}/favorites`);
+      const response = await fetch(`${SERVER_URL}/users/${userId}/favorites`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       if (response.status !== 200) {
         throw new Error("Favorites do not load");
       }
@@ -195,7 +245,6 @@ export const actions = {
         restaurants: item.restaurants,
         id: item.id,
       }));
-      console.log("Selected Favorites: " + JSON.stringify(selectedFavorites));
 
       commit("SET_USER_FAVORITES", selectedFavorites);
       return selectedFavorites;
@@ -204,6 +253,8 @@ export const actions = {
     }
   },
   async createFavoriteList({ commit }, listData) {
+    const token = Cookies.get("connectionToken");
+
     try {
       const apiUrl = `${SERVER_URL}/favorites`;
 
@@ -211,6 +262,7 @@ export const actions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: token,
         },
         body: JSON.stringify(listData),
       });
@@ -227,26 +279,9 @@ export const actions = {
       throw error;
     }
   },
-  async getFavoriteRestaurantsByFavoriteListId({ commit }, { favoriteListId }) {
-    try {
-      const response = await fetch(`${SERVER_URL}/favorites/${favoriteListId}`);
-
-      if (response.status !== 200) {
-        throw Error("Could not retrieve favorite list items");
-      }
-
-      const jsonResponse = await response.json();
-      console.log(
-        "Favorite List 91929394 value: " + JSON.stringify(jsonResponse),
-      );
-    } catch (error) {
-      console.log(
-        "Error fetching favorite restaurants from favorite list id",
-        error,
-      );
-    }
-  },
   async deleteFavoriteList({ commit }, id) {
+    const token = Cookies.get("connectionToken");
+
     try {
       const apiUrl = `${SERVER_URL}/favorites/${id}`;
 
@@ -254,6 +289,7 @@ export const actions = {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: token,
         },
       });
 
@@ -272,6 +308,8 @@ export const actions = {
     { commit },
     { favoriteListId, restaurantId },
   ) {
+    const token = Cookies.get("connectionToken");
+
     try {
       const response = await fetch(
         `${SERVER_URL}/favorites/${favoriteListId}/restaurants/${restaurantId}`,
@@ -279,6 +317,7 @@ export const actions = {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
         },
       );
@@ -296,6 +335,8 @@ export const actions = {
     }
   },
   async editFavoriteListName({ commit }, favoriteList) {
+    const token = Cookies.get("connectionToken");
+
     try {
       const response = await fetch(
         `${SERVER_URL}/favorites/${favoriteList.id}`,
@@ -303,6 +344,7 @@ export const actions = {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
           body: JSON.stringify({
             name: favoriteList.name,
@@ -322,7 +364,9 @@ export const actions = {
     { state, dispatch },
     { restaurantIdJson, favoriteListId },
   ) {
+    const token = Cookies.get("connectionToken");
     const loggedUserId = state.loggedInUser.id;
+
     try {
       const response = await fetch(
         `${SERVER_URL}/favorites/${favoriteListId}/restaurants`,
@@ -330,6 +374,7 @@ export const actions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
           body: JSON.stringify(restaurantIdJson),
         },

@@ -8,9 +8,10 @@
         <div class="card">
           <div class="card-body">
             <h3 class="card-title text-center">Log In to UFood</h3>
-            <form class="mx-auto" @submit="authenticateUser">
+            <form class="mx-auto" @submit.prevent="handleLogin">
               <div class="form-group">
                 <input
+                  v-model="email"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   class="form-control"
@@ -20,6 +21,7 @@
               </div>
               <div class="form-group">
                 <input
+                  v-model="password"
                   id="exampleInputPassword1"
                   class="form-control"
                   placeholder="Password"
@@ -30,7 +32,7 @@
             </form>
             <div class="mt-3 text-center">
               <p>
-                New user?
+                New user ?
                 <router-link to="/signup">Sign Up</router-link>
               </p>
             </div>
@@ -51,13 +53,32 @@
 <script setup>
 import "@/styles/registration.css";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import store from "@/store";
 
 const router = useRouter();
+const email = ref("");
+const password = ref("");
+
+const handleLogin = async () => {
+  try {
+    await store.dispatch("login", {
+      email: email.value,
+      password: password.value,
+    });
+    router.push({ path: "/" });
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+};
 
 const authenticateUser = (event) => {
   event.preventDefault();
   if (router && router.push) {
-    router.push({ name: "Home", query: { authenticatedUser: true } });
+    router.push({
+      query: { authenticatedUser: true },
+      name: "Home",
+    });
     console.log("it works!");
   } else {
     console.error("router not available");

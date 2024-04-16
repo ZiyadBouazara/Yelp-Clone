@@ -122,7 +122,6 @@ import Logo from "@/components/navBarComponent/NavBarLogo.vue";
 import SearchForm from "@/components/navBarComponent/NavBarSearchForm.vue";
 import Links from "@/components/navBarComponent/NavBarLinks.vue";
 import { ref } from "vue";
-import { EventBus } from "@/App.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -141,12 +140,6 @@ export default {
     ...mapState(["loggedInUser"]),
   },
   methods: {
-    openModal() {
-      EventBus.emit("open-authentication-modal");
-    },
-    closeModal() {
-      EventBus.emit("close-authentication-modal");
-    },
     navigateTo(path) {
       this.$router.push(path);
     },

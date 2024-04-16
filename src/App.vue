@@ -13,11 +13,12 @@
 import { ref, watchEffect } from "vue";
 import Navigation from "@/pages/Navigation.vue";
 import PageFooter from "@/pages/PageFooter.vue";
+import NavBarAnimation from "@/components/navBarComponent/NavBarAnimation.vue";
 import { useRoute } from "vue-router";
 import mitt from "mitt";
+import store from "@/store";
 
 export const EventBus = mitt();
-import NavBarAnimation from "@/components/navBarComponent/NavBarAnimation.vue";
 
 export default {
   components: {
@@ -33,20 +34,21 @@ export default {
       isHomePage.value = route.path.toLowerCase() === "/";
     });
 
+    watchEffect(() => {
+      const isLoggedIn = store.state.loggedInUser;
+      if (isLoggedIn) {
+        store.dispatch("fetchUsers");
+        store.dispatch("fetchUserFavorites");
+        store.dispatch("getTotalValue");
+        store.dispatch("fetchRestaurant");
+        store.dispatch("fetchUsers");
+        store.dispatch("fetchVisitsForLoggedInUser");
+      }
+    });
+
     return {
       isHomePage,
     };
-  },
-  created() {
-    EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
-    this.$store.dispatch("fetchUserFavorites");
-    this.$store.dispatch("getTotalValue");
-    this.$store.dispatch("fetchRestaurant");
-    this.$store.dispatch("fetchUsers").then(() => {
-      this.$store.dispatch("login").then(() => {
-        this.$store.dispatch("fetchVisitsForLoggedInUser");
-      });
-    });
   },
 };
 </script>
