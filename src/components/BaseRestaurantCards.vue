@@ -22,7 +22,7 @@
           left: 5px;
         "
         type="button"
-        @click="decrementeIndex()"
+        @click="decrementIndex()"
       >
         <span aria-hidden="false" class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Previous</span>
@@ -38,7 +38,7 @@
           right: 5px;
         "
         type="button"
-        @click="incrementeIndex()"
+        @click="incrementIndex()"
       >
         <span aria-hidden="false" class="carousel-control-next-icon"></span>
         <span class="visually-hidden">Next</span>
@@ -151,11 +151,10 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faArrowRight, faStar } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import AddVisit from "@/components/visitComponent/AddVisit.vue";
-import { baseRestaurantCardsMethods } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsMethods";
-import { baseRestaurantCardsComputed } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsComputed";
-import ConsultVisit from "@/components/visitComponent/ConsultVisit.vue";
-import AddFavorite from "@/components/generalComponent/AddFavorite.vue";
+import AddVisit from "@/components/visit/AddVisit.vue";
+import { utils } from "@/javascript/utils";
+import ConsultVisit from "@/components/visit/ConsultVisit.vue";
+import AddFavorite from "@/components/AddFavorite.vue";
 
 library.add(faArrowRight);
 library.add(faStar);
@@ -183,10 +182,70 @@ export default {
     };
   },
   computed: {
-    ...baseRestaurantCardsComputed,
+    getRatingFloor() {
+      if (
+        typeof this.restaurantRating === "number" &&
+        !isNaN(this.restaurantRating)
+      ) {
+        return Number(this.restaurantRating.toFixed(1));
+      } else {
+        return 0;
+      }
+    },
+    displayPriceRangeSymbol() {
+      const priceRange = this.restaurantPriceRange;
+      return "$".repeat(priceRange);
+    },
+    displayRatingSymbol() {
+      const array = Math.round(this.restaurantRating);
+      return Array.from({ length: array }, () => "star");
+    },
+    currentPicture() {
+      if (this.picture && this.picture.length > 0) {
+        return this.picture[this.imageIndex % this.picture.length];
+      } else {
+        return null;
+      }
+    },
+    loggedInUser() {
+      return this.$store.state.loggedInUser;
+    },
   },
   methods: {
-    ...baseRestaurantCardsMethods,
+    ...utils,
+    getColorBasedOnNumber(number) {
+      if (number >= 1 && number < 2) {
+        return "rgb(255, 204, 75)";
+      } else if (number >= 2 && number < 3) {
+        return "rgb(255, 135, 66)";
+      } else if (number >= 3) {
+        return "rgb(251, 67, 60)";
+      }
+    },
+    getDisplayHours() {
+      const currentDay = this.getCurrentDay();
+      if (
+        !this.restaurantHour ||
+        !this.restaurantHour[currentDay] ||
+        this.restaurantHour[currentDay] === "null"
+      ) {
+        return "today";
+      }
+      const [openingHour, closingHour] =
+        this.restaurantHour[currentDay].split("-");
+      return this.isRestaurantOpen()
+        ? "until " + closingHour
+        : "until " + openingHour;
+    },
+    incrementIndex() {
+      this.imageIndex = (this.imageIndex + 1) % this.picture.length;
+      this.$store.dispatch("updateImageIndex", this.imageIndex);
+    },
+    decrementIndex() {
+      this.imageIndex =
+        (this.imageIndex - 1 + this.picture.length) % this.picture.length;
+      this.$store.dispatch("updateImageIndex", this.imageIndex);
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import { baseRestaurantCardsMethods } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsMethods";
+import { utils } from "@/javascript/utils";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({
@@ -13,7 +13,7 @@ const openDirections = () => {
 };
 
 const isCurrentDay = (day) => {
-  const currentDay = baseRestaurantCardsMethods.getCurrentDay();
+  const currentDay = utils.getCurrentDay();
   return day === currentDay;
 };
 
@@ -94,12 +94,10 @@ onMounted(() => {
           v-if="isCurrentDay(day)"
           class="opening"
           :style="{
-            color: baseRestaurantCardsMethods.isRestaurantOpen
-              ? 'green'
-              : 'red',
+            color: utils.isRestaurantOpen ? 'green' : 'red',
           }"
         >
-          {{ baseRestaurantCardsMethods.isRestaurantOpen ? "Open" : "Closed" }}
+          {{ utils.isRestaurantOpen ? "Open" : "Closed" }}
         </span>
       </div>
     </div>

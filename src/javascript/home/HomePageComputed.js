@@ -14,7 +14,7 @@ export const homePageComputed = {
       const hasMatchingGenre = cardItem.genres.some((genre) =>
         genre.toLowerCase().includes(searchGenre.toLowerCase()),
       );
-      const filterSelectedd =
+      const isFilterSelected =
         filterSelected.length === 0 ||
         cardItem.genres.some((genre) =>
           filterSelected.some((selected) =>
@@ -22,31 +22,28 @@ export const homePageComputed = {
           ),
         );
       if (!priceSelected) {
-        return hasMatchingName && hasMatchingGenre && filterSelectedd;
+        return hasMatchingName && hasMatchingGenre && isFilterSelected;
       }
 
       const priceRangeSymbol = this.getPriceRangeSymbol(cardItem.price_range);
       const filteredPrice = priceRangeSymbol === priceSelected;
 
       return (
-        hasMatchingName && hasMatchingGenre && filterSelectedd && filteredPrice
+        hasMatchingName && hasMatchingGenre && isFilterSelected && filteredPrice
       );
     });
+
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
+
     return filteredRestaurants.slice(startIndex, endIndex);
   },
-  ...mapGetters(["getTotalRestaurant"]),
+  ...mapGetters(["getTotalRestaurant", "getRestaurants"]),
   totalRestaurants() {
     return this.getTotalRestaurant;
   },
-  ...mapGetters(["getRestaurants"]),
   restaurants() {
     return this.getRestaurants;
-  },
-  ...mapGetters(["getUsers"]),
-  users() {
-    return this.getUsers;
   },
   totalPages() {
     return Math.ceil(this.totalRestaurants / this.itemsPerPage);

@@ -50,7 +50,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
-import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
+import CardComponent from "@/components/BaseRestaurantCards.vue";
 
 const store = useStore();
 

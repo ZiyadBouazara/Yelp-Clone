@@ -76,15 +76,14 @@
 </template>
 
 <script>
-import FilterOffCanvas from "@/components/homePageComponent/FilterOffCanvas.vue";
-import FormHome from "@/components/homePageComponent/FormHome.vue";
-import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
+import FilterOffCanvas from "@/components/home/FilterOffCanvas.vue";
+import FormHome from "@/components/home/FormHome.vue";
+import CardComponent from "@/components/BaseRestaurantCards.vue";
 import { EventBus } from "@/App.vue";
-import { homePageMethods } from "@/javascript/pages/homePage/homePageMethods";
-import { homePageComputed } from "@/javascript/pages/homePage/homePageComputed";
-import ListMapSwitch from "@/components/homePageComponent/ListMapSwitchButtons.vue";
+import { homePageMethods } from "@/javascript/home/homePageMethods";
+import { homePageComputed } from "@/javascript/home/HomePageComputed";
+import ListMapSwitch from "@/components/home/ListMapSwitchButtons.vue";
 import "leaflet/dist/leaflet.css";
-import leaflet from "leaflet";
 
 export default {
   components: {
@@ -95,10 +94,6 @@ export default {
   },
   created() {
     EventBus.emit("open-authentication-modal", this.openAuthenticationModal);
-  },
-  mounted() {
-    // this.getLocation();
-    // this.initMarkerLocation();
   },
   data() {
     return {
@@ -118,60 +113,6 @@ export default {
   },
   methods: {
     ...homePageMethods,
-    getMap() {
-      this.showMap = true;
-      this.initMap();
-    },
-    getList() {
-      this.showMap = false;
-    },
-    getLocation() {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            this.latitude = position.coords.latitude;
-            this.longitude = position.coords.longitude;
-          },
-          (error) => {
-            console.error("Error getting geolocation:", error);
-          },
-        );
-      }
-    },
-    initMarkerLocation() {
-      const restaurants = this.$store.getters.getRestaurants;
-      restaurants.forEach((restaurant) => {
-        const coordinates = restaurant.location.coordinates;
-        this.markerLocations.push(coordinates);
-      });
-    },
-    async initMap() {
-      try {
-        const leaflet = await import("leaflet");
-        this.getLocation();
-        this.map = leaflet
-          .map("map")
-          .setView([this.latitude, this.longitude], 4);
-
-        leaflet
-          .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: "© OpenStreetMap contributors",
-          })
-          .addTo(this.map);
-        const customIcon = leaflet.divIcon({
-          className: "custom-leaflet-div-icon",
-          html: '<i class="fas fa-map-marker-alt fa-3x text-danger"></i>',
-          iconAnchor: [18, 36],
-        });
-        this.initMarkerLocation();
-        console.log(this.markerLocations);
-        this.markerLocations.forEach((location) => {
-          leaflet.marker(location, { icon: customIcon }).addTo(this.map);
-        });
-      } catch (error) {
-        console.error("Error loading Leaflet:", error);
-      }
-    },
   },
 };
 </script>

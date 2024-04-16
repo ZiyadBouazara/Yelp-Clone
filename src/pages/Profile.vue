@@ -27,13 +27,11 @@
 </template>
 
 <script setup>
-import ProfileCard from "@/components/profileComponent/ProfileCard.vue";
-import VisitedRestaurants from "@/components/profileComponent/VisitedRestaurants.vue";
-import SectionFavorite from "@/components/profileComponent/SectionFavorite.vue";
-import { useStore } from "vuex";
+import ProfileCard from "@/components/profile/ProfileCard.vue";
+import VisitedRestaurants from "@/components/profile/VisitedRestaurants.vue";
+import SectionFavorite from "@/components/profile/SectionFavorite.vue";
 import { computed } from "vue";
-
-const store = useStore();
+import store from "@/store";
 
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const visits = computed(() => store.getters.getVisits);

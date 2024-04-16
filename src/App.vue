@@ -12,8 +12,8 @@
 <script>
 import { ref, watchEffect } from "vue";
 import Navigation from "@/pages/Navigation.vue";
-import PageFooter from "@/pages/PageFooter.vue";
-import NavBarAnimation from "@/components/navBarComponent/NavBarAnimation.vue";
+import PageFooter from "@/components/PageFooter.vue";
+import NavBarAnimation from "@/components/navBar/NavBarAnimation.vue";
 import { useRoute } from "vue-router";
 import mitt from "mitt";
 import store from "@/store";

@@ -1,15 +1,11 @@
 <template>
   <div class="col-12 scroll-container" title="Favorites">
     <h4 class="col-12 justify-content-start" id="title">My Favorites</h4>
-    <div v-if="!userFavoritesIsNotEmpty">
-      <div
-        :class="{ 'border-danger': isHovered }"
-        class="card custom-card"
-        style="margin-top: 0"
-      >
-        <div class="card-body" style="height: 250px; text-align: center">
+    <div v-if="userFavoritesIsEmpty">
+      <div :class="{ 'border-danger': isHovered }" style="margin-top: 0">
+        <div class="card-body" style="height: 100px; text-align: center">
           <h5 class="card-title justify-content-center">
-            You have no favorites yet
+            You have no favorites
           </h5>
         </div>
       </div>
@@ -27,68 +23,65 @@
           <h5>{{ favoriteList.name }}</h5>
         </div>
       </div>
+    </div>
+
+    <input class="rename-name" placeholder="Rename" v-model="renameListName" />
+    <button
+      class="btn btn-outline-danger"
+      @click="renameFavoriteList(renameListName)"
+    >
+      Rename List
+    </button>
+    <form class="buttons-control">
       <input
-        class="rename-name"
-        placeholder="Rename"
-        v-model="renameListName"
+        class="list-name"
+        placeholder="List Name"
+        v-model="createListName"
       />
       <button
         class="btn btn-outline-danger"
-        @click="renameFavoriteList(renameListName)"
+        @click="addFavoriteList(createListName, userEmail)"
       >
-        Rename List
+        Create Favorite
       </button>
-      <form class="buttons-control">
-        <input
-          class="list-name"
-          placeholder="List Name"
-          v-model="createListName"
-        />
+      <br />
+      <input
+        class="list-name"
+        placeholder="List Name"
+        v-model="deleteListName"
+      />
+      <button
+        class="btn btn-outline-danger"
+        @click="deleteFavoriteList(deleteListName)"
+      >
+        Delete Favorite
+      </button>
+    </form>
+    <div class="favorites-section" v-if="displayFavoritesSection">
+      <div
+        style="margin-top: 10px"
+        id="favorites-card"
+        v-for="restaurant in userFavoriteRestaurants"
+        :key="restaurant.id"
+        class="favorite-item"
+      >
+        <CardComponent
+          :id="restaurant.id"
+          :picture="restaurant.pictures"
+          :readOnly="true"
+          :restaurant-genres="restaurant.genres"
+          :restaurant-hour="restaurant.opening_hours"
+          :restaurant-number="restaurant.tel"
+          :restaurant-price-range="restaurant.price_range"
+          :restaurant-rating="restaurant.rating"
+          :restaurantName="restaurant.name"
+        ></CardComponent>
         <button
-          class="btn btn-outline-danger"
-          @click="addFavoriteList(createListName, userEmail)"
+          class="btn btn-outline-danger mt-2 delete-button"
+          @click="deleteRestaurant(restaurant)"
         >
-          Create Favorite
+          Delete
         </button>
-        <br />
-        <input
-          class="list-name"
-          placeholder="List Name"
-          v-model="deleteListName"
-        />
-        <button
-          class="btn btn-outline-danger"
-          @click="deleteFavoriteList(deleteListName)"
-        >
-          Delete Favorite
-        </button>
-      </form>
-      <div class="favorites-section" v-if="displayFavoritesSection">
-        <div
-          style="margin-top: 10px"
-          id="favorites-card"
-          v-for="restaurant in userFavoriteRestaurants"
-          :key="restaurant.id"
-          class="favorite-item"
-        >
-          <CardComponent
-            :id="restaurant.id"
-            :picture="restaurant.pictures"
-            :readOnly="true"
-            :restaurant-genres="restaurant.genres"
-            :restaurant-hour="restaurant.opening_hours"
-            :restaurant-number="restaurant.tel"
-            :restaurant-price-range="restaurant.price_range"
-            :restaurant-rating="restaurant.rating"
-            :restaurantName="restaurant.name"
-          ></CardComponent>
-          <button
-            class="btn btn-outline-danger mt-2 delete-button"
-            @click="deleteResto(restaurant)"
-          >
-            Delete
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -97,8 +90,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import CardComponent from "@/components/generalComponent/BaseRestaurantCards.vue";
-import data from "bootstrap/js/src/dom/data";
+import CardComponent from "@/components/BaseRestaurantCards.vue";
 
 const createListName = ref("");
 const deleteListName = ref("");
@@ -106,7 +98,6 @@ const renameListName = ref("");
 const isHovered = false;
 const store = useStore();
 const displayFavoritesSection = ref(false);
-const userFavorites = ref([]);
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const userId = computed(() => loggedInUser.value?.id);
 const userEmail = computed(() => loggedInUser.value?.email);
@@ -116,21 +107,10 @@ const currentFavoriteList = ref("");
 const getFavoriteListByName = async (name) => {
   return await store.getters.getFavoriteListByName(name);
 };
-const favoriteList = await getFavoriteListByName("Nom de la liste");
 
-let restaurantPicture = "";
-let readOnly = false;
-let restaurantGenres = [];
-let restaurantHour = {};
-let restaurantNumber = "";
-let restaurantRating = 0;
-let restaurantName = "";
-let restaurantPriceRange = 0;
-
-const userFavoritesIsNotEmpty = computed(
-  () => store.getters.getUserFavorites.length > 0,
+const userFavoritesIsEmpty = computed(
+  () => store.getters.getUserFavorites.length === 0,
 );
-//const userFavorites = computed(() => store.getters.getUserFavorites);
 const getUserFavoritesList = computed(() => store.getters.getUserFavorites);
 
 const addFavoriteList = async (name, user) => {
@@ -167,14 +147,8 @@ const renameFavoriteList = async (newListName) => {
 const deleteFavoriteList = async (name) => {
   try {
     const favoriteList = await getFavoriteListByName(name);
-    if (!favoriteList) {
-      throw new Error(`Favorite list with name ${name} not found`);
-    }
     console.log("Favorite list:", favoriteList);
-    const response = await store.dispatch(
-      "deleteFavoriteList",
-      favoriteList.id,
-    );
+    await store.dispatch("deleteFavoriteList", favoriteList.id);
     await store.dispatch("fetchUserFavorites", userId.value);
   } catch (error) {
     console.error("Error deleting favorite list:", error);
@@ -189,8 +163,8 @@ const chosenFavList = async (favoriteList) => {
   displayFavoritesSection.value = false;
   if (favoriteList.restaurants && favoriteList.restaurants.length > 0) {
     userFavoriteRestaurants.value = [];
-    for (const resto of favoriteList.restaurants) {
-      const restaurant = await getRestaurantById(resto.id);
+    for (const r of favoriteList.restaurants) {
+      const restaurant = await getRestaurantById(r.id);
       userFavoriteRestaurants.value.push(restaurant);
     }
     displayFavoritesSection.value = true;
@@ -201,7 +175,7 @@ const chosenFavList = async (favoriteList) => {
   console.log("current fav list at: " + currentFavoriteList.value);
 };
 
-const deleteResto = async (restaurant) => {
+const deleteRestaurant = async (restaurant) => {
   console.log("restaurant:", restaurant);
   const favoriteListId = currentFavoriteList.value; // Assuming you have currentFavoriteList defined
   if (restaurant && restaurant.id && favoriteListId) {

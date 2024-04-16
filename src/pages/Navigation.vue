@@ -118,9 +118,9 @@
 
 <script>
 import "@/styles/navbar.css";
-import Logo from "@/components/navBarComponent/NavBarLogo.vue";
-import SearchForm from "@/components/navBarComponent/NavBarSearchForm.vue";
-import Links from "@/components/navBarComponent/NavBarLinks.vue";
+import Logo from "@/components/navBar/NavBarLogo.vue";
+import SearchForm from "@/components/navBar/NavBarSearchForm.vue";
+import Links from "@/components/navBar/NavBarLinks.vue";
 import { ref } from "vue";
 import { mapState } from "vuex";
 
@@ -247,38 +247,8 @@ export default {
   }
 }
 
-.profile-dropdown-btn {
-  display: flex;
-  align-items: center;
-  padding-right: 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  width: 150px;
-  border-radius: 4px;
-  color: black;
-  border: 1px solid transparent;
-  transition:
-    box-shadow 0.2s ease-in,
-    background-color 0.2s ease-in,
-    border 0.3s;
-  background-color: transparent;
-}
-
-.profile-dropdown-btn:hover {
-  background-color: #f8f9fa;
-  border-color: #ced4da;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .profile-dropdown-btn:hover .profile-img img {
   filter: brightness(0);
-}
-
-.profile-img {
-  overflow: hidden;
-  width: 30px;
-  height: 30px;
-  position: relative;
 }
 
 .profile-img img {
@@ -297,38 +267,13 @@ export default {
 }
 
 .profile-dropdown-btn span {
-  margin: 0 0.5rem;
-  margin-right: 0;
+  margin: 0 0 0 0.5rem;
   display: flex;
   align-items: center; /* Center the profile text and icon */
 }
 
-.profile-dropdown-list {
-  position: absolute;
-  top: 68px;
-  width: 220px;
-  right: 0;
-  background-color: white;
-  border-radius: 10px;
-  max-height: 0;
-  overflow: hidden;
-  box-shadow: darkgrey;
-  transition: max-height 0.5s;
-}
-
 .profile-dropdown-list hr {
   border: 0.5px solid green;
-}
-
-.profile-dropdown-list.active {
-  max-height: 500px;
-}
-
-.profile-dropdown-list-item {
-  padding: 0.5rem 0 0.5rem 1rem;
-  transition:
-    background-color 0.2s ease-in,
-    padding-left 0.2s;
 }
 
 .profile-dropdown-list-item a {
@@ -341,7 +286,6 @@ export default {
 }
 
 .profile-dropdown-list-item a i {
-  margin-right: 0.8rem;
   font-size: 1.1rem;
   width: 2.3rem;
   height: 2.3rem;
@@ -352,39 +296,5 @@ export default {
   margin-right: 1rem;
   border-radius: 50%;
   transition: margin-right 0.3s;
-}
-
-.profile-dropdown-list-item:hover {
-  padding-left: 1.5rem;
-  background-color: #ff6666;
-}
-
-.red-link {
-  color: red !important;
-  margin-top: 15px;
-  margin-right: 10px;
-  margin-left: 10px;
-  text-decoration: none !important;
-}
-
-.red-link:hover {
-  color: red !important;
-}
-
-.hovered-link {
-  color: #ff6666 !important;
-  margin-top: 15px;
-  margin-right: 10px;
-  margin-left: 10px;
-  text-decoration: none !important;
-}
-
-.bg-fading {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0) 0%,
-    #ababab 100%
-  );
-  transition: background 0.5s ease;
 }
 </style>

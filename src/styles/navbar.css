@@ -8,10 +8,9 @@
   border-radius: 4px;
   color: black;
   border: 1px solid transparent;
-  transition:
-    box-shadow 0.2s ease-in,
-    background-color 0.2s ease-in,
-    border 0.3s;
+  transition: box-shadow 0.2s ease-in,
+  background-color 0.2s ease-in,
+  border 0.3s;
   background-color: transparent;
 }
 
@@ -48,8 +47,7 @@
 }
 
 .profile-dropdown-btn span {
-  margin: 0 0.5rem;
-  margin-right: 0;
+  margin: 0 0 0 0.5rem;
   display: flex;
   align-items: center; /* Center the profile text and icon */
 }
@@ -68,7 +66,7 @@
 }
 
 .profile-dropdown-list hr {
-  border: 0.5px solid green;
+  border: 1px solid green;
 }
 
 .profile-dropdown-list.active {
@@ -77,9 +75,8 @@
 
 .profile-dropdown-list-item {
   padding: 0.5rem 0 0.5rem 1rem;
-  transition:
-    background-color 0.2s ease-in,
-    padding-left 0.2s;
+  transition: background-color 0.2s ease-in,
+  padding-left 0.2s;
 }
 
 .profile-dropdown-list-item a {
@@ -92,7 +89,6 @@
 }
 
 .profile-dropdown-list-item a i {
-  margin-right: 0.8rem;
   font-size: 1.1rem;
   width: 2.3rem;
   height: 2.3rem;
@@ -128,13 +124,4 @@
   margin-right: 10px;
   margin-left: 10px;
   text-decoration: none !important;
-}
-
-.bg-fading {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0) 0%,
-    #ababab 100%
-  );
-  transition: background 0.5s ease;
 }

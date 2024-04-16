@@ -1,15 +1,14 @@
 <script setup>
 import "leaflet/dist/leaflet.css";
-import LocationAndHours from "@/components/restaurantComponent/LocationAndHours.vue";
-import SideContainer from "@/components/restaurantComponent/SideContainer.vue";
-import RestaurantHeader from "@/components/restaurantComponent/RestaurantHeader.vue";
+import LocationAndHours from "@/components/restaurant/LocationAndHours.vue";
+import SideContainer from "@/components/restaurant/SideContainer.vue";
+import RestaurantHeader from "@/components/restaurant/RestaurantHeader.vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import AboutRestaurant from "@/components/restaurantComponent/AboutRestaurant.vue";
-import AddVisit from "@/components/visitComponent/AddVisit.vue";
-import { baseRestaurantCardsComputed } from "@/javascript/components/baseRestaurantsCards/baseRestaurantCardsComputed";
+import AboutRestaurant from "@/components/restaurant/AboutRestaurant.vue";
+import AddVisit from "@/components/visit/AddVisit.vue";
 import { onMounted } from "vue";
-import AddFavorite from "@/components/generalComponent/AddFavorite.vue";
+import AddFavorite from "@/components/AddFavorite.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -38,7 +37,6 @@ onMounted(() => {
     <div class="main-container d-flex">
       <button
         :data-bs-target="`#visitModal${restaurantId}`"
-        :disabled="!baseRestaurantCardsComputed.loggedInUser"
         class="btn btn-outline-danger btn-lg"
         data-bs-toggle="modal"
         style="margin-left: 40px"
@@ -57,7 +55,6 @@ onMounted(() => {
         class="btn btn-outline-dark btn-lg"
         style="margin-left: 5px"
         :data-bs-target="`#modalAddFavorite${restaurantId}`"
-        :disabled="!baseRestaurantCardsComputed.loggedInUser"
         data-bs-toggle="modal"
         type="button"
       >

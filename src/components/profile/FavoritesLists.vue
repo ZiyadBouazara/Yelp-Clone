@@ -41,7 +41,7 @@
 <script setup>
 import { computed, emit, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import ModalFavoriteList from "@/components/profileComponent/ModalFavoriteList.vue";
+import ModalFavoriteList from "@/components/profile/ModalFavoriteList.vue";
 
 const store = useStore();
 const showModal = ref(false);
@@ -103,6 +103,7 @@ const handleClickedList = (favoriteList) => {
 .favorite-pill:hover {
   background-color: #ff6666;
 }
+
 .no-favorites-list {
   display: flex;
   justify-content: center;

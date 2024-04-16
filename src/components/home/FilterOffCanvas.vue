@@ -71,29 +71,6 @@
           </span>
         </div>
       </div>
-      <!--      <div class="row">-->
-      <!--        <div class="btn-group">-->
-      <!--          <button-->
-      <!--            type="button"-->
-      <!--            class="btn dropdown-toggle black hover"-->
-      <!--            data-bs-toggle="dropdown"-->
-      <!--            aria-expanded="false"-->
-      <!--            style="border-radius: 30px; margin-top: 50px; margin-bottom: 50px"-->
-      <!--          >-->
-      <!--            {{ selectedDistance || "Choose Distance" }}-->
-      <!--          </button>-->
-      <!--          <ul class="dropdown-menu">-->
-      <!--            <li v-for="optionDistance in Distance" :key="optionDistance.id">-->
-      <!--              <a-->
-      <!--                class="dropdown-item"-->
-      <!--                @click="updateSelectedDistance(optionDistance.name)"-->
-      <!--              >-->
-      <!--                {{ optionDistance.name }}</a-->
-      <!--              >-->
-      <!--            </li>-->
-      <!--          </ul>-->
-      <!--        </div>-->
-      <!--      </div>-->
       <div class="row">
         <p style="font-weight: bold">Select a price...</p>
         <div class="price-label">
@@ -125,11 +102,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   props: {
-    Genres: Array,
+    genres: Array,
   },
   data() {
     return {
@@ -143,16 +120,6 @@ export default {
         { id: 7, name: "Italien" },
       ],
     };
-  },
-  computed: {
-    ...mapGetters(["getPrice"]),
-    getPricee() {
-      return this.getPrice;
-    },
-    ...mapGetters(["getGenres"]),
-    selectedFilters() {
-      return this.getGenres;
-    },
   },
   methods: {
     handleUserPriceChoice(event) {
@@ -180,15 +147,12 @@ export default {
       this.addSelectedFilter(filter);
     },
     handleFilterClick(filter) {
-      var foundable = filter.toLowerCase();
+      const foundable = filter.toLowerCase();
       if (this.getGenres.includes(foundable)) {
         this.removeFilterFromStore(foundable);
       } else {
         this.addFilter(foundable);
       }
-    },
-    updateSelectedDistance(distance) {
-      this.selectedDistance = distance;
     },
   },
 };
@@ -200,11 +164,6 @@ body {
   margin: 50px;
 }
 
-.form-check-inline {
-  display: flex;
-  align-content: center;
-}
-
 .row,
 .comp {
   margin: 10px;
@@ -214,6 +173,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .form-range {
   max-width: 200px;
 }

@@ -19,7 +19,7 @@ export default {
           <h3>Profile</h3>
         </div>
         <div class="row">
-          <img src="../../assets/UFood_Profile_Picture.png" />
+          <img src="../assets/UFood_Profile_Picture.png" />
         </div>
         <div class="row">
           <p>Score: 75</p>
