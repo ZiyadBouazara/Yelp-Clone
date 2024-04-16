@@ -44,30 +44,41 @@ export const homePageMethods = {
     this.showMap = false;
   },
   getLocation() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.latitude = position.coords.latitude;
-          this.longitude = position.coords.longitude;
-        },
-        (error) => {
-          console.error("Error getting geolocation:", error);
-        },
-      );
-    }
+    return new Promise((resolve, reject) => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+            resolve({ latitude: this.latitude, longitude: this.longitude });
+          },
+          (error) => {
+            console.error("Error getting geolocation:", error);
+            reject(error);
+          },
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+        reject(new Error("Geolocation is not supported by this browser."));
+      }
+    });
   },
   initMarkerLocation() {
     const restaurants = this.$store.getters.getRestaurants;
     restaurants.forEach((restaurant) => {
       const coordinates = restaurant.location.coordinates;
-      this.markerLocations.push(coordinates);
+      const [longitude, latitude] = coordinates; // Reversed for Leaflet
+      this.markerLocations.push([latitude, longitude]);
+      console.log("Latitude: " + latitude + ", Longitude: " + longitude);
     });
   },
   async initMap() {
     try {
       const leaflet = await import("leaflet");
-      this.getLocation();
-      this.map = leaflet.map("map").setView([this.latitude, this.longitude], 4);
+      await this.getLocation();
+      this.map = leaflet
+        .map("map")
+        .setView([this.latitude, this.longitude], 15);
 
       leaflet
         .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
