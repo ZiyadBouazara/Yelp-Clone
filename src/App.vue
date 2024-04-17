@@ -11,7 +11,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
-import Navigation from "@/pages/Navigation.vue";
+import Navigation from "@/components/Navigation.vue";
 import PageFooter from "@/components/PageFooter.vue";
 import NavBarAnimation from "@/components/navBar/NavBarAnimation.vue";
 import { useRoute } from "vue-router";
@@ -40,9 +40,9 @@ export default {
     });
 
     watchEffect(() => {
-      const isLoggedIn = store.state.loggedInUser;
-      if (isLoggedIn) {
-        store.dispatch("fetchUserFavorites");
+      const loggedInUser = store.state.loggedInUser;
+      if (loggedInUser) {
+        store.dispatch("fetchUserFavorites", loggedInUser);
         store.dispatch("fetchVisitsForLoggedInUser");
       }
     });

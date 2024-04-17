@@ -12,6 +12,14 @@
       </div>
     </div>
     <div v-if="showMap">
+      <div v-if="loading">
+        <div
+          class="spinner-border spinner-border-lg text-primary"
+          role="status"
+          style="width: 6rem; height: 6rem; margin: 10% auto auto"
+        ></div>
+        <p>Loading map...</p>
+      </div>
       <div class="map-container" id="map"></div>
     </div>
     <div v-else>
@@ -106,6 +114,7 @@ export default {
       latitude: 0,
       longitude: 0,
       markerLocations: [],
+      loading: true,
     };
   },
   computed: {

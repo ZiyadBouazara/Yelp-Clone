@@ -104,7 +104,7 @@
           <img
             id="user-profile-picture"
             alt="A user's profile picture"
-            src="@/assets/default_user_avatar.png"
+            src="../assets/default_user_avatar.png"
             @click="navigateTo('/profile')"
           />
           <div class="user-name-lastname ml-2">
@@ -123,6 +123,7 @@ import SearchForm from "@/components/navBar/NavBarSearchForm.vue";
 import Links from "@/components/navBar/NavBarLinks.vue";
 import { ref } from "vue";
 import { mapState } from "vuex";
+import store from "@/store";
 
 export default {
   components: {

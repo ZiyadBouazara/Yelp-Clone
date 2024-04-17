@@ -36,12 +36,14 @@ export const homePageMethods = {
     const restaurantId = restaurant.id;
     return this.$store.getters.getRestaurantById(restaurantId);
   },
-  getMap() {
+  async getMap() {
     this.showMap = true;
-    this.initMap();
+    await this.initMap();
+    this.loading = false;
   },
   getList() {
     this.showMap = false;
+    this.loading = true;
   },
   getLocation() {
     return new Promise((resolve, reject) => {
