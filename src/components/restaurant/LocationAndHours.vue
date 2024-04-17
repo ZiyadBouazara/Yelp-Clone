@@ -47,7 +47,10 @@ const initMap = async (restaurantLocation) => {
 };
 
 onMounted(() => {
-  initMap(props.restaurant.location.coordinates);
+  const coordinates = props.restaurant.location.coordinates;
+  const [longitude, latitude] = coordinates;
+  const restaurantLocation = [latitude, longitude]; //a l'envers pour leaflet
+  initMap(restaurantLocation);
 });
 </script>
 

@@ -69,7 +69,7 @@ export const homePageMethods = {
     const restaurants = this.$store.getters.getRestaurants;
     restaurants.forEach((restaurant) => {
       const coordinates = restaurant.location.coordinates;
-      const [longitude, latitude] = coordinates; // Reversed for Leaflet
+      const [longitude, latitude] = coordinates;
       this.markerLocations.push([latitude, longitude]);
     });
   },
