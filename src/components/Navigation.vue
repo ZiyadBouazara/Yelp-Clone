@@ -118,16 +118,13 @@
 import "@/styles/navbar.css";
 import Logo from "@/components/navBar/NavBarLogo.vue";
 import SearchForm from "@/components/navBar/NavBarSearchForm.vue";
-import Links from "@/components/navBar/NavBarLinks.vue";
 import { ref } from "vue";
 import { mapState } from "vuex";
-import store from "@/store";
 
 export default {
   components: {
     Logo,
     SearchForm,
-    Links,
   },
   data() {
     return {
