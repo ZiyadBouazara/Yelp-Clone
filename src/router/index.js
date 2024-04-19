@@ -11,6 +11,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: { requiresAuth: true },
   },
   {
     path: "/profile",
@@ -33,6 +34,7 @@ const routes = [
     name: "Restaurant details",
     component: RestaurantDetails,
     props: true,
+    meta: { requiresAuth: true },
   },
 ];
 
