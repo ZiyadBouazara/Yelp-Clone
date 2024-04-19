@@ -66,12 +66,20 @@ export const homePageMethods = {
     });
   },
   initMarkerLocation() {
-    const restaurants = this.$store.getters.getRestaurants;
-    restaurants.forEach((restaurant) => {
+    let num = 0;
+    const filteredRestaurants = this.filteredRestaurants;
+    this.markerLocations = filteredRestaurants.map((restaurant) => {
       const coordinates = restaurant.location.coordinates;
       const [longitude, latitude] = coordinates;
-      this.markerLocations.push([latitude, longitude]);
+      return [latitude, longitude];
     });
+
+    filteredRestaurants.forEach((restaurant) => {
+      num++;
+      console.log("filtered restaurants: ", restaurant.location.coordinates);
+    });
+
+    console.log("number of restaurants: ", num);
   },
   async initMap() {
     try {

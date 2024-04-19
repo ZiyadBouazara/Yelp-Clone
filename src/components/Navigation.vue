@@ -59,8 +59,6 @@
                 <a class="dropdown-item" href="#">Explore locations</a>
               </div>
             </div>
-
-            <Links :isHovered="isHovered" :links="links" @hover="setHover" />
           </ul>
           <router-link style="display: none" to="/profile">Profile</router-link>
           <div
@@ -155,7 +153,6 @@ export default {
     const profileDropdownList = ref(null);
     const btn = ref(null);
     const names = ref("Profile");
-    const links = ["Write A Review"];
     const isHovered = Array.from({ length: 10 }, () => ref(false));
 
     const dropdowns = [
@@ -195,7 +192,6 @@ export default {
       profileDropdownList,
       btn,
       names,
-      links,
       isHovered,
       dropdowns,
       dropDownProfile,

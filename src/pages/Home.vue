@@ -89,9 +89,9 @@ import FormHome from "@/components/home/FormHome.vue";
 import CardComponent from "@/components/BaseRestaurantCards.vue";
 import { EventBus } from "@/App.vue";
 import { homePageMethods } from "@/javascript/home/homePageMethods";
-import { homePageComputed } from "@/javascript/home/HomePageComputed";
 import ListMapSwitch from "@/components/home/ListMapSwitchButtons.vue";
 import "leaflet/dist/leaflet.css";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -118,7 +118,58 @@ export default {
     };
   },
   computed: {
-    ...homePageComputed,
+    ...mapGetters([
+      "getTotalRestaurant",
+      "getRestaurants",
+      "getPrice",
+      "getGenres",
+      "getSearchTerm",
+      "getSearchTermGenre",
+    ]),
+    totalRestaurants() {
+      return this.getTotalRestaurant;
+    },
+    restaurants() {
+      return this.getRestaurants;
+    },
+    filteredRestaurants() {
+      const searchTerm = this.getSearchTerm.toLowerCase();
+      const searchGenre = this.getSearchTermGenre.toLowerCase();
+      const filterSelected = this.getGenres.map((genre) => genre.toLowerCase());
+      const priceSelected = this.getPrice;
+
+      return this.restaurants.filter((restaurant) => {
+        const hasMatchingName = restaurant.name
+          .toLowerCase()
+          .includes(searchTerm);
+        const hasMatchingGenre = restaurant.genres.some((genre) =>
+          genre.toLowerCase().includes(searchGenre),
+        );
+        const isFilterSelected =
+          filterSelected.length === 0 ||
+          restaurant.genres.some((genre) =>
+            filterSelected.includes(genre.toLowerCase()),
+          );
+        const isMatchingPrice =
+          !priceSelected ||
+          this.getPriceRangeSymbol(restaurant.price_range) === priceSelected;
+
+        return (
+          hasMatchingName &&
+          hasMatchingGenre &&
+          isFilterSelected &&
+          isMatchingPrice
+        );
+      });
+    },
+    filteredCardData() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.filteredRestaurants.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.totalRestaurants / this.itemsPerPage);
+    },
   },
   methods: {
     ...homePageMethods,
