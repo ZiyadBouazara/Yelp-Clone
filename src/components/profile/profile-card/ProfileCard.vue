@@ -15,17 +15,35 @@
       <div class="row mb-3">
         <div class="col">
           <div class="row">
-            <div class="col">
-              <button class="btn btn-light" @click="editProfile">
-                <i class="far fa-pen-to-square"></i>
-                <span class="ms-2">Edit Profile</span>
-              </button>
+            <div class="col-6">
+              <div>
+                <button
+                  :data-bs-target="`#modal-followers`"
+                  class="btn btn-light"
+                  data-bs-toggle="modal"
+                  type="button"
+                >
+                  <span class="ms-2">{{ props.followers.length }}</span>
+                  <br />
+                  <span class="ms-2">followers</span>
+                </button>
+                <UserFollowers :followers="props.followers" />
+              </div>
             </div>
-            <div class="col">
-              <button class="btn btn-light" @click="addPhoto">
-                <i class="far fa-image"></i>
-                <span class="ms-2">Add Photo</span>
-              </button>
+            <div class="col-6">
+              <div>
+                <button
+                  :data-bs-target="`#modal-following`"
+                  class="btn btn-light"
+                  data-bs-toggle="modal"
+                  type="button"
+                >
+                  <span class="ms-2">{{ props.following.length }}</span>
+                  <br />
+                  <span class="ms-2">following</span>
+                </button>
+                <UserFollowing :following="props.following" />
+              </div>
             </div>
           </div>
         </div>
@@ -39,8 +57,12 @@
 </template>
 
 <script setup>
+import UserFollowing from "@/components/profile/profile-card/UserFollowing.vue";
+import UserFollowers from "@/components/profile/profile-card/UserFollowers.vue";
 import { computed } from "vue";
 import store from "@/store";
+
+const props = defineProps({ followers: Array, following: Array });
 
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 </script>

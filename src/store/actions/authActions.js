@@ -40,12 +40,17 @@ export const authActions = {
 
       const data = await response.json();
       Cookies.set("connectionToken", data.token);
-      const { email: userEmail, name: name, id: id } = data;
+      const { email: userEmail, name: name, id: id, rating: rating } = data;
       console.log("data: ", data);
       console.log("email: ", userEmail);
       console.log("name: ", name);
       console.log("id: ", id);
-      commit("SET_LOGGED_IN_USER", { email: userEmail, name: name, id: id });
+      commit("SET_LOGGED_IN_USER", {
+        email: userEmail,
+        name: name,
+        id: id,
+        rating: rating,
+      });
       return data;
     } catch (error) {
       console.error("Error during login:", error);

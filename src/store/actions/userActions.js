@@ -27,4 +27,46 @@ export const userActions = {
       console.error("Error fetching users:", error);
     }
   },
+
+  async fetchFollowersForUser({ state }) {
+    const token = Cookies.get("connectionToken");
+
+    const userId = state.loggedInUser.id;
+
+    try {
+      const response = await fetch(`${SERVER_URL}/users/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+
+      const rawJsonResponse = await response.json();
+      console.log(rawJsonResponse.followers);
+      return await rawJsonResponse.followers;
+    } catch (error) {
+      console.error("Error fetching followers:", error);
+    }
+  },
+
+  async fetchFollowingForUser({ state }) {
+    const token = Cookies.get("connectionToken");
+    const userId = state.loggedInUser.id;
+    try {
+      const response = await fetch(`${SERVER_URL}/users/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+
+      const rawJsonResponse = await response.json();
+      console.log(rawJsonResponse.following);
+      return await rawJsonResponse.following;
+    } catch (error) {
+      console.error("Error fetching following:", error);
+    }
+  },
 };
