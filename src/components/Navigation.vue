@@ -98,11 +98,12 @@
         <button class="btn btn-outline-danger" type="button" @click="logout">
           Log Out
         </button>
-        <div class="photo d-flex align-items-center">
+        <div class="photo d-flex align-items-center justify-content-center">
           <img
+            v-if="loggedInUser.email"
+            :src="getGravatarUrl(loggedInUser.email)"
+            alt="User Profile Picture"
             id="user-profile-picture"
-            alt="A user's profile picture"
-            src="../assets/default_user_avatar.png"
             @click="navigateTo('/profile')"
           />
           <div class="user-name-lastname ml-2">
@@ -120,6 +121,7 @@ import Logo from "@/components/navBar/NavBarLogo.vue";
 import SearchForm from "@/components/navBar/NavBarSearchForm.vue";
 import { ref } from "vue";
 import { mapState } from "vuex";
+import md5 from "md5";
 
 export default {
   components: {
@@ -136,6 +138,10 @@ export default {
     ...mapState(["loggedInUser"]),
   },
   methods: {
+    getGravatarUrl(email, size = 80) {
+      const emailHash = md5(email.trim().toLowerCase()); // Hash the email (MD5)
+      return `https://secure.gravatar.com/avatar/${emailHash}?s=${size}&d=mm`; // Gravatar URL with size and default image (mm = mystery man)
+    },
     navigateTo(path) {
       this.$router.push(path);
     },
@@ -206,8 +212,8 @@ export default {
 
 #user-profile-picture {
   border-radius: 50%;
-  max-width: 55px;
-  max-height: 55px;
+  max-width: 40px;
+  max-height: 40px;
   width: 70%;
   height: 70%;
 }

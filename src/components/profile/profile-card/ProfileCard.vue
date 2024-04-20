@@ -1,10 +1,14 @@
 <template>
   <div class="card" style="max-width: 18rem">
-    <img
-      alt="Profile picture"
-      class="profile-picture"
-      src="@/assets/default_user_avatar.png"
-    />
+    <div>
+      <img
+        v-if="userEmail"
+        :src="getGravatarUrl(userEmail)"
+        alt="User Profile Picture"
+        class="profile-picture"
+      />
+      <p v-else>No email provided.</p>
+    </div>
     <div class="card-body">
       <div class="row mb-3">
         <div class="col">
@@ -61,10 +65,17 @@ import UserFollowing from "@/components/profile/profile-card/UserFollowing.vue";
 import UserFollowers from "@/components/profile/profile-card/UserFollowers.vue";
 import { computed } from "vue";
 import store from "@/store";
+import md5 from "md5";
 
 const props = defineProps({ followers: Array, following: Array });
 
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
+const userEmail = computed(() => loggedInUser.value.email);
+
+function getGravatarUrl(email, size = 80) {
+  const emailHash = md5(email.trim().toLowerCase()); // Hash the email (MD5)
+  return `https://secure.gravatar.com/avatar/${emailHash}?s=${size}&d=mm`; // Gravatar URL with size and default image (mm = mystery man)
+}
 </script>
 
 <style scoped>
