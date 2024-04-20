@@ -73,7 +73,7 @@ const handleLogin = async () => {
       password: password.value,
     });
 
-    router.push({ path: "/" });
+    await router.push({ path: "/" });
   } catch (error) {
     loginError.value = validateForm.validateLoginForm();
     console.error("Login failed:", error);

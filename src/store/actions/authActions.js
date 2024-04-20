@@ -39,13 +39,13 @@ export const authActions = {
       });
 
       const data = await response.json();
-      Cookies.set("connectionToken", data.token);
+
+      Cookies.set("connectionToken", data.token, { expires: 7 });
+
       const { email: userEmail, name: name, id: id } = data;
-      console.log("data: ", data);
-      console.log("email: ", userEmail);
-      console.log("name: ", name);
-      console.log("id: ", id);
+
       commit("SET_LOGGED_IN_USER", { email: userEmail, name: name, id: id });
+
       return data;
     } catch (error) {
       console.error("Error during login:", error);
@@ -61,6 +61,7 @@ export const authActions = {
         },
       });
 
+      Cookies.remove("connectionToken");
       commit("SET_LOGGED_IN_USER", null);
     } catch (error) {
       console.error("Logout error:", error);
