@@ -14,11 +14,17 @@ export const mutations = {
   SET_SEARCH_TERM(state, searchTerm) {
     state.searchTerm = searchTerm;
   },
+  SET_SEARCH_USERS(state, searchUserTerm) {
+    state.searchTermUsers = searchUserTerm;
+  },
   SET_RESTAURANTS(state, restaurants) {
     state.restaurants = restaurants;
   },
   SET_TOTAL_RESTAURANT(state, total) {
     state.totalRestaurant = total;
+  },
+  SET_TOTAL_USERS(state, total) {
+    state.totalUsers = total;
   },
   SET_USERS(state, users) {
     state.users = users;

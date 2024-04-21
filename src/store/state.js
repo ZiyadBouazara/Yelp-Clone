@@ -1,6 +1,7 @@
 const state = {
   price: "",
   searchTerm: "",
+  searchTermUsers: "",
   searchTermGenre: "",
   message: "",
   genres: [],
@@ -11,6 +12,7 @@ const state = {
   visits: [],
   userFavorites: [],
   totalRestaurant: 0,
+  totalUsers: 0,
 };
 
 export default state;

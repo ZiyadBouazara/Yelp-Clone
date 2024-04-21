@@ -16,6 +16,9 @@ export const updateActions = {
   updateSearchTerm({ commit }, searchTerm) {
     commit("SET_SEARCH_TERM", searchTerm);
   },
+  updateSearchUserTerm({ commit }, searchTerm) {
+    commit("SET_SEARCH_USERS", searchTerm);
+  },
   updateImageIndex({ commit }, imageIndex) {
     commit("SET_IMAGE_INDEX", imageIndex);
   },

@@ -40,6 +40,7 @@ export default {
         store.dispatch("getTotalValue");
         store.dispatch("fetchRestaurant");
         store.dispatch("fetchUsers");
+        store.dispatch("getTotalValueUsers");
         store.dispatch("fetchUserFavorites", loggedInUser);
         store.dispatch("fetchVisitsForLoggedInUser");
       }

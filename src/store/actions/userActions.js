@@ -1,9 +1,10 @@
 import Cookies from "js.cookie";
+import state from "@/store/state";
 
 const SERVER_URL = "https://ufoodapi.herokuapp.com";
 
 export const userActions = {
-  async fetchUsers({ commit }) {
+  async getTotalValueUsers({ commit }) {
     const token = Cookies.get("connectionToken");
 
     try {
@@ -12,6 +13,26 @@ export const userActions = {
           Authorization: token,
         },
       });
+
+      const jsonResponse = await response.json();
+      commit("SET_TOTAL_USERS", jsonResponse.total);
+    } catch (error) {
+      console.error("Error getting total value:", error);
+      throw error;
+    }
+  },
+  async fetchUsers({ commit }) {
+    const token = Cookies.get("connectionToken");
+
+    try {
+      const response = await fetch(
+        `${SERVER_URL}/users?limit=${state.totalUsers}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      );
 
       const rawJsonResponse = await response.json();
 
