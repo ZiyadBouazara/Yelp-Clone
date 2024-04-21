@@ -31,6 +31,13 @@ export const mutations = {
   },
   SET_LOGGED_IN_USER(state, user) {
     state.loggedInUser = user;
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+  },
+  GET_LOGGED_IN_USER_LOCAL(state) {
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      state.loggedInUser = JSON.parse(storedUser);
+    }
   },
   SET_VISITS(state, visits) {
     state.visits = visits;

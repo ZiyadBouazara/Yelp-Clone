@@ -53,6 +53,9 @@ export const authActions = {
       throw error;
     }
   },
+  async checkLoggedInUser({ commit }) {
+    commit("GET_LOGGED_IN_USER_LOCAL");
+  },
   async logout({ commit }) {
     try {
       await fetch(`${SERVER_URL}/logout`, {

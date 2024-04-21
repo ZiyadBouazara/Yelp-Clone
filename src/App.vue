@@ -26,6 +26,9 @@ export default {
     Navigation,
     PageFooter,
   },
+  created() {
+    store.dispatch("checkLoggedInUser");
+  },
   setup() {
     const isHomePage = ref(false);
     const route = useRoute();
