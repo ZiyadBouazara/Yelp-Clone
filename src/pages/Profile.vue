@@ -2,7 +2,11 @@
   <div v-if="loggedInUser" class="container-fluid mt-5">
     <div class="row mt-3">
       <div class="col-12 d-flex justify-content-center">
-        <ProfileCard :user="loggedInUser" />
+        <ProfileCard
+          :user="loggedInUser"
+          :followers="followers"
+          :following="following"
+        />
       </div>
     </div>
     <div class="row mt-3 visited-restaurants-row">
