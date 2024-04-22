@@ -67,8 +67,8 @@ import md5 from "md5";
 
 const props = defineProps({
   user: { type: Object, required: true },
-  followers: { type: Array },
-  following: { type: Array },
+  followers: { type: Array, default: () => [] },
+  following: { type: Array, default: () => [] },
 });
 
 function getGravatarUrl(email, size = 80) {
