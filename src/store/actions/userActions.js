@@ -42,7 +42,7 @@ export const userActions = {
         parsedUser.email = parsedUser.email.replace(/["'\\]/g, "");
         return parsedUser;
       });
-      console.log("users fetched: " + JSON.stringify(users));
+      //console.log("users fetched: " + JSON.stringify(users));
       commit("SET_USERS", users);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -88,6 +88,53 @@ export const userActions = {
       return await rawJsonResponse.following;
     } catch (error) {
       console.error("Error fetching following:", error);
+    }
+  },
+
+  async followAUser({ commit, dispatch }, followerId) {
+    const token = Cookies.get("connectionToken");
+    const userId = state.loggedInUser.id;
+
+    try {
+      const response = await fetch(`${SERVER_URL}/follow`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ followerId }),
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        commit("ADD_TO_FOLLOWINGS", followerId);
+        return responseData;
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error following user:", error);
+    }
+  },
+  async unfollowAUser({ commit, dispatch }, followerId) {
+    const token = Cookies.get("connectionToken");
+    const userId = state.loggedInUser.id;
+
+    try {
+      const response = await fetch(`${SERVER_URL}/follow/${followerId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ followerId }),
+      });
+      if (response.ok) {
+        commit("REMOVE_FROM_FOLLOWINGS", followerId);
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error unfollowing user:", error);
     }
   },
 };

@@ -5,6 +5,7 @@ import SignUp from "@/pages/SignUp.vue";
 import Profile from "@/pages/Profile.vue";
 import RestaurantDetails from "@/pages/RestaurantDetails.vue";
 import store from "@/store";
+import UserProfile from "@/components/profile/UserProfile.vue";
 
 const routes = [
   {
@@ -35,6 +36,12 @@ const routes = [
     component: RestaurantDetails,
     props: true,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/user/:userId",
+    name: "UserProfile",
+    component: UserProfile,
+    props: true,
   },
 ];
 

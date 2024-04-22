@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-center mx-auto navbar">
+    <div
+      class="d-flex justify-content-between align-items-center mx-auto navbar"
+    >
       <div class="flex-grow-1">
         <form class="d-flex" @submit.prevent="handleSubmit">
           <input
@@ -9,12 +11,12 @@
             v-model="searchTermUsers"
             placeholder="Search"
             aria-label="Search"
-            style="border-radius: 30px; height: 40px; flex-grow: 1;"
+            style="border-radius: 30px; height: 40px; flex-grow: 1"
           />
           <button
             type="submit"
             class="btn btn-outline-danger"
-            style="margin-left: 5px; height: 40px;"
+            style="margin-left: 5px; height: 40px"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -31,24 +33,24 @@
           </button>
         </form>
       </div>
+      <div v-if="isLoading && filteredUsers.length === 0">
+        Loading users....
+      </div>
       <div
-        v-if="filteredUsers.length > 0"
+        v-else-if="filteredUsers.length > 0"
         class="filtered-users dropdown-container"
       >
         <select class="form-select dropdown-content" v-model="selectedUser">
           <option
             v-for="(user, index) in filteredUsers"
             :key="index"
-            :value="user.name"
+            :value="user"
           >
             {{ user.name }}
           </option>
         </select>
       </div>
-      <div
-        v-if="isSearchActive && filteredUsers.length === 0"
-        class="filtered-users dropdown-container"
-      >
+      <div v-else-if="showNoResults" class="filtered-users dropdown-container">
         <p>No users found.</p>
       </div>
     </div>
@@ -57,26 +59,55 @@
 
 <script>
 import { mapState } from "vuex";
+import { useRouter } from "vue-router";
 import store from "@/store";
+import { router } from "@/router";
 
 export default {
   name: "SearchForm",
   data() {
     return {
+      isLoading: false,
       searchTermUsers: "",
       selectedUser: null,
       isSearchActive: false,
     };
   },
   methods: {
-    handleInput() {
+    async handleInput() {
+      this.isLoading = true;
       this.isSearchActive = true;
       console.log("User typed:", this.searchTermUsers);
-      this.$store.dispatch("updateSearchUserTerm", this.searchTermUsers);
+
+      const timeoutId = setTimeout(() => {
+        this.isLoading = false;
+        clearTimeout(timeoutId);
+      }, 20000);
+
+      try {
+        await this.$store.dispatch(
+          "updateSearchUserTerm",
+          this.searchTermUsers,
+        );
+        clearTimeout(timeoutId);
+        this.isLoading = false;
+        this.isSearchActive = true;
+      } catch (error) {
+        console.error("Error fetching users: ", error);
+      }
     },
     handleSubmit() {
       this.isSearchActive = true;
+      this.isLoading = true;
       console.log("Form submitted");
+    },
+    handleSelectedUser() {
+      console.log("Selected user:", this.selectedUser);
+      console.log("Selected user ID:", this.selectedUser.id);
+      router.push({
+        name: "UserProfile",
+        params: { userId: this.selectedUser.id },
+      });
     },
   },
   computed: {
@@ -93,6 +124,16 @@ export default {
         user.name.toLowerCase().includes(searchTermUser),
       );
     },
+    showNoResults() {
+      return this.searchTimedOut && this.filteredUsers.length === 0;
+    },
+  },
+  watch: {
+    selectedUser(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.handleSelectedUser();
+      }
+    },
   },
 };
 </script>
@@ -104,13 +145,18 @@ export default {
 }
 
 .dropdown-container {
-  width: 100px;
+  width: 100%;
   max-height: 200px;
   overflow-y: auto;
+  background-color: #f8f9fa; /* Change the background color to match your app's theme */
+  border: 1px solid #ced4da; /* Change the border color to match your app's theme */
+  border-radius: 0.25rem; /* Adjust the border radius to match your app's style */
 }
 
 .dropdown-content {
   width: 100%;
+  color: #495057; /* Change the text color to match your app's theme */
+  font-size: 1rem; /* Adjust the font size to match your app's style */
 }
 
 @media (max-width: 768px) {

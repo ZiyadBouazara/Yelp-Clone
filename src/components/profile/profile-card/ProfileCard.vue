@@ -2,8 +2,8 @@
   <div class="card" style="max-width: 18rem">
     <div>
       <img
-        v-if="userEmail"
-        :src="getGravatarUrl(userEmail)"
+        v-if="user"
+        :src="getGravatarUrl(user.email)"
         alt="User Profile Picture"
         class="profile-picture"
       />
@@ -12,8 +12,8 @@
     <div class="card-body">
       <div class="row mb-3">
         <div class="col">
-          <h4 class="card-title">{{ loggedInUser.name }}</h4>
-          <h5 class="card-text">{{ loggedInUser.email }}</h5>
+          <h4 class="card-title">{{ user.name }}</h4>
+          <h5 class="card-text">{{ user.email }}</h5>
         </div>
       </div>
       <div class="row mb-3">
@@ -27,11 +27,11 @@
                   data-bs-toggle="modal"
                   type="button"
                 >
-                  <span class="ms-2">{{ props.followers.length }}</span>
+                  <span class="ms-2">{{ followers.length }}</span>
                   <br />
                   <span class="ms-2">followers</span>
                 </button>
-                <UserFollowers :followers="props.followers" />
+                <UserFollowers :followers="followers" />
               </div>
             </div>
             <div class="col-6">
@@ -42,18 +42,18 @@
                   data-bs-toggle="modal"
                   type="button"
                 >
-                  <span class="ms-2">{{ props.following.length }}</span>
+                  <span class="ms-2">{{ following.length }}</span>
                   <br />
                   <span class="ms-2">following</span>
                 </button>
-                <UserFollowing :following="props.following" />
+                <UserFollowing :following="following" />
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <p><i class="far fa-star"></i> Rating : {{ loggedInUser.rating }}</p>
+        <p><i class="far fa-star"></i> Rating : {{ user.rating }}</p>
       </div>
     </div>
     <hr style="background-color: #ccc; margin: 0" />
@@ -63,14 +63,17 @@
 <script setup>
 import UserFollowing from "@/components/profile/profile-card/UserFollowing.vue";
 import UserFollowers from "@/components/profile/profile-card/UserFollowers.vue";
-import { computed } from "vue";
-import store from "@/store";
 import md5 from "md5";
+import { ref } from "vue";
 
-const props = defineProps({ followers: Array, following: Array });
+const props = defineProps({
+  user: { type: Object, required: true },
+  followers: { type: Array, default: () => [] },
+  following: { type: Array, default: () => [] },
+});
 
-const loggedInUser = computed(() => store.getters.getLoggedInUser);
-const userEmail = computed(() => loggedInUser.value.email);
+const followers = ref(props.followers);
+const following = ref(props.following);
 
 function getGravatarUrl(email, size = 80) {
   const emailHash = md5(email.trim().toLowerCase()); // Hash the email (MD5)

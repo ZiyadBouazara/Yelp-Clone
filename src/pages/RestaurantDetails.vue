@@ -3,16 +3,18 @@ import "leaflet/dist/leaflet.css";
 import LocationAndHours from "@/components/restaurant/LocationAndHours.vue";
 import SideContainer from "@/components/restaurant/SideContainer.vue";
 import RestaurantHeader from "@/components/restaurant/RestaurantHeader.vue";
+import SameTypeRestaurant from "@/components/restaurant/SameTypeRestaurant.vue";
 import { useRoute } from "vue-router";
 import AboutRestaurant from "@/components/restaurant/AboutRestaurant.vue";
 import AddVisit from "@/components/visit/AddVisit.vue";
-import { onMounted, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 import AddFavorite from "@/components/AddFavorite.vue";
 import store from "@/store";
 
 const route = useRoute();
 
 const restaurantId = route.params.id;
+const loading = ref(false);
 const getRestaurant = (restaurantId) => {
   return store.getters.getRestaurantById(restaurantId);
 };
@@ -23,13 +25,24 @@ const getDirections = (destination) => {
   const url = `https://www.openstreetmap.org/directions?engine=osrm_car&to=${destination}`;
   window.open(url);
 };
-
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-onMounted(() => {
+const sameRestaurants = ref([]);
+
+const fetchSameGenreRestaurants = async () => {
+  const currentRestaurant = store.getters.getRestaurantById(restaurantId);
+  const currentRestaurantFirstGenre = currentRestaurant.genres[0];
+  sameRestaurants.value = store.getters.getRestaurantsByGenre(
+    currentRestaurantFirstGenre,
+  );
+};
+
+console.log("same restaurants length in details", sameRestaurants.value.length);
+onMounted(async () => {
   scrollToTop();
+  await fetchSameGenreRestaurants();
 });
 </script>
 
@@ -87,6 +100,11 @@ onMounted(() => {
     <div class="line"></div>
     <about-restaurant :restaurant="getRestaurant(restaurantId)" />
     <div class="line"></div>
+    <div v-if="loading">Loading...</div>
+    <div v-else-if="sameRestaurants && sameRestaurants.length > 0">
+      <h5 class="justify-content-center">Similar Restaurants</h5>
+      <same-type-restaurant :restaurants="sameRestaurants" />
+    </div>
   </div>
 </template>
 

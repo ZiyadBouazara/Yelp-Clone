@@ -12,6 +12,8 @@ const state = {
   visits: [],
   userFavorites: [],
   totalRestaurant: 0,
+  userFollowers: [],
+  userFollowings: [],
   totalUsers: 0,
 };
 

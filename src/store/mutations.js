@@ -70,4 +70,13 @@ export const mutations = {
       }
     }
   },
+  ADD_TO_FOLLOWINGS(state, followerId) {
+    state.userFollowings.push(followerId);
+  },
+  REMOVE_FROM_FOLLOWINGS(state, followerId) {
+    const index = state.userFollowings.indexOf(followerId);
+    if (index !== -1) {
+      state.userFollowings.splice(index, 1);
+    }
+  },
 };

@@ -63,7 +63,6 @@ import { validateForm } from "@/javascript/validateForm";
 const router = useRouter();
 const email = ref("");
 const password = ref("");
-
 const loginError = ref("");
 
 const handleLogin = async () => {

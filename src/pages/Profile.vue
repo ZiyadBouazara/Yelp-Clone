@@ -2,10 +2,9 @@
   <div v-if="loggedInUser" class="container-fluid mt-5">
     <div class="row mt-3">
       <div class="col-12 d-flex justify-content-center">
-        <ProfileCard :followers="followers" :following="following" />
+        <ProfileCard :user="loggedInUser" />
       </div>
     </div>
-
     <div class="row mt-3 visited-restaurants-row">
       <h4 class="visited-restaurants-title">Visited restaurants</h4>
       <div class="col-12 d-flex justify-content-center">
@@ -37,6 +36,7 @@ const following = ref([]);
 
 const loggedInUser = computed(() => store.getters.getLoggedInUser);
 const visits = computed(() => store.getters.getVisits);
+console.log("user visits in user profile: ", visits);
 
 onMounted(async () => {
   followers.value = await store.dispatch("fetchFollowersForUser");
