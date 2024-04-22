@@ -27,11 +27,11 @@
                   data-bs-toggle="modal"
                   type="button"
                 >
-                  <span class="ms-2">{{ followers.length }}</span>
+                  <span class="ms-2">{{ props.followers.length }}</span>
                   <br />
                   <span class="ms-2">followers</span>
                 </button>
-                <UserFollowers :followers="followers" />
+                <UserFollowers :followers="props.followers" />
               </div>
             </div>
             <div class="col-6">
@@ -42,11 +42,11 @@
                   data-bs-toggle="modal"
                   type="button"
                 >
-                  <span class="ms-2">{{ following.length }}</span>
+                  <span class="ms-2">{{ props.following.length }}</span>
                   <br />
                   <span class="ms-2">following</span>
                 </button>
-                <UserFollowing :following="following" />
+                <UserFollowing :following="props.following" />
               </div>
             </div>
           </div>
@@ -64,16 +64,12 @@
 import UserFollowing from "@/components/profile/profile-card/UserFollowing.vue";
 import UserFollowers from "@/components/profile/profile-card/UserFollowers.vue";
 import md5 from "md5";
-import { ref } from "vue";
 
 const props = defineProps({
   user: { type: Object, required: true },
-  followers: { type: Array, default: () => [] },
-  following: { type: Array, default: () => [] },
+  followers: { type: Array },
+  following: { type: Array },
 });
-
-const followers = ref(props.followers);
-const following = ref(props.following);
 
 function getGravatarUrl(email, size = 80) {
   const emailHash = md5(email.trim().toLowerCase()); // Hash the email (MD5)
