@@ -49,10 +49,8 @@ export const userActions = {
     }
   },
 
-  async fetchFollowersForUser({ state }) {
+  async fetchFollowersForUser({ state }, userId) {
     const token = Cookies.get("connectionToken");
-
-    const userId = state.loggedInUser.id;
 
     try {
       const response = await fetch(`${SERVER_URL}/users/${userId}`, {
@@ -93,8 +91,6 @@ export const userActions = {
 
   async followAUser({ commit, dispatch }, followerId) {
     const token = Cookies.get("connectionToken");
-    const userId = state.loggedInUser.id;
-
     try {
       const response = await fetch(`${SERVER_URL}/follow`, {
         method: "POST",
@@ -102,7 +98,7 @@ export const userActions = {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: JSON.stringify({ followerId }),
+        body: JSON.stringify({ id: followerId }),
       });
       if (response.ok) {
         const responseData = await response.json();
@@ -126,7 +122,7 @@ export const userActions = {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: JSON.stringify({ followerId }),
+        body: JSON.stringify({ id: followerId }),
       });
       if (response.ok) {
         commit("REMOVE_FROM_FOLLOWINGS", followerId);

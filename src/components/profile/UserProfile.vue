@@ -2,7 +2,7 @@
   <div v-if="user" class="container-fluid mt-5">
     <div class="row mt-3">
       <div class="col-12 d-flex justify-content-center">
-        <ProfileCard :user="user" />
+        <OtherUserProfileCard :user="user" />
       </div>
     </div>
     <div class="row mt-3 friends-management justify-content-center">
@@ -17,29 +17,22 @@
         <span v-else>Follow {{ user.name }}</span>
       </button>
     </div>
-    <div class="row mt-3 visited-restaurants-row">
-      <h4 class="visited-restaurants-title">Visited restaurants</h4>
-      <div class="col-12 d-flex justify-content-center">
-        <VisitedRestaurants :visits="visits" />
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
-import ProfileCard from "@/components/profile/profile-card/ProfileCard.vue";
-import VisitedRestaurants from "@/components/profile/VisitedRestaurants.vue";
 import { useStore } from "vuex";
 import { computed, onMounted, ref } from "vue";
+import OtherUserProfileCard from "@/components/profile/profile-card/OtherUserProfileCard.vue";
 
 const store = useStore();
 const isFollowing = ref(false);
 const props = defineProps({ userId: { type: String, required: true } });
-
 const user = computed(() => store.getters.getUserById(props.userId));
-
 const visits = computed(() => store.getters.getVisitsByUserId(props.userId));
 console.log("visits: ", visits);
+
+console.log("props of the visiting user id: ", props.userId);
 
 const handleFollowingUser = async () => {
   if (!isFollowing.value) {
@@ -51,15 +44,9 @@ const handleFollowingUser = async () => {
   }
 };
 
-const selectedUserFollowers = computed(() =>
-  store.getters.getFriendFollowers(props.userId),
-);
-const selectedUserFollowings = computed(() =>
-  store.getters.getFriendFollowings(props.userId),
-);
-
 onMounted(async () => {
   console.log("user prop: ", props.userId);
+  await store.getters.getVisitsByUserId(props.userId);
   await store.getters.getUserById(props.userId);
   console.log("user: ", store.getters.getUserById(props.userId));
 });
