@@ -1,3 +1,12 @@
+# Images
+<img width="1064" alt="Screenshot 2024-05-02 at 2 29 44 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/d7567a8f-a108-42df-b077-0699ed54378f">
+<img width="1187" alt="Screenshot 2024-05-02 at 2 26 18 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/3279d2b1-1047-4bae-89b9-4974f8bc79b3">
+<img width="1187" alt="Screenshot 2024-05-02 at 2 27 12 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/e6041403-7875-4f56-96b9-d9081046b163">
+<img width="1187" alt="Screenshot 2024-05-02 at 2 27 19 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/17754e8d-943a-49ed-873e-f2e15d27e1e0">
+<img width="1187" alt="Screenshot 2024-05-02 at 2 27 58 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/81f49eb0-5875-492f-9fe0-c5790ee385af">
+<img width="1064" alt="Screenshot 2024-05-02 at 2 37 04 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/0fef4e4e-2aad-410d-b86d-ea27c6c35926">
+<img width="1064" alt="Screenshot 2024-05-02 at 2 37 11 PM" src="https://github.com/ZiyadBouazara/Yelp-Clone/assets/97689339/7eec882c-5b6a-4694-9bc5-a39255b863a8">
+
 # vue-starter
 
 Kit de départ préconfiguré utilisant [vue-cli](https://cli.vuejs.org/), [ESLint](https://eslint.org/) avec [Prettier](https://prettier.io/) et [Jest](https://jestjs.io/).
